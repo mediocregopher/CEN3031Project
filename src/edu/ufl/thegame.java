@@ -6,15 +6,13 @@ import android.widget.TextView;
 
 public class thegame extends Activity
 {
-    /** Called when the activity is first created. */
+    /* Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        TextView text = new TextView(this);
-        text.setText("Hello World!");
-        setContentView(text);
+        setContentView(new GamePanel(this));
     }
 }
