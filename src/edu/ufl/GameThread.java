@@ -1,6 +1,8 @@
 package edu.ufl;
 
-import android.util.Log;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
@@ -16,6 +18,11 @@ public class GameThread extends Thread {
 	private SurfaceHolder surfaceHolder;
 	// The actual view that handles inputs and draws to the surface
 	private GamePanel gamePanel;
+	// Albert is a rectangle?
+	public RectF albert;
+	// Albert moving 1 = right, -1 = left
+	public int moving;
+
 
     /* Whether or not the thread is currently alive */
 	private boolean running;
@@ -27,6 +34,7 @@ public class GameThread extends Thread {
 		super();
 		this.surfaceHolder = surfaceHolder;
 		this.gamePanel = gamePanel;
+		albert = new RectF(10,10,30,50);
 	}
 
 	@Override
@@ -36,11 +44,27 @@ public class GameThread extends Thread {
 		while (running) {
             beginTime = System.currentTimeMillis();
 
-
             /* Begin actual game loop stuff */
 			tickCount++;
             /* End game loop stuff */
-
+			Canvas c = null;
+			try {
+                c = surfaceHolder.lockCanvas();
+                synchronized (surfaceHolder) {
+                	// IF running - and not paused
+                	// Should use a "physics" method and give albert a speed and mulitply by elasped time
+                	albert.offset(5*moving, 0);
+                	// END IF
+                    draw(c);
+                }
+            } finally {
+                // do this in a finally so that if an exception is thrown
+                // during the above, we don't leave the Surface in an
+                // inconsistent state
+                if (c != null) {
+                    surfaceHolder.unlockCanvasAndPost(c);
+                }
+            }
 
             timeDiff = System.currentTimeMillis() - beginTime;
             sleepTime = (int)(FPS_PERIOD - timeDiff);
@@ -54,4 +78,12 @@ public class GameThread extends Thread {
 		GameLog.d("GameThread", "Game loop executed " + tickCount + " times");
 	}
 	
+
+	
+	private void draw(Canvas canvas) {
+		canvas.drawARGB(255, 255, 0, 0);
+		Paint color = new Paint();
+		color.setARGB(255, 0, 0, 255);
+		canvas.drawRect(albert, color);
+	}
 }

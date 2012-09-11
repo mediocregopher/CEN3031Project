@@ -3,7 +3,6 @@ package edu.ufl;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,22 +18,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		setFocusable(true);
 	}
 
-	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 	}
 
-	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
 		thread.start();
 	}
 
-	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		GameLog.d("GamePanel", "Surface is being destroyed, attempting to shut down thread");
 
         /* Block until we can shutdown the gamethread */
 		boolean retry = true;
+		thread.setRunning(false);
 		while (retry) {
 			try {
 				thread.join();
@@ -48,7 +45,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		GameLog.d("GamePanel", "Action " + event.getAction());
+		if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_POINTER_DOWN) {
+			if (event.getX() < getWidth()*(.25-.05)) {
+				// Left
+				thread.moving = -1;
+			} else if (event.getX() > getWidth()*(1 - (.25-.05))) {
+				// Right
+				thread.moving = 1;
+			}
 			if (event.getY() > getHeight() - 50) {
 				thread.setRunning(false);
 				((Activity)getContext()).finish();
@@ -56,7 +61,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				GameLog.d("GamePanel", "Coords: x=" + event.getX() + ",y=" + event.getY());
 			}
 		}
-		return super.onTouchEvent(event);
+		if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+			thread.moving=0;
+		}
+		//return super.onTouchEvent(event);
+		return true; // required to get Action_up event
 	}
 
 	@Override
