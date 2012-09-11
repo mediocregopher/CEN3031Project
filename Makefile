@@ -1,5 +1,3 @@
-allthethings: debug install logcat
-
 debug:
 	ant debug
 
@@ -11,3 +9,5 @@ install:
 
 logcat:
 	adb logcat | grep "TheGame"
+
+allthethings: debug install logcat
