@@ -10,6 +10,8 @@ import android.view.SurfaceView;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 	private GameThread thread;
+    private double leftPortion;
+    private double rightPortion;
 
 	public GamePanel(Context context) {
 		super(context);
@@ -45,28 +47,36 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		GameLog.d("GamePanel", "Action " + event.getAction());
+		//GameLog.d("GamePanel", "Action " + event.getAction());
 		if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_POINTER_DOWN) {
-			if (event.getX() < getWidth()*(.25-.05)) {
+            GameLog.d("GamePanel", "Coords: x=" + event.getX() + ",y=" + event.getY());
+            if (event.getX() < leftPortion ) {
 				// Left
 				thread.moving = -1;
-			} else if (event.getX() > getWidth()*(1 - (.25-.05))) {
+			}
+            else if (event.getX() > rightPortion ) {
 				// Right
 				thread.moving = 1;
 			}
-			if (event.getY() > getHeight() - 50) {
+			else if (event.getY() > getHeight() - 50) {
 				thread.setRunning(false);
 				((Activity)getContext()).finish();
-			} else {
-				GameLog.d("GamePanel", "Coords: x=" + event.getX() + ",y=" + event.getY());
 			}
 		}
-		if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+		if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_POINTER_UP ) {
 			thread.moving=0;
 		}
-		//return super.onTouchEvent(event);
 		return true; // required to get Action_up event
 	}
+
+    @Override
+    protected void onSizeChanged (int w, int h, int oldw, int oldh) {
+        if (w == 0) { /* Docs say this can happen, ignore it */ }
+        else {
+            leftPortion  = ((double)w)*(.2);
+            rightPortion = ((double)w)*(.8);
+        }
+    }
 
 	@Override
 	protected void onDraw(Canvas canvas) {

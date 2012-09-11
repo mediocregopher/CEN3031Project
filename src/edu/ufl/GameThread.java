@@ -45,8 +45,8 @@ public class GameThread extends Thread {
             beginTime = System.currentTimeMillis();
 
             /* Begin actual game loop stuff */
+
 			tickCount++;
-            /* End game loop stuff */
 			Canvas c = null;
 			try {
                 c = surfaceHolder.lockCanvas();
@@ -55,6 +55,7 @@ public class GameThread extends Thread {
                 	// Should use a "physics" method and give albert a speed and mulitply by elasped time
                 	albert.offset(5*moving, 0);
                 	// END IF
+
                     draw(c);
                 }
             } finally {
@@ -66,6 +67,10 @@ public class GameThread extends Thread {
                 }
             }
 
+            /* End game loop stuff */
+
+            //If there's time left over in this frame, sleep. This is what keeps us at
+            //our set FPS
             timeDiff = System.currentTimeMillis() - beginTime;
             sleepTime = (int)(FPS_PERIOD - timeDiff);
             if (sleepTime > 0) {
