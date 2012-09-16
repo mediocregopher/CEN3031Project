@@ -106,6 +106,13 @@ public class GameThread extends Thread {
     }
     
     private void updatePhysics() {
+
+        if      (gamePanel.controller.isLeftPressed())  { moving = -1; }
+        else if (gamePanel.controller.isRightPressed()) { moving = 1; }
+        else    { moving = 0; }
+
+        if (gamePanel.controller.isJumpPressed()) { jump(); }
+
         dx = moving * PHYS_PLAYER_SPEED;
         dy += PHYS_GRAVITY * PHYS_ELAPSED_TIME;
         
