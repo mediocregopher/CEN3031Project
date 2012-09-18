@@ -97,11 +97,11 @@ public class GameThread extends Thread {
 
     private void draw(Canvas canvas) {
         // draw background
-        canvas.drawARGB(255, 255, 0, 0);
+        canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
         
         // draw Albert
         Paint color = new Paint();
-        color.setARGB(255, 0, 0, 255);
+        color.setARGB(255, 0x04, 0x5f, 0x18);
         canvas.drawRect(albert, color);
     }
     
