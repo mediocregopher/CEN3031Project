@@ -27,6 +27,12 @@ public class LevelObject {
     
 
     LevelObject(float x, float y, float w, float h) {
+        this.x    = x;
+        this.oldx = x;
+        this.y    = y;
+        this.oldy = y;
+        this.w    = w;
+        this.h    = h;
         object = new RectF(x,y,x+w,y+h);
     }
 
@@ -52,6 +58,9 @@ public class LevelObject {
     public void commitUpdate() {
         oldx = x;
         oldy = y;
+        //GameLog.d("LevelObject", "committing: " + String.valueOf(x) + ", " + String.valueOf(y));
+        //WHY DOESN'T THIS WORK?
+        //object.offsetTo(x, y);
         object.offsetTo(x - object.width()/2, y - object.height()/2);
     }
 

@@ -92,7 +92,7 @@ public class GameThread extends Thread {
     private void update() {
         albert.update(gamePanel);
 
-        if (albert.getX() < 0 || albert.getX() > gamePanel.getWidth()) {
+        if (albert.getX() < 0 || (albert.getX()+albert.getWidth()) > gamePanel.getWidth()) {
             albert.resetX();
         }
         if (albert.getY() > MAX_Y) {
