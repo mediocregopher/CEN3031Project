@@ -18,6 +18,7 @@ public class GameThread extends Thread {
     private GamePanel gamePanel;
 
     private LevelObject albert;
+    private LevelObject tile;
 
     /* Whether or not the thread is currently alive */
     private boolean running;
@@ -30,6 +31,7 @@ public class GameThread extends Thread {
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
         this.albert = new LevelObject(10,10,10,20);
+        this.tile = new LevelObject(200,200,50,50);
     }
 
     @Override
@@ -82,6 +84,7 @@ public class GameThread extends Thread {
         // draw background
         canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
         albert.draw(canvas);
+        tile.draw(canvas);
     }
     
     private void update() {
