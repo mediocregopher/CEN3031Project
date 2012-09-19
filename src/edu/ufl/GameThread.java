@@ -6,7 +6,10 @@ import android.view.SurfaceHolder;
 public class GameThread extends Thread {
 
     public final static int FPS = 30;
-    private final static int FPS_PERIOD = 1000/FPS;
+    public final static int FPS_PERIOD = 1000/FPS;
+
+    // Minimum y - placeholder until we get level collision
+    private static final int MAX_Y = 300;
 
     long beginTime;     // the time when the cycle begun
     long timeDiff;      // the time it took for the cycle to execute
@@ -49,7 +52,6 @@ public class GameThread extends Thread {
                 c = surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
                     // IF running - and not paused
-                    // Should use a "physics" method and give albert a speed and multiply by elapsed time
                     update();
                     // END IF
 
@@ -89,5 +91,14 @@ public class GameThread extends Thread {
     
     private void update() {
         albert.update(gamePanel);
+
+        if (albert.getX() < 0 || albert.getX() > gamePanel.getWidth()) {
+            albert.resetX();
+        }
+        if (albert.getY() > MAX_Y) {
+            albert.resetY();
+        }
+
+        albert.commitUpdate();
     }
 }

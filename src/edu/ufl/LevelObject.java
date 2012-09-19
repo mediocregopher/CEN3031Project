@@ -9,49 +9,54 @@ public class LevelObject {
     private RectF object;
 
     // Physic constants
-    private static final double PHYS_GRAVITY = 9f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
-    private static final double PHYS_PLAYER_SPEED = 250f/1000f; // 250 pixels/millisecond
-    private static final double PHYS_PLAYER_JUMP = 1;
-    private static final double PHYS_ELAPSED_TIME = 1000/(float)GameThread.FPS;
+    private static final float GRAVITY = 9f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
+    private static final float SPEED = 250f/1000f; // 250 pixels/millisecond
+    private static final float JUMP_SPEED = 1;
+    private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
+
+    private float oldx;
+    private float oldy;
+    private float x;
+    private float y;
+    private float h;
+    private float w;
 
     // Velocity dx, dy
-    private double dx;
-    private double dy;
+    private float dx;
+    private float dy;
     
-    // Minimum y - placeholder until we get level collision
-    private static final int MAX_Y = 300;
 
     LevelObject(float x, float y, float w, float h) {
         object = new RectF(x,y,x+w,y+h);
     }
 
+    public float getX()      { return x; }
+    public float getY()      { return y; }
+    public float getWidth()  { return w; }
+    public float getHeight() { return h; }
+
     public void update(GamePanel gamePanel) {
-        if      (gamePanel.controller.isLeftPressed())  { dx = -PHYS_PLAYER_SPEED; }
-        else if (gamePanel.controller.isRightPressed()) { dx =  PHYS_PLAYER_SPEED; }
+        if      (gamePanel.controller.isLeftPressed())  { dx = -SPEED; }
+        else if (gamePanel.controller.isRightPressed()) { dx =  SPEED; }
         else    { dx = 0; }
 
-        if (gamePanel.controller.isJumpPressed()) { dy = -PHYS_PLAYER_JUMP; }
+        if (gamePanel.controller.isJumpPressed()) { dy = -JUMP_SPEED; }
 
-        dy += PHYS_GRAVITY * PHYS_ELAPSED_TIME;
+        dy += GRAVITY * FPS_PERIOD;
         
-        float x = (float) (object.centerX() + dx * PHYS_ELAPSED_TIME);
-        float y = (float) (object.centerY() + dy * PHYS_ELAPSED_TIME);
+        x = object.centerX() + dx * FPS_PERIOD;
+        y = object.centerY() + dy * FPS_PERIOD;
         
-        
-        // check for collisions
-        if (x < 0) {
-            x=0;
-        } else if (x > gamePanel.getWidth()) {
-            x = gamePanel.getWidth();
-        }
-        
-        if (y > MAX_Y) {
-            y = MAX_Y;
-            dy = 0;
-        }
-        
+    }
+
+    public void commitUpdate() {
+        oldx = x;
+        oldy = y;
         object.offsetTo(x - object.width()/2, y - object.height()/2);
     }
+
+    public void resetX() { x = oldx; }
+    public void resetY() { y = oldy; }
 
     public void draw(Canvas canvas) {
         Paint color = new Paint();
