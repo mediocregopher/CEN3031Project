@@ -11,7 +11,7 @@ public class LevelObject {
     // Physic constants
     private static final float GRAVITY = 25f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
     private static final float SPEED = 250f/1000f; // 250 pixels/millisecond
-    private static final float JUMP_SPEED = 250f/1000f;
+    private static final float JUMP_SPEED = 700f/1000f;
     private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
 
     private float x;
@@ -49,19 +49,19 @@ public class LevelObject {
         else if (gamePanel.controller.isRightPressed()) { dx =  SPEED; }
         else    { dx = 0; }
 
-        if (gamePanel.controller.isJumpPressed()) { dy = -JUMP_SPEED; }
+        if (gamePanel.controller.isJumpPressed() && dy == 0) { dy = JUMP_SPEED; gamePanel.controller.jumped();}
 
-        dy += GRAVITY;
+        dy -= GRAVITY;
         
         this.setX(object.left + dx * FPS_PERIOD);
         this.setY(object.top  + dy * FPS_PERIOD);
         
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, Camera camera) {
         Paint color = new Paint();
         color.setARGB(255, 0x04, 0x5f, 0x18);
-        canvas.drawRect(object, color);
+        camera.drawRect(canvas, object, color);
     }
 
     private void commitPosition() {
