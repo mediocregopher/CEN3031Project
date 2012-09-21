@@ -105,17 +105,20 @@ public class GameThread extends Thread {
         }
 
         switch(Util.intersect(albert.object,tile.object)) {
-            case NONE:   //GameLog.d("GameThread","No intersect");
-                         break;
+            case NONE:   break;
+
             case TOP:    albert.setY(tile.object.top - albert.getHeight());
                          albert.setDY(0);
                          break;
+
             case BOTTOM: albert.setY(tile.object.bottom);
                          albert.setDY(0);
                          break;
+
             case LEFT:   albert.setX(tile.object.left - albert.getWidth()); 
                          albert.setDX(0);
                          break;
+
             case RIGHT:  albert.setX(tile.object.right);
                          albert.setDX(0);
                          break;

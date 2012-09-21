@@ -9,13 +9,11 @@ public class LevelObject {
     public RectF object;
 
     // Physic constants
-    private static final float GRAVITY = 9f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
+    private static final float GRAVITY = 25f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
     private static final float SPEED = 250f/1000f; // 250 pixels/millisecond
-    private static final float JUMP_SPEED = 1;
+    private static final float JUMP_SPEED = 250f/1000f;
     private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
 
-    private float oldx;
-    private float oldy;
     private float x;
     private float y;
     private float h;
@@ -27,9 +25,7 @@ public class LevelObject {
 
     LevelObject(float x, float y, float w, float h) {
         this.x    = x;
-        this.oldx = x;
         this.y    = y;
-        this.oldy = y;
         this.w    = w;
         this.h    = h;
         object = new RectF(x,y,x+w,y+h);
@@ -55,24 +51,16 @@ public class LevelObject {
 
         if (gamePanel.controller.isJumpPressed()) { dy = -JUMP_SPEED; }
 
-        dy += GRAVITY * FPS_PERIOD;
+        dy += GRAVITY;
         
-        x = object.centerX() + dx * FPS_PERIOD;
-        y = object.centerY() + dy * FPS_PERIOD;
+        x = object.left + dx * FPS_PERIOD;
+        y = object.top  + dy * FPS_PERIOD;
         
     }
 
     public void commitUpdate() {
-        oldx = x;
-        oldy = y;
-        //GameLog.d("LevelObject", "committing: " + String.valueOf(x) + ", " + String.valueOf(y));
-        //WHY DOESN'T THIS WORK?
-        //object.offsetTo(x, y);
-        object.offsetTo(x - object.width()/2, y - object.height()/2);
+        object.offsetTo((int)x, (int)y);
     }
-
-    public void resetX() { x = oldx; }
-    public void resetY() { y = oldy; }
 
     public void draw(Canvas canvas) {
         Paint color = new Paint();
