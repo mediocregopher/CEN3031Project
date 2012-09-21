@@ -1,6 +1,5 @@
 package edu.ufl;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
@@ -12,10 +11,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread thread;
     public  GameController controller;
-    private double leftPortion;
-    private double rightPortion;
-    private double jumpPortion;
-    private int lrPointer = -1;
 
     public GamePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
