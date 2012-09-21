@@ -2,6 +2,7 @@ package edu.ufl;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
+import android.graphics.RectF;
 
 public class GameThread extends Thread {
 
@@ -92,11 +93,32 @@ public class GameThread extends Thread {
     private void update() {
         albert.update(gamePanel);
 
-        if (albert.getX() < 0 || (albert.getX()+albert.getWidth()) > gamePanel.getWidth()) {
-            albert.resetX();
+        if (albert.getX() < 0) {
+            albert.setX(0);
         }
+        else if ((albert.getX()+albert.getWidth()) > gamePanel.getWidth())  {
+            albert.setX(gamePanel.getWidth()-albert.getWidth());
+        }
+        
         if (albert.getY() > MAX_Y) {
-            albert.resetY();
+            albert.setY(MAX_Y);
+        }
+
+        switch(Util.intersect(albert.object,tile.object)) {
+            case NONE:   //GameLog.d("GameThread","No intersect");
+                         break;
+            case TOP:    albert.setY(tile.object.top - albert.getHeight());
+                         albert.setDY(0);
+                         break;
+            case BOTTOM: albert.setY(tile.object.bottom);
+                         albert.setDY(0);
+                         break;
+            case LEFT:   albert.setX(tile.object.left - albert.getWidth()); 
+                         albert.setDX(0);
+                         break;
+            case RIGHT:  albert.setX(tile.object.right);
+                         albert.setDX(0);
+                         break;
         }
 
         albert.commitUpdate();

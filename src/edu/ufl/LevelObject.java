@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 
 public class LevelObject {
 
-    private RectF object;
+    public RectF object;
 
     // Physic constants
     private static final float GRAVITY = 9f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
@@ -24,7 +24,6 @@ public class LevelObject {
     // Velocity dx, dy
     private float dx;
     private float dy;
-    
 
     LevelObject(float x, float y, float w, float h) {
         this.x    = x;
@@ -36,10 +35,18 @@ public class LevelObject {
         object = new RectF(x,y,x+w,y+h);
     }
 
-    public float getX()      { return x; }
-    public float getY()      { return y; }
-    public float getWidth()  { return w; }
-    public float getHeight() { return h; }
+    public float getX()      { return x;  }
+    public float getY()      { return y;  }
+    public void  setX(float x) { this.x = x; }
+    public void  setY(float y) { this.y = y; }
+
+    public float getDX()     { return dx; }
+    public float getDY()     { return dy; }
+    public void  setDX(float dx) {this.dx = dx; }
+    public void  setDY(float dy) {this.dy = dy; }
+
+    public float getWidth()  { return w;  }
+    public float getHeight() { return h;  }
 
     public void update(GamePanel gamePanel) {
         if      (gamePanel.controller.isLeftPressed())  { dx = -SPEED; }
