@@ -52,13 +52,9 @@ public class LevelObject {
         if (gamePanel.controller.isJumpPressed()) { dy = -JUMP_SPEED; }
 
         dy += GRAVITY;
-
-        GameLog.d("LevelObject","previous y:"+String.valueOf(y));
         
         this.setX(object.left + dx * FPS_PERIOD);
         this.setY(object.top  + dy * FPS_PERIOD);
-
-        GameLog.d("LevelObject","new y:"+String.valueOf(y));
         
     }
 
