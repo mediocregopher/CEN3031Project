@@ -35,7 +35,7 @@ public class GameThread extends Thread {
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
         this.albert = new LevelObject(10,10,10,20);
-        this.tile = new LevelObject(200,200,50,50);
+        this.tile = new LevelObject(200,150,100,100);
     }
 
     @Override
@@ -102,6 +102,7 @@ public class GameThread extends Thread {
         
         if (albert.getY() > MAX_Y) {
             albert.setY(MAX_Y);
+            albert.setDY(0);
         }
 
         switch(Util.intersect(albert.object,tile.object)) {
@@ -112,7 +113,7 @@ public class GameThread extends Thread {
                          break;
 
             case BOTTOM: albert.setY(tile.object.bottom);
-                         albert.setDY(0);
+                         if (albert.getDY() < 0) albert.setDY(0);
                          break;
 
             case LEFT:   albert.setX(tile.object.left - albert.getWidth()); 
@@ -124,6 +125,5 @@ public class GameThread extends Thread {
                          break;
         }
 
-        albert.commitUpdate();
     }
 }

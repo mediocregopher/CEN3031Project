@@ -33,8 +33,8 @@ public class LevelObject {
 
     public float getX()      { return x;  }
     public float getY()      { return y;  }
-    public void  setX(float x) { this.x = x; }
-    public void  setY(float y) { this.y = y; }
+    public void  setX(float x) { this.x = x; commitPosition(); }
+    public void  setY(float y) { this.y = y; commitPosition(); }
 
     public float getDX()     { return dx; }
     public float getDY()     { return dy; }
@@ -52,20 +52,24 @@ public class LevelObject {
         if (gamePanel.controller.isJumpPressed()) { dy = -JUMP_SPEED; }
 
         dy += GRAVITY;
-        
-        x = object.left + dx * FPS_PERIOD;
-        y = object.top  + dy * FPS_PERIOD;
-        
-    }
 
-    public void commitUpdate() {
-        object.offsetTo((int)x, (int)y);
+        GameLog.d("LevelObject","previous y:"+String.valueOf(y));
+        
+        this.setX(object.left + dx * FPS_PERIOD);
+        this.setY(object.top  + dy * FPS_PERIOD);
+
+        GameLog.d("LevelObject","new y:"+String.valueOf(y));
+        
     }
 
     public void draw(Canvas canvas) {
         Paint color = new Paint();
         color.setARGB(255, 0x04, 0x5f, 0x18);
         canvas.drawRect(object, color);
+    }
+
+    private void commitPosition() {
+        object.offsetTo(Math.round(x),Math.round(y));
     }
 
 }

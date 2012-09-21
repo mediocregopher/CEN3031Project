@@ -17,8 +17,8 @@ class Util {
     public enum IntersectRet { NONE,TOP,BOTTOM,LEFT,RIGHT}
     public static IntersectRet intersect(RectF a, RectF b) {
 
-        if (a.left < b.right && a.right > b.left &&
-            a.top < b.bottom && a.bottom > b.top   ) {
+        if (a.left <= b.right  && a.right  >= b.left &&
+            a.top  <= b.bottom && a.bottom >= b.top     ) {
 
             float xdiff =  (a.left + (a.right-a.left)/2f) - (b.left + (b.right-b.left)/2f);
             float ydiff = (a.top  + (a.bottom-a.top)/2f) - (b.top  + (b.bottom-b.top)/2f);
