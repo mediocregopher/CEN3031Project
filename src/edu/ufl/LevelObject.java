@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 public class LevelObject {
 
     private RectF rectf;
+    public  Paint color;
 
     // Physic constants
     private static final float GRAVITY = 25f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
@@ -24,11 +25,14 @@ public class LevelObject {
     private float dy;
 
     LevelObject(float x, float y, float w, float h) {
-        this.x    = x;
-        this.y    = y;
-        this.w    = w;
-        this.h    = h;
-        rectf     = new RectF(x,y,x+w,y+h);
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        rectf  = new RectF(x,y,x+w,y+h);
+
+        color  = new Paint();
+        color.setARGB(255, 0x04, 0x5f, 0x18);
     }
 
     public float getX()      { return x;  }
@@ -60,10 +64,8 @@ public class LevelObject {
         
     }
 
-    public void draw(Canvas canvas) {
-        Paint color = new Paint();
-        color.setARGB(255, 0x04, 0x5f, 0x18);
-        canvas.drawRect(rectf, color);
+    public void draw(Canvas canvas,Camera camera) {
+        camera.draw(this,canvas);
     }
 
     private void commitPosition() {

@@ -20,6 +20,7 @@ public class GameThread extends Thread {
     private SurfaceHolder surfaceHolder;
     // The actual view that handles inputs and draws to the surface
     private GamePanel gamePanel;
+    private Camera camera;
 
     private LevelObject albert;
     private LevelObject tile;
@@ -36,6 +37,7 @@ public class GameThread extends Thread {
         this.gamePanel = gamePanel;
         this.albert = new LevelObject(10,10,10,20);
         this.tile = new LevelObject(200,150,100,100);
+        this.camera = new Camera(gamePanel);
     }
 
     @Override
@@ -86,8 +88,8 @@ public class GameThread extends Thread {
     private void draw(Canvas canvas) {
         // draw background
         canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
-        albert.draw(canvas);
-        tile.draw(canvas);
+        albert.draw(canvas,camera);
+        tile.draw(canvas,camera);
     }
     
     private void update() {
@@ -126,6 +128,8 @@ public class GameThread extends Thread {
                          albert.setDX(0);
                          break;
         }
+
+        camera.offset(albert);
 
     }
 }
