@@ -63,11 +63,10 @@ public class GameController {
                 leftPressed  = false;
                 rightPressed = false;
             }
+            else {
+                jumpPressed  = false;
+            }
         }
      }
-    
-    public void jumped() {
-        jumpPressed = false;
-    }
 }
 

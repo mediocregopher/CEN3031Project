@@ -2,6 +2,7 @@ package edu.ufl;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
+import android.graphics.RectF;
 
 public class GameThread extends Thread {
 
@@ -9,7 +10,7 @@ public class GameThread extends Thread {
     public final static int FPS_PERIOD = 1000/FPS;
 
     // Minimum y - placeholder until we get level collision
-    private static final int MIN_Y = 10;
+    private static final int MAX_Y = 300;
 
     long beginTime;     // the time when the cycle begun
     long timeDiff;      // the time it took for the cycle to execute
@@ -22,8 +23,6 @@ public class GameThread extends Thread {
 
     private LevelObject albert;
     private LevelObject tile;
-    
-    private Camera camera;
 
     /* Whether or not the thread is currently alive */
     private boolean running;
@@ -35,9 +34,8 @@ public class GameThread extends Thread {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
-        this.albert = new LevelObject(100,0,10,20);
-        this.tile = new LevelObject(200,150,50,50);
-        this.camera = new Camera(this, tile);
+        this.albert = new LevelObject(10,10,10,20);
+        this.tile = new LevelObject(200,150,100,100);
     }
 
     @Override
@@ -58,7 +56,7 @@ public class GameThread extends Thread {
                     update();
                     // END IF
 
-                    draw(c, camera);
+                    draw(c);
                 }
             } finally {
                 // do this in a finally so that if an exception is thrown
@@ -85,12 +83,11 @@ public class GameThread extends Thread {
         GameLog.d("GameThread", "Game loop executed " + tickCount + " times");
     }
 
-    private void draw(Canvas canvas, Camera camera) {
+    private void draw(Canvas canvas) {
         // draw background
         canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
-        
-        albert.draw(canvas, camera);
-        tile.draw(canvas, camera);
+        albert.draw(canvas);
+        tile.draw(canvas);
     }
     
     private void update() {
@@ -99,12 +96,12 @@ public class GameThread extends Thread {
         if (albert.getX() < 0) {
             albert.setX(0);
         }
-        else if ((albert.getX()+albert.getWidth()) > 1000)  {
-            albert.setX(1000-albert.getWidth());
+        else if ((albert.getX()+albert.getWidth()) > gamePanel.getWidth())  {
+            albert.setX(gamePanel.getWidth()-albert.getWidth());
         }
         
-        if (albert.getY() < MIN_Y) {
-            albert.setY(MIN_Y);
+        if (albert.getY() > MAX_Y) {
+            albert.setY(MAX_Y);
             albert.setDY(0);
         }
 
@@ -112,7 +109,7 @@ public class GameThread extends Thread {
             case NONE:   break;
 
             case TOP:    albert.setY(tile.object.top - albert.getHeight());
-                         albert.setDY(-albert.getDY()/2f);
+                         albert.setDY(0);
                          break;
 
             case BOTTOM: albert.setY(tile.object.bottom);
@@ -127,8 +124,6 @@ public class GameThread extends Thread {
                          albert.setDX(0);
                          break;
         }
-        
-        camera.updatePosition(albert);
 
     }
 }
