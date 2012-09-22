@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 import android.graphics.RectF;
 
+import edu.ufl.Tile.TileType;
+
 public class GameThread extends Thread {
 
     public final static int FPS = 30;
@@ -36,7 +38,7 @@ public class GameThread extends Thread {
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
         this.albert = new LevelObject(10,10,10,20);
-        this.tile = new LevelObject(200,150,100,100);
+        this.tile   = new Tile(TileType.BRICK,200,150);
         this.camera = new Camera(gamePanel);
     }
 
