@@ -125,27 +125,36 @@ public class GameThread extends Thread {
             albert.setDY(0);
         }
 
-        //RectF tileRectF   = tile.getRectF();
-        //RectF albertRectF = albert.getRectF();
-        //switch(Util.intersect(albertRectF,tileRectF)) {
-        //    case NONE:   break;
+        RectF albertRectF = albert.getRectF();
+        for (int i=0; i<level.getMaxX(); i++) {
+            for (int j=0; j<level.getMaxY(); j++) {
+                Tile tile = level.get(i,j);
+                if (tile.getType() != TileType.AIR__) {
+                    RectF tileRectF   = tile.getRectF();
+                    switch(Util.intersect(albertRectF,tileRectF)) {
+                        case NONE:   break;
 
-        //    case TOP:    albert.setY(tileRectF.top - albert.getHeight());
-        //                 albert.setDY(0);
-        //                 break;
+                        case TOP:    albert.setY(tileRectF.top - albert.getHeight());
+                                     albert.setDY(0);
+                                     break;
 
-        //    case BOTTOM: albert.setY(tileRectF.bottom);
-        //                 if (albert.getDY() < 0) albert.setDY(0);
-        //                 break;
+                        case BOTTOM: albert.setY(tileRectF.bottom);
+                                     if (albert.getDY() < 0) albert.setDY(0);
+                                     break;
 
-        //    case LEFT:   albert.setX(tileRectF.left - albert.getWidth());
-        //                 albert.setDX(0);
-        //                 break;
+                        case LEFT:   albert.setX(tileRectF.left - albert.getWidth());
+                                     albert.setDX(0);
+                                     break;
 
-        //    case RIGHT:  albert.setX(tileRectF.right);
-        //                 albert.setDX(0);
-        //                 break;
-        //}
+                        case RIGHT:  albert.setX(tileRectF.right);
+                                     albert.setDX(0);
+                                     break;
+                    }
+                }
+            }
+        }
+
+
 
         camera.offset(albert);
 
