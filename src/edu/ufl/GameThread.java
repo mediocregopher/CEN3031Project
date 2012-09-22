@@ -105,22 +105,24 @@ public class GameThread extends Thread {
             albert.setDY(0);
         }
 
-        switch(Util.intersect(albert.object,tile.object)) {
+        RectF tileRectF   = tile.getRectF();
+        RectF albertRectF = albert.getRectF();
+        switch(Util.intersect(albertRectF,tileRectF)) {
             case NONE:   break;
 
-            case TOP:    albert.setY(tile.object.top - albert.getHeight());
+            case TOP:    albert.setY(tileRectF.top - albert.getHeight());
                          albert.setDY(0);
                          break;
 
-            case BOTTOM: albert.setY(tile.object.bottom);
+            case BOTTOM: albert.setY(tileRectF.bottom);
                          if (albert.getDY() < 0) albert.setDY(0);
                          break;
 
-            case LEFT:   albert.setX(tile.object.left - albert.getWidth()); 
+            case LEFT:   albert.setX(tileRectF.left - albert.getWidth());
                          albert.setDX(0);
                          break;
 
-            case RIGHT:  albert.setX(tile.object.right);
+            case RIGHT:  albert.setX(tileRectF.right);
                          albert.setDX(0);
                          break;
         }
