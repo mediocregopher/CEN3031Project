@@ -122,6 +122,7 @@ public class Level {
     }
 
     public void draw(Canvas canvas, Camera camera) {
+        canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
         albert.draw(canvas,camera);
         for (int i=0; i<getMaxX(); i++) {
             for (int j=0; j<getMaxY(); j++) {

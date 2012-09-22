@@ -100,7 +100,6 @@ public class GameThread extends Thread {
 
     private void draw(Canvas canvas) {
         // draw background
-        canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
         level.draw(canvas,camera);
     }
     
