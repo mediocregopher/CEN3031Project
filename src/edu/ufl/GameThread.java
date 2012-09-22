@@ -37,7 +37,7 @@ public class GameThread extends Thread {
         this.gamePanel = gamePanel;
         this.albert = new LevelObject(100,0,10,20);
         this.tile = new LevelObject(200,150,50,50);
-        this.camera = new Camera(this, tile);
+        this.camera = new Camera(gamePanel,tile);
     }
 
     @Override
