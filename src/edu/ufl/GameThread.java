@@ -15,9 +15,6 @@ public class GameThread extends Thread {
     public final static int FPS = 30;
     public final static int FPS_PERIOD = 1000/FPS;
 
-    // Minimum y - placeholder until we get level collision
-    private static final int MAX_Y = 300;
-
     long beginTime;     // the time when the cycle begun
     long timeDiff;      // the time it took for the cycle to execute
     int sleepTime;      // ms to sleep (<0 if we're behind)
@@ -113,15 +110,18 @@ public class GameThread extends Thread {
     private void update() {
         albert.update(gamePanel);
 
+        int MAX_X = level.getMaxPixelsX();
+        int MAX_Y = level.getMaxPixelsY();
+
         if (albert.getX() < 0) {
             albert.setX(0);
         }
-        else if ((albert.getX()+albert.getWidth()) > gamePanel.getWidth())  {
-            albert.setX(gamePanel.getWidth()-albert.getWidth());
+        else if ((albert.getX()+albert.getWidth()) > MAX_X)  {
+            albert.setX(MAX_X-albert.getWidth());
         }
         
-        if (albert.getY() > MAX_Y) {
-            albert.setY(MAX_Y);
+        if (albert.getY()+albert.getHeight() > level.getMaxPixelsY()) {
+            albert.setY(MAX_Y-albert.getHeight());
             albert.setDY(0);
         }
 

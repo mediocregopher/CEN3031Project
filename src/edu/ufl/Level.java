@@ -37,8 +37,8 @@ public class Level {
     public int  getMaxX() { return this.maxX; }
     public int  getMaxY() { return this.maxY; }
 
-    public int getMaxPixelX() { return (int)Tile.SIZE*getMaxX(); }
-    public int getMaxPixelY() { return (int)Tile.SIZE*getMaxY(); }
+    public int getMaxPixelsX() { return (int)Tile.SIZE*getMaxX(); }
+    public int getMaxPixelsY() { return (int)Tile.SIZE*getMaxY(); }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
     public Tile get(int X, int Y) {
