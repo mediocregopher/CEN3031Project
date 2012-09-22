@@ -117,7 +117,7 @@ public class Level {
             }
         }
 
-        camera.offset(albert);
+        camera.offset(albert,this);
 
     }
 

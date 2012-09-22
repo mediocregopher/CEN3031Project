@@ -25,9 +25,29 @@ class Camera {
         canvas.drawRect(rectf,lo.color);
     }
 
-    public void offset(LevelObject albert) {
-        x = albert.getX() - gamePanel.getWidth()/2f;
-        y = albert.getY() - gamePanel.getHeight()/2f;
+    public void offset(LevelObject albert, Level level) {
+
+        float MAX_X = (float)level.getMaxPixelsX();
+        float MAX_Y = (float)level.getMaxPixelsY();
+
+        float albertX = albert.getX();
+        float albertY = albert.getY();
+
+        float gPw  = gamePanel.getWidth();
+        float gPw2 = gPw/2f;
+        float gPh  = gamePanel.getHeight();
+
+        if (albertX < gPw2) {
+            //x stays the same
+        }
+        else if (albertX > MAX_X - gPw2) {
+            //x stays the same
+        }
+        else {
+            x = albertX - gPw2;
+        }
+
+        y = albertY - gPh/2f;
     }
 
 }
