@@ -1,6 +1,7 @@
 package edu.ufl;
 
 import java.util.ArrayList;
+import android.graphics.Canvas;
 import edu.ufl.Tile.TileType;
 
 /*
@@ -36,13 +37,16 @@ public class Level {
     public int  getMaxX() { return this.maxX; }
     public int  getMaxY() { return this.maxY; }
 
+    public int getMaxPixelX() { return (int)Tile.SIZE*getMaxX(); }
+    public int getMaxPixelY() { return (int)Tile.SIZE*getMaxY(); }
+
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
     public Tile get(int X, int Y) {
         Tile ret;
         try {
             ret = map.get(Y).get(X);
         } catch(IndexOutOfBoundsException e) {
-            ret = new Tile(TileType.AIR__, X, Y);
+            ret = new Tile(TileType.AIR__, X*Tile.SIZE, Y*Tile.SIZE);
         }
         return ret;
     }
@@ -59,18 +63,14 @@ public class Level {
         this.maxY = maxY;
     }
 
-    //Stupid debugging method
-    public void print() {
-        System.out.print(this.getMaxX());
-        System.out.print(" X ");
-        System.out.print(this.getMaxY());
-        System.out.print('\n');
-        for (int i=this.getMaxY()-1; i>-1; i--) {
-            for (int j=0; j<this.getMaxX(); j++) {
-                System.out.print(this.get(j,i).getType().toString());
-                System.out.print(' ');
+    public void draw(Canvas canvas, Camera camera) {
+        for (int i=0; i<getMaxX(); i++) {
+            for (int j=0; j<getMaxY(); j++) {
+                Tile t = get(i,j);
+                if (t.getType() != TileType.AIR__) {
+                    t.draw(canvas,camera);
+                }
             }
-            System.out.print('\n');
         }
     }
 }

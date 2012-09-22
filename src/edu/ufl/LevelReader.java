@@ -31,20 +31,25 @@ public class LevelReader {
             //Else get the tile type and add that new tile to this row
             else {
                 TileType type = charToTileType(c);
-                row.add(new Tile(type,x,y));
+                row.add(new Tile(type,x*Tile.SIZE,y*Tile.SIZE));
                 x++;
             }
         }
 
-        //Since we read the rows from top to bottom, but our Y axis goes from bottom
-        //to top, we need to reverse the rows.
-        ArrayList<ArrayList<Tile>> reversemap = new ArrayList<ArrayList<Tile>>();
-        for (i=map.size()-1; i>-1; i--) {
-            reversemap.add(map.get(i));
-        }
+        ////Since we read the rows from top to bottom, but our Y axis goes from bottom
+        ////to top, we need to reverse the rows.
+        //ArrayList<ArrayList<Tile>> reversemap = new ArrayList<ArrayList<Tile>>();
+        //for (i=map.size()-1; i>-1; i--) {
+        //    reversemap.add(map.get(i));
+        //}
 
         //Create the new level and return it
-        return new Level(reversemap);
+        return new Level(map);
+    }
+
+    public static Level blankLevel() {
+        ArrayList<ArrayList<Tile>> map = new ArrayList<ArrayList<Tile>>();
+        return new Level(map);
     }
 
     //Given a char, returns the associated type. Defaults to AIR__

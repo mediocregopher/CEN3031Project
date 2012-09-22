@@ -1,8 +1,12 @@
 package edu.ufl;
 
+import java.io.*;
+
+import android.content.Context;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 import android.graphics.RectF;
+import android.content.res.Resources;
 
 import edu.ufl.Tile.TileType;
 
@@ -22,10 +26,11 @@ public class GameThread extends Thread {
     private SurfaceHolder surfaceHolder;
     // The actual view that handles inputs and draws to the surface
     private GamePanel gamePanel;
+    private Context context;
     private Camera camera;
 
     private LevelObject albert;
-    private LevelObject tile;
+    private Level level;
 
     /* Whether or not the thread is currently alive */
     private boolean running;
@@ -33,13 +38,24 @@ public class GameThread extends Thread {
         this.running = running;
     }
 
-    public GameThread(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
+    public GameThread(SurfaceHolder surfaceHolder, Context context, GamePanel gamePanel) {
         super();
         this.surfaceHolder = surfaceHolder;
+        this.context   = context;
         this.gamePanel = gamePanel;
         this.albert = new LevelObject(10,10,10,20);
-        this.tile   = new Tile(TileType.BRICK,200,150);
         this.camera = new Camera(gamePanel);
+
+        try {
+            BufferedInputStream bis = new BufferedInputStream( 
+                                        context.getResources().openRawResource( 
+                                          R.raw.level1) );
+            this.level  = LevelReader.read(bis);
+            bis.close();
+        } catch (IOException e) {
+            GameLog.d("GameThread","Could not create level for some reason");
+            this.level  = LevelReader.blankLevel();
+        } 
     }
 
     @Override
@@ -91,7 +107,7 @@ public class GameThread extends Thread {
         // draw background
         canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
         albert.draw(canvas,camera);
-        tile.draw(canvas,camera);
+        level.draw(canvas,camera);
     }
     
     private void update() {
@@ -109,27 +125,27 @@ public class GameThread extends Thread {
             albert.setDY(0);
         }
 
-        RectF tileRectF   = tile.getRectF();
-        RectF albertRectF = albert.getRectF();
-        switch(Util.intersect(albertRectF,tileRectF)) {
-            case NONE:   break;
+        //RectF tileRectF   = tile.getRectF();
+        //RectF albertRectF = albert.getRectF();
+        //switch(Util.intersect(albertRectF,tileRectF)) {
+        //    case NONE:   break;
 
-            case TOP:    albert.setY(tileRectF.top - albert.getHeight());
-                         albert.setDY(0);
-                         break;
+        //    case TOP:    albert.setY(tileRectF.top - albert.getHeight());
+        //                 albert.setDY(0);
+        //                 break;
 
-            case BOTTOM: albert.setY(tileRectF.bottom);
-                         if (albert.getDY() < 0) albert.setDY(0);
-                         break;
+        //    case BOTTOM: albert.setY(tileRectF.bottom);
+        //                 if (albert.getDY() < 0) albert.setDY(0);
+        //                 break;
 
-            case LEFT:   albert.setX(tileRectF.left - albert.getWidth());
-                         albert.setDX(0);
-                         break;
+        //    case LEFT:   albert.setX(tileRectF.left - albert.getWidth());
+        //                 albert.setDX(0);
+        //                 break;
 
-            case RIGHT:  albert.setX(tileRectF.right);
-                         albert.setDX(0);
-                         break;
-        }
+        //    case RIGHT:  albert.setX(tileRectF.right);
+        //                 albert.setDX(0);
+        //                 break;
+        //}
 
         camera.offset(albert);
 
