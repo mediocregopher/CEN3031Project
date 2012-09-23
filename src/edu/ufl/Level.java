@@ -89,7 +89,7 @@ public class Level {
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             albert.setY(MAX_Y-albert.getHeight());
             albert.setDY(0);
-            albert.setCanJump(true && !gamePanel.controller.isJumpPressed());
+            albert.setCanJump(!gamePanel.controller.isJumpPressed());
         }
 
         RectF albertRectF = albert.getRectF();
@@ -103,7 +103,7 @@ public class Level {
 
                         case TOP:    albert.setY(tileRectF.top - albert.getHeight());
                                      albert.setDY(0);
-                                     albert.setCanJump(true && !gamePanel.controller.isJumpPressed());
+                                     albert.setCanJump(!gamePanel.controller.isJumpPressed());
                                      break;
 
                         case BOTTOM: albert.setY(tileRectF.bottom);
