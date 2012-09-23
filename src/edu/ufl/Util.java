@@ -36,4 +36,14 @@ class Util {
         return IntersectRet.NONE;
     }
 
+    /*
+     * Basic intersect method, takes in positions of two rectangles (their top left corners)
+     * and their widths/heights and returns a bool of whether or not they're intersecting.
+     */
+    public static boolean intersectLite(float x1, float y1, float w1, float h1,
+                                        float x2, float y2, float w2, float h2) {
+        return (x1 <= x2+w2 && x1+w1 >= x2 &&
+                y1 <= y2+h2 && y1+h1 >= y2);
+    }
+
 }

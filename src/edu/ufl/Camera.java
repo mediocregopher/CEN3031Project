@@ -16,13 +16,20 @@ class Camera {
     }
 
     public void draw(LevelObject lo, Canvas canvas) {
-        RectF rectf = new RectF(lo.getRectF());
+        RectF loRectF = lo.getRectF();
+        if (Util.intersectLite(/*Rect1*/
+                               loRectF.left, loRectF.top,
+                               loRectF.right-loRectF.left, loRectF.bottom-loRectF.top,
+                               /*Rect2*/
+                               x,y, gamePanel.getWidth(),gamePanel.getHeight())) {
+            RectF rectf = new RectF(lo.getRectF());
 
-        float offX = rectf.left - x;
-        float offY = rectf.top  - y;
+            float offX = rectf.left - x;
+            float offY = rectf.top  - y;
 
-        rectf.offsetTo(offX,offY);
-        canvas.drawRect(rectf,lo.color);
+            rectf.offsetTo(offX,offY);
+            canvas.drawRect(rectf,lo.color);
+        }
     }
 
     public void offset(LevelObject albert, Level level) {
