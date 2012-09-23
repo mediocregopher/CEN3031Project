@@ -6,14 +6,17 @@ import android.graphics.RectF;
 class Camera {
 
     private GamePanel gamePanel;
-    float x;
-    float y;
+    private float x;
+    private float y;
 
     Camera(GamePanel gP) {
         gamePanel = gP;
         x = 0;
         y = 0;
     }
+
+    public float getX() { return x; }
+    public float getY() { return y; }
 
     public void draw(LevelObject lo, Canvas canvas) {
         RectF loRectF = lo.getRectF();
