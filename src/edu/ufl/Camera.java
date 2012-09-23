@@ -38,10 +38,13 @@ class Camera {
         float gPh  = gamePanel.getHeight();
 
         if (albertX < gPw2) {
-            //x stays the same
+            // force camera to stick to side
+            // albertX may not equal gPw2 when crossing boundary b/c speed != 1;
+            // so x needs to be forced
+            x = 0;
         }
         else if (albertX > MAX_X - gPw2) {
-            //x stays the same
+            x = MAX_X - gPw;
         }
         else {
             x = albertX - gPw2;
