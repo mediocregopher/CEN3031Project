@@ -10,9 +10,9 @@ public class LevelObject {
     public  Paint color;
 
     // Physic constants
-    private static final float GRAVITY = 25f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
+    private static final float GRAVITY = 30f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
     private static final float SPEED = 250f/1000f; // 250 pixels/millisecond
-    private static final float JUMP_SPEED = 250f/1000f;
+    private static final float JUMP_SPEED = 500f/1000f;
     private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
 
     private float x;
@@ -23,6 +23,8 @@ public class LevelObject {
     // Velocity dx, dy
     private float dx;
     private float dy;
+    
+    private boolean canJump;
 
     LevelObject(float x, float y, float w, float h) {
         this.x = x;
@@ -49,13 +51,16 @@ public class LevelObject {
     public float getHeight() { return h;  }
 
     public RectF getRectF() { return rectf; }
+    
+    public void setCanJump(boolean canJump) { this.canJump = canJump; }
 
-    public void update(GamePanel gamePanel) {
-        if      (gamePanel.controller.isLeftPressed())  { dx = -SPEED; }
-        else if (gamePanel.controller.isRightPressed()) { dx =  SPEED; }
+
+    public void update(GameController controller) {
+        if      (controller.isLeftPressed())  { dx = -SPEED; }
+        else if (controller.isRightPressed()) { dx =  SPEED; }
         else    { dx = 0; }
 
-        if (gamePanel.controller.isJumpPressed()) { dy = -JUMP_SPEED; }
+        if (controller.isJumpPressed() && canJump) { dy = -JUMP_SPEED; }
 
         dy += GRAVITY;
         
@@ -71,5 +76,6 @@ public class LevelObject {
     private void commitPosition() {
         rectf.offsetTo(Math.round(x),Math.round(y));
     }
+
 
 }

@@ -71,11 +71,14 @@ public class Level {
     }
 
     public void update(GamePanel gamePanel, Camera camera) {
-        albert.update(gamePanel);
+        albert.update(gamePanel.controller);
 
         int MAX_X = getMaxPixelsX();
         int MAX_Y = getMaxPixelsY();
 
+        // Assume Albert can't jump
+        albert.setCanJump(false);
+        
         if (albert.getX() < 0) {
             albert.setX(0);
         }
@@ -86,6 +89,7 @@ public class Level {
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             albert.setY(MAX_Y-albert.getHeight());
             albert.setDY(0);
+            albert.setCanJump(true && !gamePanel.controller.isJumpPressed());
         }
 
         RectF albertRectF = albert.getRectF();
@@ -99,6 +103,7 @@ public class Level {
 
                         case TOP:    albert.setY(tileRectF.top - albert.getHeight());
                                      albert.setDY(0);
+                                     albert.setCanJump(true && !gamePanel.controller.isJumpPressed());
                                      break;
 
                         case BOTTOM: albert.setY(tileRectF.bottom);
