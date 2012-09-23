@@ -36,13 +36,6 @@ public class LevelReader {
             }
         }
 
-        ////Since we read the rows from top to bottom, but our Y axis goes from bottom
-        ////to top, we need to reverse the rows.
-        //ArrayList<ArrayList<Tile>> reversemap = new ArrayList<ArrayList<Tile>>();
-        //for (i=map.size()-1; i>-1; i--) {
-        //    reversemap.add(map.get(i));
-        //}
-
         //Create the new level and return it
         return new Level(map);
     }
