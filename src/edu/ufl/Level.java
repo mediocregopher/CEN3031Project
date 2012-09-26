@@ -63,7 +63,7 @@ public class Level {
         }
         this.maxX = maxX;
         this.maxY = maxY;
-        this.albert = new LevelObject(10,10,10,20);
+        this.albert = new LevelObject(10,10,40,90);
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds

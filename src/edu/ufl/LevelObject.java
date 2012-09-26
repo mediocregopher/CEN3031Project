@@ -10,9 +10,9 @@ public class LevelObject {
     public  Paint color;
 
     // Physic constants
-    private static final float GRAVITY = 30f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
-    private static final float SPEED = 250f/1000f; // 250 pixels/millisecond
-    private static final float JUMP_SPEED = 500f/1000f;
+    private static final float GRAVITY = 50f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
+    private static final float SPEED = 400f/1000f; // 250 pixels/millisecond
+    private static final float JUMP_SPEED = 800f/1000f;
     private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
 
     private float x;
