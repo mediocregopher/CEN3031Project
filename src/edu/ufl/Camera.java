@@ -60,7 +60,7 @@ class Camera {
             x = albertX - gPw2;
         }
 
-        y = albertY - gPh/2f;
+        y = albertY - 3*gPh/4f;
     }
 
 }

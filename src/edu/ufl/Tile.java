@@ -2,7 +2,7 @@ package edu.ufl;
 
 public class Tile extends LevelObject{
 
-    public final static float SIZE = 30f;
+    public final static float SIZE = 50f;
 
     //TileType def
     //(AIR has underscores because debugging is easier if all enums' names have
