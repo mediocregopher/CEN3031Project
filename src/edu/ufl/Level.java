@@ -80,6 +80,7 @@ public class Level {
     public void update(GamePanel gamePanel, Camera camera) {
         albert.update(gamePanel.controller);
 
+        // get level dimensions
         int MAX_X = getMaxPixelsX();
         int MAX_Y = getMaxPixelsY();
 
@@ -94,6 +95,7 @@ public class Level {
         }
         
         if (albert.getY()+albert.getHeight() > MAX_Y) {
+            // TODO: fall death
             albert.setY(MAX_Y-albert.getHeight());
             albert.setDY(0);
             albert.setCanJump(!gamePanel.controller.isJumpPressed());

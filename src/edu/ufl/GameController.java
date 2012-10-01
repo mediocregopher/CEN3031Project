@@ -7,22 +7,27 @@ public class GameController {
     private double leftPortion;
     private double rightPortion;
     private double jumpPortion;
+    private double sprintOffset;
 
     private int    lrPointer = -1;
+    private float originX;
+    private float originY;
 
     private boolean  leftPressed = false;
     private boolean rightPressed = false;
     private boolean  jumpPressed = false;
-
+    private boolean sprintActive = false;
+    
     public boolean  isLeftPressed() { return  leftPressed; }
     public boolean isRightPressed() { return rightPressed; }
     public boolean  isJumpPressed() { return  jumpPressed; }
-
+    public boolean isSprinting() {return sprintActive;}
 
     public void panelSizeChanged(int w, int h) {
         leftPortion  = ((double)w)*(.2);
         rightPortion = ((double)w)*(.8);
         jumpPortion  = ((double)h)*(.8);
+        sprintOffset  = ((double)w)*(.1);
     }
 
     public void panelTouchEvent(MotionEvent event) {
@@ -47,14 +52,26 @@ public class GameController {
                 // Left
                 lrPointer    = event.getPointerId(index);
                 leftPressed  = true;
+                originX = x;
+                originY = y;
             }
             else if (x > rightPortion && lrPointer == -1) {
                 // Right
                 lrPointer    = event.getPointerId(index);
                 rightPressed = true;
+                originX = x;
+                originY = y;
             }
             else if (y > jumpPortion) {
                 jumpPressed  = true;
+            }
+        }
+        if (action == MotionEvent.ACTION_MOVE) {
+            if (event.getPointerId(index) == lrPointer) {
+                // Active sprint when pointer moves outside a circle of radius sprintOffset
+                int distance = (int) Math.sqrt( Math.pow(x - originX,2) + Math.pow(y - originY,2));
+                if (distance > sprintOffset) { sprintActive = true; } 
+                else { sprintActive = false; }
             }
         }
         if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP ) {
@@ -62,6 +79,7 @@ public class GameController {
                 lrPointer    = -1;
                 leftPressed  = false;
                 rightPressed = false;
+                sprintActive = false;
             }
             else {
                 jumpPressed  = false;

@@ -10,10 +10,11 @@ public class LevelObject {
     public  Paint color;
 
     // Physic constants
-    private static final float GRAVITY = 50f/1000f;    // 0.009 pixels/millisecond^2 (remember +y moves down)
-    private static final float SPEED = 400f/1000f; // 250 pixels/millisecond
-    private static final float JUMP_SPEED = 800f/1000f;
     private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
+    private static final float GRAVITY = 1000f/1000f * (FPS_PERIOD/1000f);    // 0.009 pixels/millisecond^2 (remember +y moves down)
+    private static final float SPEED = 200f/1000f; // 250 pixels/millisecond
+    private static final float JUMP_SPEED = 600f/1000f;
+
 
     private float x;
     private float y;
@@ -59,6 +60,8 @@ public class LevelObject {
         if      (controller.isLeftPressed())  { dx = -SPEED; }
         else if (controller.isRightPressed()) { dx =  SPEED; }
         else    { dx = 0; }
+        
+        if (controller.isSprinting()) { dx *= 2; }
 
         if (controller.isJumpPressed() && canJump) { dy = -JUMP_SPEED; }
 
