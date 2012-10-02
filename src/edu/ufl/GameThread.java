@@ -5,10 +5,6 @@ import java.io.*;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
-import android.graphics.RectF;
-import android.content.res.Resources;
-
-import edu.ufl.Tile.TileType;
 
 public class GameThread extends Thread {
 
