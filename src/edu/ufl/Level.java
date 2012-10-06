@@ -104,8 +104,8 @@ public class Level {
         toLookAt = new ArrayList<LevelObject>();
 
         int xstart = (int)( camera.getX()/Tile.SIZE);
-        if (xstart - 5 >=0) xstart -= 5;
-        int xend   = xstart + (int)( (camera.getX()+gamePanel.getWidth()) / Tile.SIZE) + 5;
+        if (xstart - UPDATE_OFFSET >=0) xstart -= UPDATE_OFFSET;
+        int xend   = xstart + (int)( (camera.getX()+gamePanel.getWidth()) / Tile.SIZE) + UPDATE_OFFSET;
 
 
         for (int i=xstart; i<=xend; i++) {
