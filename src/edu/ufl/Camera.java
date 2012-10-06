@@ -41,7 +41,7 @@ class Camera {
         float MAX_Y = (float)level.getMaxPixelsY();
 
         float albertX = albert.getX();
-        float albertY = albert.getY();
+        float albertBottom = albert.getY() + albert.getHeight();
 
         float gPw  = gamePanel.getWidth();
         float gPw2 = gPw/2f;
@@ -61,11 +61,11 @@ class Camera {
             x = albertX - gPw2;
         }
 
-        if (albertY + albert.getHeight() >= MAX_Y - gPh2) {
+        if (albertBottom >= MAX_Y - gPh2) {
             y = MAX_Y - gPh;
         }
         else {
-            y = albertY + albert.getHeight() - gPh2;
+            y = albertBottom - gPh2;
         }
     }
 
