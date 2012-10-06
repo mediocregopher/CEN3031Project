@@ -19,7 +19,6 @@ public class GameThread extends Thread {
     private SurfaceHolder surfaceHolder;
     // The actual view that handles inputs and draws to the surface
     private GamePanel gamePanel;
-    private Context context;
     private Camera camera;
 
     private Level level;
@@ -33,13 +32,14 @@ public class GameThread extends Thread {
     public GameThread(SurfaceHolder surfaceHolder, Context context, GamePanel gamePanel) {
         super();
         this.surfaceHolder = surfaceHolder;
-        this.context   = context;
         this.gamePanel = gamePanel;
         this.camera = new Camera(gamePanel);
 
+        ResourceManager.init(context.getResources());
+
         try {
             BufferedInputStream bis = new BufferedInputStream( 
-                                        context.getResources().openRawResource( 
+                                        ResourceManager.getResources().openRawResource(
                                           R.raw.level1) );
             this.level  = LevelReader.read(bis);
             bis.close();
