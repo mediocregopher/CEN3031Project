@@ -46,6 +46,7 @@ class Camera {
         float gPw  = gamePanel.getWidth();
         float gPw2 = gPw/2f;
         float gPh  = gamePanel.getHeight();
+        float gPh2 = gPh/2f;
 
         if (albertX < gPw2) {
             // force camera to stick to side
@@ -60,8 +61,12 @@ class Camera {
             x = albertX - gPw2;
         }
 
-        //y = albertY - 3*gPh/4f;
-        y = albertY - gPh/2f;
+        if (albertY + albert.getHeight() >= MAX_Y - gPh2) {
+            y = MAX_Y - gPh;
+        }
+        else {
+            y = albertY + albert.getHeight() - gPh2;
+        }
     }
 
 }
