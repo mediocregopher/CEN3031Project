@@ -3,6 +3,7 @@ package edu.ufl;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 
 class Camera {
 
@@ -19,20 +20,21 @@ class Camera {
     public float getX() { return x; }
     public float getY() { return y; }
 
-    public void draw(LevelObject lo, Canvas canvas) {
-        RectF loRectF = lo.getRectF();
+    public void drawRectF(RectF loRectF, Canvas canvas) {
+        Paint color  = new Paint();
+        color.setARGB(255, 0x04, 0x5f, 0x18);
         if (Util.intersectLite(/*Rect1*/
                                loRectF.left, loRectF.top,
                                loRectF.right-loRectF.left, loRectF.bottom-loRectF.top,
                                /*Rect2*/
                                x,y, gamePanel.getWidth(),gamePanel.getHeight())) {
-            RectF rectf = new RectF(lo.getRectF());
+            RectF rectf = new RectF(loRectF);
 
             float offX = rectf.left - x;
             float offY = rectf.top  - y;
 
             rectf.offsetTo(offX,offY);
-            canvas.drawRect(rectf,lo.color);
+            canvas.drawRect(rectf,color);
         }
     }
 

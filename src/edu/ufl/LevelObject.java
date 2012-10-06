@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 public class LevelObject {
 
     private RectF rectf;
-    public  Paint color;
 
     // Physic constants
     private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
@@ -34,8 +33,6 @@ public class LevelObject {
         this.h = h;
         rectf  = new RectF(x,y,x+w,y+h);
 
-        color  = new Paint();
-        color.setARGB(255, 0x04, 0x5f, 0x18);
     }
 
     public float getX()      { return x;  }
@@ -73,7 +70,7 @@ public class LevelObject {
     }
 
     public void draw(Canvas canvas,Camera camera) {
-        camera.draw(this,canvas);
+        camera.drawRectF(this.getRectF(),canvas);
     }
 
     private void commitPosition() {
