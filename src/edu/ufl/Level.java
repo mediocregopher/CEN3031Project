@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Canvas;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import edu.ufl.Tile.TileType;
 
@@ -48,6 +50,7 @@ public class Level {
     public int getMaxPixelsY() { return (int)Tile.SIZE*getMaxY(); }
 
     public LevelObject albert;
+    private Bitmap background;
 
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
@@ -64,6 +67,9 @@ public class Level {
         this.maxX = maxX;
         this.maxY = maxY;
         this.albert = new LevelObject(10,10,40,90);
+
+        this.background = BitmapFactory.decodeResource( ResourceManager.getResources(),
+                                                        R.drawable.background );
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
@@ -145,7 +151,8 @@ public class Level {
     }
 
     public void draw(Canvas canvas, Camera camera) {
-        canvas.drawARGB(255, 0x38, 0xAC, 0xEC);
+        canvas.drawARGB(255, 0x81, 0x43, 0xb6);
+        camera.drawBackground(background,getMaxPixelsY(),canvas);
         albert.draw(canvas,camera);
         for (int i=0; i<toLookAt.size(); i++) {
             toLookAt.get(i).draw(canvas,camera);

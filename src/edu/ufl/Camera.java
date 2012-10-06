@@ -2,6 +2,7 @@ package edu.ufl;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.graphics.Bitmap;
 
 class Camera {
 
@@ -67,6 +68,12 @@ class Camera {
         else {
             y = albertBottom - gPh2;
         }
+    }
+
+    public void drawBackground(Bitmap background, int MAX_Y, Canvas canvas) {
+        float bx = 0;
+        float by = (float)(MAX_Y - background.getHeight()) - getY();
+        canvas.drawBitmap(background,bx,by,null);
     }
 
 }
