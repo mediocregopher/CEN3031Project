@@ -1,7 +1,6 @@
 package edu.ufl;
 
 import android.graphics.RectF;
-import android.graphics.Paint;
 import android.graphics.Canvas;
 
 public class LevelObject {

@@ -2,6 +2,7 @@ package edu.ufl;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.graphics.Rect;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 
@@ -19,6 +20,22 @@ class Camera {
 
     public float getX() { return x; }
     public float getY() { return y; }
+
+    public void draw(RectF loRectF, Bitmap bitmap, Canvas canvas) {
+        if (Util.intersectLite(/*Rect1*/
+                               loRectF.left, loRectF.top,
+                               loRectF.right-loRectF.left, loRectF.bottom-loRectF.top,
+                               /*Rect2*/
+                               x,y, gamePanel.getWidth(),gamePanel.getHeight())) {
+
+            float offX = loRectF.left - x;
+            float offY = loRectF.top  - y;
+
+            GameLog.d("Camera","offX:"+String.valueOf(offX)+" offY:"+String.valueOf(offY));
+
+            canvas.drawBitmap(bitmap,offX,offY,null);
+        }
+    }
 
     public void drawRectF(RectF loRectF, Canvas canvas) {
         Paint color  = new Paint();

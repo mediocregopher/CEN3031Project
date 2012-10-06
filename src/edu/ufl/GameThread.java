@@ -35,7 +35,7 @@ public class GameThread extends Thread {
         this.gamePanel = gamePanel;
         this.camera = new Camera(gamePanel);
 
-        ResourceManager.init(context.getResources());
+        ResourceManager.init(context);
 
         try {
             BufferedInputStream bis = new BufferedInputStream( 

@@ -1,5 +1,6 @@
 package edu.ufl;
 
+import android.content.Context;
 import android.content.res.Resources;
 
 /*
@@ -9,14 +10,14 @@ import android.content.res.Resources;
 
 public class ResourceManager {
 
-    private static Resources res;
-    
-    public static void init(Resources r) {
-        ResourceManager.res = r;
+    private static Context con;
+
+    public static void init(Context c) {
+        ResourceManager.con = c;
     }
 
     public static Resources getResources() {
-        return ResourceManager.res;
+        return ResourceManager.con.getResources();
     }
 }
 
