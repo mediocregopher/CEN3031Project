@@ -36,7 +36,7 @@ class Camera {
         }
     }
 
-    public void offset(LevelObject albert, Level level) {
+    public void offset(Albert albert, Level level) {
 
         float MAX_X = (float)level.getMaxPixelsX();
         float MAX_Y = (float)level.getMaxPixelsY();

@@ -49,7 +49,7 @@ public class Level {
     public int getMaxPixelsX() { return (int)Tile.SIZE*getMaxX(); }
     public int getMaxPixelsY() { return (int)Tile.SIZE*getMaxY(); }
 
-    public LevelObject albert;
+    public Albert albert;
     private Bitmap background;
 
     //Everytime update is called it updates this list with objects we should actually check.
@@ -66,7 +66,7 @@ public class Level {
         }
         this.maxX = maxX;
         this.maxY = maxY;
-        this.albert = new LevelObject(10,10,40,90);
+        this.albert = new Albert(10,10);
 
         this.background = BitmapFactory.decodeResource( ResourceManager.getResources(),
                                                         R.drawable.background );
