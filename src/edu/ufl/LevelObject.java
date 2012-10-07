@@ -25,13 +25,17 @@ public class LevelObject {
     
     private boolean canJump;
 
+    LevelObject() { /* Don't do shit */ }
     LevelObject(float x, float y, float w, float h) {
+        this.initRectF(x,y,w,h);
+    }
+
+    public void initRectF(float x, float y, float w, float h) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         rectf  = new RectF(x,y,x+w,y+h);
-
     }
 
     public float getX()      { return x;  }
@@ -50,7 +54,6 @@ public class LevelObject {
     public RectF getRectF() { return rectf; }
     
     public void setCanJump(boolean canJump) { this.canJump = canJump; }
-
 
     public void update(GameController controller) {
         if      (controller.isLeftPressed())  { dx = -SPEED; }

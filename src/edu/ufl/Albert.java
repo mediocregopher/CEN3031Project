@@ -9,13 +9,9 @@ public class Albert extends LevelObject {
     private Bitmap bitmap;
 
     Albert(float x, float y) {
-        super(x,y,40,90);
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inScaled = false;
-
         this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
-                                                    R.drawable.albert,
-                                                    o );
+                                                    R.drawable.albert );
+        this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
     }
 
     @Override
