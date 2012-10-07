@@ -12,9 +12,9 @@ public class Albert extends LevelObject {
         super(x,y,40,90);
         BitmapFactory.Options o = new BitmapFactory.Options();
         o.inScaled = false;
+
         this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
-                                                    R.drawable.blahblahblah, //Needs to be called this
-                                                                             //or weird things happen
+                                                    R.drawable.albert,
                                                     o );
     }
 

@@ -31,8 +31,6 @@ class Camera {
             float offX = loRectF.left - x;
             float offY = loRectF.top  - y;
 
-            GameLog.d("Camera","offX:"+String.valueOf(offX)+" offY:"+String.valueOf(offY));
-
             canvas.drawBitmap(bitmap,offX,offY,null);
         }
     }
