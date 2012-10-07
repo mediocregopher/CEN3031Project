@@ -2,6 +2,7 @@ package edu.ufl;
 
 import android.graphics.RectF;
 import android.graphics.Canvas;
+import android.graphics.Bitmap;
 
 public class LevelObject {
 
@@ -24,6 +25,8 @@ public class LevelObject {
     private float dy;
     
     private boolean canJump;
+
+    protected Bitmap bitmap;
 
     LevelObject() { /* Don't do shit */ }
     LevelObject(float x, float y, float w, float h) {

@@ -6,8 +6,6 @@ import android.graphics.Canvas;
 
 public class Albert extends LevelObject {
 
-    private Bitmap bitmap;
-
     Albert(float x, float y) {
         this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
                                                     R.drawable.albert );

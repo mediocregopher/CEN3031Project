@@ -47,8 +47,7 @@ public class Level {
     public int  getMaxY() { return this.maxY; }
 
     public int getMaxPixelsX() { return (int)Tile.SIZE*getMaxX(); }
-    public int getMaxPixelsY() { return (int)Tile.SIZE*getMaxY(); }
-
+    public int getMaxPixelsY() { return (int)Tile.SIZE*getMaxY(); } 
     public  Albert albert;
     private Bitmap background;
 

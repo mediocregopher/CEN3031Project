@@ -20,6 +20,9 @@ public class LevelReader {
         //Declare an albert, put him in a precarious place
         Albert albert = new Albert(50,50);
 
+        //Declare a new tiletype to initialize the Tile.SIZE variable
+        new Tile(TileType.GROUND,0,0);
+
         while ((i = fh.read()) != -1) {
             char c = (char)i;
 
