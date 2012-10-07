@@ -49,7 +49,7 @@ public class Level {
     public int getMaxPixelsX() { return (int)Tile.SIZE*getMaxX(); }
     public int getMaxPixelsY() { return (int)Tile.SIZE*getMaxY(); }
 
-    public Albert albert;
+    public  Albert albert;
     private Bitmap background;
 
     //Everytime update is called it updates this list with objects we should actually check.
@@ -57,7 +57,7 @@ public class Level {
     private ArrayList<LevelObject> toLookAt;
 
     //Constructor
-    public Level(ArrayList<ArrayList<Tile>> map) {
+    public Level(ArrayList<ArrayList<Tile>> map,Albert albert) {
         this.map = map;
         int maxX = 0;
         int maxY = map.size();
@@ -66,7 +66,7 @@ public class Level {
         }
         this.maxX = maxX;
         this.maxY = maxY;
-        this.albert = new Albert(10,10);
+        this.albert = albert;
 
         this.background = BitmapFactory.decodeResource( ResourceManager.getResources(),
                                                         R.drawable.background );
@@ -78,7 +78,7 @@ public class Level {
         try {
             ret = map.get(Y).get(X);
         } catch(IndexOutOfBoundsException e) {
-            ret = new Tile(TileType.AIR__, X*Tile.SIZE, Y*Tile.SIZE);
+            ret = new Tile(TileType.AIR, X*Tile.SIZE, Y*Tile.SIZE);
         }
         return ret;
     }
@@ -117,7 +117,7 @@ public class Level {
         for (int i=xstart; i<=xend; i++) {
             for (int j=0; j<getMaxY(); j++) {
                 Tile tile = get(i,j);
-                if (tile.getType() != TileType.AIR__) { toLookAt.add(tile); }
+                if (tile.getType() != TileType.AIR) { toLookAt.add(tile); }
             }
         }
 

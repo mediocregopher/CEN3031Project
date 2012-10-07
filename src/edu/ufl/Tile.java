@@ -4,14 +4,9 @@ public class Tile extends LevelObject{
 
     public final static float SIZE = 50f;
 
-    //TileType def
-    //(AIR has underscores because debugging is easier if all enums' names have
-    // the same length)
     public static enum TileType {
-        AIR__,
-        BRICK,
-        WATER,
-        GRASS
+        AIR,
+        GROUND
     }
 
     //Extra Members

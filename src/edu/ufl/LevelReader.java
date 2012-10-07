@@ -17,6 +17,9 @@ public class LevelReader {
         ArrayList<ArrayList<Tile>> map = new ArrayList<ArrayList<Tile>>();
         ArrayList<Tile> row = new ArrayList<Tile>();
 
+        //Declare an albert, put him in a precarious place
+        Albert albert = new Albert(50,50);
+
         while ((i = fh.read()) != -1) {
             char c = (char)i;
 
@@ -28,31 +31,40 @@ public class LevelReader {
                 row = new ArrayList<Tile>();
             }
 
-            //Else get the tile type and add that new tile to this row
+            //Else get the level object and add it
             else {
-                TileType type = charToTileType(c);
-                row.add(new Tile(type,x*Tile.SIZE,y*Tile.SIZE));
+                switch (c) {
+                    case 'a':
+                        albert.setX(x*Tile.SIZE);
+                        albert.setY(y*Tile.SIZE-(albert.getHeight() - Tile.SIZE - 5));
+                        break;
+                        
+                    //Assume it's a tile if nothing else
+                    default:
+                        TileType type = charToTileType(c);
+                        row.add(new Tile(type,x*Tile.SIZE,y*Tile.SIZE));
+                        break;
+                }
                 x++;
             }
         }
 
         //Create the new level and return it
-        return new Level(map);
+        return new Level(map,albert);
     }
 
     public static Level blankLevel() {
         ArrayList<ArrayList<Tile>> map = new ArrayList<ArrayList<Tile>>();
-        return new Level(map);
+        Albert albert = new Albert(50,50);
+        return new Level(map,albert);
     }
 
-    //Given a char, returns the associated type. Defaults to AIR__
+    //Given a char, returns the associated type. Defaults to AIR
     private static TileType charToTileType(char c) {
         TileType type;
         switch (c) {
-            case '#': type = TileType.BRICK; break;
-            case '~': type = TileType.WATER; break;
-            case '_': type = TileType.GRASS; break;
-            default:  type = TileType.AIR__; break;
+            case '#': type = TileType.GROUND; break;
+            default:  type = TileType.AIR;  break;
         }
         return type;
     }
