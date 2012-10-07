@@ -37,6 +37,7 @@ public class LevelReader {
             //Else get the level object and add it
             else {
                 switch (c) {
+                    //ALBERT!
                     case 'a':
                         albert.setX(x*Tile.SIZE);
                         albert.setY(y*Tile.SIZE-(albert.getHeight() - Tile.SIZE - 5));

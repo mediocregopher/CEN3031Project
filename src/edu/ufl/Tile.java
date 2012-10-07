@@ -41,9 +41,4 @@ public class Tile extends LevelObject{
         }
     }
 
-    @Override
-    public void draw(Canvas canvas, Camera camera) {
-        camera.draw(this.getRectF(),bitmap,canvas);
-    }
-
 }
