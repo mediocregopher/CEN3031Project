@@ -36,11 +36,15 @@ public class GameThread extends Thread {
         this.camera = new Camera(gamePanel);
 
         ResourceManager.init(context);
-
+        setLevel(R.raw.level1);
+        
+    }
+    
+    private void setLevel(int id){
         try {
             BufferedInputStream bis = new BufferedInputStream( 
                                         ResourceManager.getResources().openRawResource(
-                                          R.raw.level1) );
+                                          id) );
             this.level  = LevelReader.read(bis);
             bis.close();
         } catch (IOException e) {
@@ -66,8 +70,11 @@ public class GameThread extends Thread {
                     // IF running - and not paused
                     update();
                     // END IF
-
-                    draw(c);
+                    if (level.isFinished()) {
+                        setLevel(R.raw.level1);
+                    } else {
+                        draw(c);
+                    }
                 }
             } finally {
                 // do this in a finally so that if an exception is thrown
@@ -95,11 +102,13 @@ public class GameThread extends Thread {
     }
 
     private void draw(Canvas canvas) {
-        // draw background
-        level.draw(canvas,camera);
+        if (canvas != null) { // stupid undocumented change around android 4
+            level.draw(canvas,camera);
+        }
     }
     
     private void update() {
         level.update(gamePanel,camera);
+        
     }
 }
