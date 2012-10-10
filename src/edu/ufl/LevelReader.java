@@ -15,6 +15,7 @@ public class LevelReader {
 
         //make blank level map to pass into the Level object
         ArrayList<ArrayList<Tile>> map = new ArrayList<ArrayList<Tile>>();
+		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         ArrayList<Tile> row = new ArrayList<Tile>();
 
         //Declare an albert, put him in a precarious place
@@ -41,8 +42,14 @@ public class LevelReader {
                     case 'a':
                         albert.setX(x*Tile.SIZE);
                         albert.setY(y*Tile.SIZE-(albert.getHeight() - Tile.SIZE - 5));
+						// need to set an air tile for where albert was?
                         break;
                         
+					case 'e':
+						enemies.add(new Enemy(x, y, c));
+						TileType type2 = charToTileType(c);
+                        row.add(new Tile(type2,x*Tile.SIZE,y*Tile.SIZE));
+						break;
                     //Assume it's a tile if nothing else
                     default:
                         TileType type = charToTileType(c);
@@ -54,13 +61,14 @@ public class LevelReader {
         }
 
         //Create the new level and return it
-        return new Level(map,albert);
+        return new Level(map, enemies, albert);
     }
 
     public static Level blankLevel() {
         ArrayList<ArrayList<Tile>> map = new ArrayList<ArrayList<Tile>>();
         Albert albert = new Albert(50,50);
-        return new Level(map,albert);
+        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+        return new Level(map,enemies,albert);
     }
 
     //Given a char, returns the associated type. Defaults to AIR
@@ -72,6 +80,6 @@ public class LevelReader {
         }
         return type;
     }
-
+	
 }
 

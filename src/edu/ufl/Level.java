@@ -39,7 +39,8 @@ public class Level {
     private int maxX;
     private int maxY;
     private ArrayList<ArrayList<Tile>> map;
-
+	private ArrayList<Enemy> enemies;
+	
     //Getters/Setters
     //(The maxX/Y variables don't have setters because their value is inherent in
     // the map, so changing them could only make them wrong).
@@ -54,15 +55,18 @@ public class Level {
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
     private ArrayList<LevelObject> toLookAt;
+	private ArrayList<Enemy> enemiesToLookAt;
 
     //Constructor
-    public Level(ArrayList<ArrayList<Tile>> map,Albert albert) {
+    public Level(ArrayList<ArrayList<Tile>> map, ArrayList<Enemy> enemies, Albert albert) {
         this.map = map;
+		this.enemies = enemies;
         int maxX = 0;
         int maxY = map.size();
         for (int i=0; i<maxY; i++) {
             if (map.get(i).size() > maxX) { maxX = map.get(i).size(); }
         }
+		
         this.maxX = maxX;
         this.maxY = maxY;
         this.albert = albert;
@@ -81,7 +85,16 @@ public class Level {
         }
         return ret;
     }
-
+	
+	public Enemy get(int X, boolean t) {
+		Enemy ret;
+		try {
+			ret = enemies.get(X);
+		} catch (IndexOutOfBoundsException e) {
+			ret = null;
+		}
+		return ret;
+	}
     public void update(GamePanel gamePanel, Camera camera) {
         albert.update(gamePanel.controller);
 
@@ -107,7 +120,7 @@ public class Level {
         }
 
         toLookAt = new ArrayList<LevelObject>();
-
+		
         int xstart = (int)( camera.getX()/Tile.SIZE);
         if (xstart - UPDATE_OFFSET >=0) xstart -= UPDATE_OFFSET;
         int xend   = xstart + (int)( (camera.getX()+gamePanel.getWidth()) / Tile.SIZE) + UPDATE_OFFSET;
@@ -119,7 +132,13 @@ public class Level {
                 if (tile.getType() != TileType.AIR) { toLookAt.add(tile); }
             }
         }
-
+		
+		enemiesToLookAt = new ArrayList<Enemy>();
+		
+		for (int i = 0; i <= enemies.size(); i++) {
+			enemiesToLookAt.add(get(i,true));
+		}
+		
         RectF albertRectF = albert.getRectF();
         for (int i=0; i<toLookAt.size(); i++) {
             RectF tileRectF   = toLookAt.get(i).getRectF();
@@ -144,8 +163,32 @@ public class Level {
                              break;
             }
         }
+		
+		for (int i = 0; i < enemiesToLookAt.size(); i++) {
+			RectF enemyRectF = enemiesToLookAt.get(i).getRectF();
+			switch (Util.intersect(albertRectF, enemyRectF)) {
+				case NONE: break;
+				
+				case BOTTOM: albert.setY(enemyRectF.bottom);
+                             if (enemiesToLookAt.get(i).getTopHarmful()) {
+								//kill albert
+							 }
+							 else {
+								killEnemy(enemiesToLookAt.get(i));
+							 }
+                             break;
 
-        camera.offset(albert,this);
+               default:    
+							 //should never happen
+							 if (enemiesToLookAt.get(i).getIsHarmful()) {
+								//kill abert
+							 }
+							 else {
+								killEnemy(enemiesToLookAt.get(i));
+							 }
+                             break;
+			}
+		}
 
     }
 
@@ -157,4 +200,12 @@ public class Level {
             toLookAt.get(i).draw(canvas,camera);
         }
     }
+	
+	public void killEnemy(int index) {
+		enemies.remove(index);
+	}
+	
+	public void killEnemy(Enemy e) {
+		enemies.remove(e);
+	}
 }

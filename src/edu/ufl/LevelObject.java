@@ -25,6 +25,8 @@ public class LevelObject {
     private float dy;
     
     private boolean canJump;
+	protected boolean isHarmful;
+	protected boolean topHarmful;
 
     protected Bitmap bitmap;
 
@@ -53,6 +55,9 @@ public class LevelObject {
 
     public float getWidth()  { return w;  }
     public float getHeight() { return h;  }
+	
+	public boolean getIsHarmful() { return true; }
+	public boolean getTopHarmful() { return true; }
 
     public RectF getRectF() { return rectf; }
     
@@ -81,6 +86,6 @@ public class LevelObject {
     private void commitPosition() {
         rectf.offsetTo(Math.round(x),Math.round(y));
     }
-
+	
 
 }
