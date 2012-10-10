@@ -174,6 +174,7 @@ public class Level {
 								//kill albert
 							 }
 							 else {
+								albert.setDY(albert.getJumpSpeed() / 2);
 								killEnemy(enemiesToLookAt.get(i));
 							 }
                              break;

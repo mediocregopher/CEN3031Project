@@ -55,6 +55,7 @@ public class LevelObject {
 
     public float getWidth()  { return w;  }
     public float getHeight() { return h;  }
+    public float getJumpSpeed() { return JUMP_SPEED; }
 	
 	public boolean getIsHarmful() { return true; }
 	public boolean getTopHarmful() { return true; }

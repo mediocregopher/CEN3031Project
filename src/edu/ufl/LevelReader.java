@@ -46,10 +46,12 @@ public class LevelReader {
                         break;
                         
 					case 'e':
-						enemies.add(new Enemy(x, y, c));
-						TileType type2 = charToTileType(c);
-                        row.add(new Tile(type2,x*Tile.SIZE,y*Tile.SIZE));
+						enemyCase(c, enemies, row, x, y);
 						break;
+						
+					case 't':
+					    enemyCase(c, enemies, row, x, y);
+                        break;
                     //Assume it's a tile if nothing else
                     default:
                         TileType type = charToTileType(c);
@@ -81,5 +83,11 @@ public class LevelReader {
         return type;
     }
 	
+    public static void enemyCase(char c, ArrayList<Enemy> enemies, ArrayList<Tile> row, int x, int y) {
+        enemies.add(new Enemy(x, y, c));
+        TileType type2 = charToTileType(c);
+        row.add(new Tile(type2,x*Tile.SIZE,y*Tile.SIZE));
+    }
+
 }
 
