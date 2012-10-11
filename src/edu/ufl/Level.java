@@ -49,8 +49,12 @@ public class Level {
 
     public int getMaxPixelsX() { return (int)Tile.SIZE*getMaxX(); }
     public int getMaxPixelsY() { return (int)Tile.SIZE*getMaxY(); } 
+    
     public  Albert albert;
     private Bitmap background;
+    private boolean finished = false;
+    
+    public boolean isFinished() { return finished; } 
 
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
@@ -113,10 +117,11 @@ public class Level {
         }
         
         if (albert.getY()+albert.getHeight() > MAX_Y) {
-            // TODO: fall death
-            albert.setY(MAX_Y-albert.getHeight());
-            albert.setDY(0);
-            albert.setCanJump(!gamePanel.controller.isJumpPressed());
+            if (albert.isDead()) {
+                finished = true;
+            } else {
+                albert.kill();
+            }
         }
 
         toLookAt = new ArrayList<LevelObject>();
@@ -180,7 +185,6 @@ public class Level {
                              break;
 
                default:    
-							 //should never happen
 							 if (enemiesToLookAt.get(i).getIsHarmful()) {
 								//kill abert
 							 }
@@ -190,7 +194,8 @@ public class Level {
                              break;
 			}
 		}
-
+        camera.offset(albert,this);
+        
     }
 
     public void draw(Canvas canvas, Camera camera) {

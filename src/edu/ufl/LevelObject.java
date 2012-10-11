@@ -6,25 +6,25 @@ import android.graphics.Bitmap;
 
 public class LevelObject {
 
-    private RectF rectf;
+    protected RectF rectf;
 
     // Physic constants
-    private static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
-    private static final float GRAVITY = 1000f/1000f * (FPS_PERIOD/1000f);    // 0.009 pixels/millisecond^2 (remember +y moves down)
-    private static final float SPEED = 200f/1000f; // 250 pixels/millisecond
-    private static final float JUMP_SPEED = 600f/1000f;
+    protected static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
+    protected static final float GRAVITY = 1000f/1000f * (FPS_PERIOD/1000f);    // 0.009 pixels/millisecond^2 (remember +y moves down)
+    protected static final float SPEED = 200f/1000f; // 250 pixels/millisecond
+    protected static final float JUMP_SPEED = 600f/1000f;
 
 
-    private float x;
-    private float y;
-    private float h;
-    private float w;
+    protected float x;
+    protected float y;
+    protected float h;
+    protected float w;
 
     // Velocity dx, dy
-    private float dx;
-    private float dy;
+    protected float dx;
+    protected float dy;
     
-    private boolean canJump;
+    protected boolean canJump;
 	protected boolean isHarmful;
 	protected boolean topHarmful;
 
@@ -64,27 +64,11 @@ public class LevelObject {
     
     public void setCanJump(boolean canJump) { this.canJump = canJump; }
 
-    public void update(GameController controller) {
-        if      (controller.isLeftPressed())  { dx = -SPEED; }
-        else if (controller.isRightPressed()) { dx =  SPEED; }
-        else    { dx = 0; }
-        
-        if (controller.isSprinting()) { dx *= 2; }
-
-        if (controller.isJumpPressed() && canJump) { dy = -JUMP_SPEED; }
-
-        dy += GRAVITY;
-        
-        this.setX(rectf.left + dx * FPS_PERIOD);
-        this.setY(rectf.top  + dy * FPS_PERIOD);
-        
-    }
-
     public void draw(Canvas canvas, Camera camera) {
         camera.draw(this.getRectF(),bitmap,canvas);
     }
 
-    private void commitPosition() {
+    protected void commitPosition() {
         rectf.offsetTo(Math.round(x),Math.round(y));
     }
 	
