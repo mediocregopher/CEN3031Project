@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.graphics.Canvas;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -108,14 +107,14 @@ public class Level {
 
         // Assume Albert can't jump
         albert.setCanJump(false);
-        
+
         if (albert.getX() < 0) {
             albert.setX(0);
         }
         else if ((albert.getX()+albert.getWidth()) > MAX_X)  {
             albert.setX(MAX_X-albert.getWidth());
         }
-        
+
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             if (albert.isDead()) {
                 finished = true;
@@ -124,92 +123,96 @@ public class Level {
             }
         }
 
-        toLookAt = new ArrayList<LevelObject>();
-		
-        int xstart = (int)( camera.getX()/Tile.SIZE);
-        if (xstart - UPDATE_OFFSET >=0) xstart -= UPDATE_OFFSET;
-        int xend   = xstart + (int)( (camera.getX()+gamePanel.getWidth()) / Tile.SIZE) + UPDATE_OFFSET;
+        // Only do these if albert is alive
+        // Allows the death animation to run
+        if (!albert.isDead()) {
+
+            toLookAt = new ArrayList<LevelObject>();
+
+            int xstart = (int)( camera.getX()/Tile.SIZE);
+            if (xstart - UPDATE_OFFSET >=0) xstart -= UPDATE_OFFSET;
+            int xend   = xstart + (int)( (camera.getX()+gamePanel.getWidth()) / Tile.SIZE) + UPDATE_OFFSET;
 
 
-        for (int i=xstart; i<=xend; i++) {
-            for (int j=0; j<getMaxY(); j++) {
-                Tile tile = get(i,j);
-                if (tile.getType() != TileType.AIR) { toLookAt.add(tile); }
+            for (int i=xstart; i<=xend; i++) {
+                for (int j=0; j<getMaxY(); j++) {
+                    Tile tile = get(i,j);
+                    if (tile.getType() != TileType.AIR) { toLookAt.add(tile); }
+                }
             }
-        }
-		
-		enemiesToLookAt = new ArrayList<Enemy>();
-		
-		for (int i = 0; i <= enemies.size(); i++) {
-		    Enemy enemy = get(i,true);
-			if (enemy != null) { enemiesToLookAt.add(enemy);}
-		}
-		
-        RectF albertRectF = albert.getRectF();
-        for (int i=0; i<toLookAt.size(); i++) {
-            RectF tileRectF   = toLookAt.get(i).getRectF();
-            switch(Util.intersect(albertRectF,tileRectF)) {
+
+            enemiesToLookAt = new ArrayList<Enemy>();
+
+            for (int i = 0; i <= enemies.size(); i++) {
+                Enemy enemy = get(i,true);
+                if (enemy != null) { enemiesToLookAt.add(enemy);}
+            }
+
+            RectF albertRectF = albert.getRectF();
+            for (int i=0; i<toLookAt.size(); i++) {
+                RectF tileRectF   = toLookAt.get(i).getRectF();
+                switch(Util.intersect(albertRectF,tileRectF)) {
                 case NONE:   break;
 
                 case TOP:    albert.setY(tileRectF.top - albert.getHeight());
-                             albert.setDY(0);
-                             albert.setCanJump(!gamePanel.controller.isJumpPressed());
-                             break;
+                albert.setDY(0);
+                albert.setCanJump(!gamePanel.controller.isJumpPressed());
+                break;
 
                 case BOTTOM: albert.setY(tileRectF.bottom);
-                             if (albert.getDY() < 0) albert.setDY(0);
-                             break;
+                if (albert.getDY() < 0) albert.setDY(0);
+                break;
 
                 case LEFT:   albert.setX(tileRectF.left - albert.getWidth());
-                             albert.setDX(0);
-                             break;
+                albert.setDX(0);
+                break;
 
                 case RIGHT:  albert.setX(tileRectF.right);
-                             albert.setDX(0);
-                             break;
+                albert.setDX(0);
+                break;
+                }
             }
-        }
-		
-		for (int i = 0; i < enemiesToLookAt.size(); i++) {
-		    GameLog.d("Level", "checking for enemy collision");
-			RectF enemyRectF = enemiesToLookAt.get(i).getRectF();
-			switch (Util.intersect(albertRectF, enemyRectF)) {
-				case NONE: break;
-				
-				case TOP: albert.setY(enemyRectF.top);
-                             if (enemiesToLookAt.get(i).getTopHarmful()) {
-								albert.kill();
-							 }
-							 else {
-								albert.setDY(albert.getJumpSpeed() / 2);
-								killEnemy(enemiesToLookAt.get(i));
-							 }
-                             break;
 
-               default:    
-							 if (enemiesToLookAt.get(i).getIsHarmful()) {
-								albert.kill();
-							 }
-							 else {
-								killEnemy(enemiesToLookAt.get(i));
-							 }
-                             break;
-			}
-		}
-        camera.offset(albert,this);
-        
+            for (int i = 0; i < enemiesToLookAt.size(); i++) {
+                RectF enemyRectF = enemiesToLookAt.get(i).getRectF();
+                switch (Util.intersect(albertRectF, enemyRectF)) {
+                case NONE: break;
+
+                case TOP: albert.setY(enemyRectF.top - albert.getHeight());
+                if (enemiesToLookAt.get(i).getTopHarmful()) {
+                    albert.kill();
+                }
+                else {
+                    albert.setDY(albert.getJumpSpeed() / 2);
+                    killEnemy(enemiesToLookAt.get(i));
+                }
+                break;
+
+                default:    
+                    if (enemiesToLookAt.get(i).getIsHarmful()) {
+                        albert.kill();
+                    }
+                    else {
+                        killEnemy(enemiesToLookAt.get(i));
+                    }
+                    break;
+                }
+            }
+            camera.offset(albert,this);
+
+        }
     }
 
     public void draw(Canvas canvas, Camera camera) {
         canvas.drawARGB(255, 0x81, 0x43, 0xb6);
         camera.drawBackground(background,getMaxPixelsY(),canvas);
-        albert.draw(canvas,camera);
         for (int i=0; i<toLookAt.size(); i++) {
             toLookAt.get(i).draw(canvas,camera);
         }
         for (int i=0; i<enemiesToLookAt.size(); i++) {
             enemiesToLookAt.get(i).draw(canvas,camera);
         }
+        albert.draw(canvas,camera);
     }
 	
 	public void killEnemy(int index) {

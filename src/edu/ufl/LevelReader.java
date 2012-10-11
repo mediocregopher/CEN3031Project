@@ -42,15 +42,14 @@ public class LevelReader {
                     case 'a':
                         albert.setX(x*Tile.SIZE);
                         albert.setY(y*Tile.SIZE-(albert.getHeight() - Tile.SIZE - 5));
-						// need to set an air tile for where albert was?
                         break;
                         
 					case 'e':
-						enemyCase(c, enemies, row, x, y);
+						enemyCase(c, enemies, x, y);
 						break;
 						
 					case 't':
-					    enemyCase(c, enemies, row, x, y);
+					    enemyCase(c, enemies, x, y);
                         break;
                 }
                 //Assume it's a tile if nothing else
@@ -81,8 +80,8 @@ public class LevelReader {
         return type;
     }
 	
-    public static void enemyCase(char c, ArrayList<Enemy> enemies, ArrayList<Tile> row, float x, float y) {
-        enemies.add(new Enemy(x*Tile.SIZE, y*(Tile.SIZE +1), c));
+    public static void enemyCase(char c, ArrayList<Enemy> enemies, float x, float y) {
+        enemies.add(new Enemy(x*Tile.SIZE, y*(Tile.SIZE)+Tile.SIZE, c));
     }
 
 }

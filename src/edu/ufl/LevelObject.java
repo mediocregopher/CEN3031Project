@@ -57,8 +57,8 @@ public class LevelObject {
     public float getHeight() { return h;  }
     public float getJumpSpeed() { return JUMP_SPEED; }
 	
-	public boolean getIsHarmful() { return true; }
-	public boolean getTopHarmful() { return true; }
+	public boolean getIsHarmful() { return isHarmful; }
+	public boolean getTopHarmful() { return topHarmful; }
 
     public RectF getRectF() { return rectf; }
     
