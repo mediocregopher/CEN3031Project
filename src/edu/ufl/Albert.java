@@ -38,6 +38,7 @@ public class Albert extends LevelObject {
         // TODO: Decrement lives
         this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
                                                     R.drawable.albert_dead );
+        dx = 0;
         dy = -JUMP_SPEED;
     }
 

@@ -141,7 +141,8 @@ public class Level {
 		enemiesToLookAt = new ArrayList<Enemy>();
 		
 		for (int i = 0; i <= enemies.size(); i++) {
-			enemiesToLookAt.add(get(i,true));
+		    Enemy enemy = get(i,true);
+			if (enemy != null) { enemiesToLookAt.add(enemy);}
 		}
 		
         RectF albertRectF = albert.getRectF();
@@ -170,13 +171,14 @@ public class Level {
         }
 		
 		for (int i = 0; i < enemiesToLookAt.size(); i++) {
+		    GameLog.d("Level", "checking for enemy collision");
 			RectF enemyRectF = enemiesToLookAt.get(i).getRectF();
 			switch (Util.intersect(albertRectF, enemyRectF)) {
 				case NONE: break;
 				
-				case BOTTOM: albert.setY(enemyRectF.bottom);
+				case TOP: albert.setY(enemyRectF.top);
                              if (enemiesToLookAt.get(i).getTopHarmful()) {
-								//kill albert
+								albert.kill();
 							 }
 							 else {
 								albert.setDY(albert.getJumpSpeed() / 2);
@@ -186,7 +188,7 @@ public class Level {
 
                default:    
 							 if (enemiesToLookAt.get(i).getIsHarmful()) {
-								//kill abert
+								albert.kill();
 							 }
 							 else {
 								killEnemy(enemiesToLookAt.get(i));
@@ -204,6 +206,9 @@ public class Level {
         albert.draw(canvas,camera);
         for (int i=0; i<toLookAt.size(); i++) {
             toLookAt.get(i).draw(canvas,camera);
+        }
+        for (int i=0; i<enemiesToLookAt.size(); i++) {
+            enemiesToLookAt.get(i).draw(canvas,camera);
         }
     }
 	

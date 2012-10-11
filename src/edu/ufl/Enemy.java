@@ -15,10 +15,10 @@ public class Enemy extends LevelObject{
 		TOP
     }
 	
-	public Enemy (float x, float y, char c) { 
+	public Enemy (float x, float y, char c) {
 		type = findEnemyType(c);
 		this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.enemy );
-        this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
+        this.initRectF(x,y-bitmap.getHeight(),bitmap.getWidth(),bitmap.getHeight());
 		
 		 isHarmful = true;
 		 if (type.equals(EnemyType.TOP))
