@@ -183,7 +183,7 @@ public class Level {
                     albert.kill();
                 }
                 else {
-                    albert.setDY(albert.getJumpSpeed() / 2);
+                    albert.setDY(-albert.getJumpSpeed() / 2);
                     killEnemy(enemiesToLookAt.get(i));
                 }
                 break;
