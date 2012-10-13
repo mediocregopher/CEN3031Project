@@ -19,10 +19,11 @@ public class Albert extends LevelObject {
 
     public boolean isDead() { return dead; }
 
+    private Sprite sprite;
+
     Albert(float x, float y) {
-        this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
-                                                    R.drawable.albert );
-        this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
+        this.sprite = new Sprite(Sprite.SpriteType.ALBERT);
+        this.initRectF(x,y,this.sprite.getWidth(),this.sprite.getHeight());
 
         //Scale *SPEED's
         SPEED = ResourceManager.dpToPx(SPEED);
@@ -43,7 +44,11 @@ public class Albert extends LevelObject {
         dy += Constants.GRAVITY;
         this.setX(rectf.left + dx * Constants.FPS_PERIOD);
         this.setY(rectf.top  + dy * Constants.FPS_PERIOD);
-        
+        this.sprite.update(); 
+    }
+
+    public void draw(Canvas canvas, Camera camera) {
+        sprite.draw(this.getRectF(),canvas,camera);
     }
     
     public void kill() {

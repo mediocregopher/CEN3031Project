@@ -21,17 +21,28 @@ class Camera {
     public float getX() { return x; }
     public float getY() { return y; }
 
-    public void draw(RectF loRectF, Bitmap bitmap, Canvas canvas) {
+    public void draw(RectF mask, RectF loRectF, Bitmap bitmap, Canvas canvas) {
         if (Util.intersectLite(/*Rect1*/
                                loRectF.left, loRectF.top,
                                loRectF.right-loRectF.left, loRectF.bottom-loRectF.top,
                                /*Rect2*/
                                x,y, gamePanel.getWidth(),gamePanel.getHeight())) {
 
-            float offX = loRectF.left - x;
-            float offY = loRectF.top  - y;
+            float left = loRectF.left - x;
+            float top  = loRectF.top  - y;
 
-            canvas.drawBitmap(bitmap,offX,offY,null);
+            RectF tmp = new RectF(loRectF);
+            tmp.offsetTo(left,top);
+            Rect dst = new Rect();
+            tmp.round(dst);
+
+            Rect src = null;
+            if (mask != null) {
+                src = new Rect();
+                mask.round(src);
+            }
+
+            canvas.drawBitmap(bitmap,src,dst,null);
         }
     }
 

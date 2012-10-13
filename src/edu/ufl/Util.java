@@ -1,6 +1,7 @@
 package edu.ufl;
 
 import android.graphics.RectF;
+import java.io.*;
 
 class Util {
 
@@ -35,6 +36,29 @@ class Util {
                                         float x2, float y2, float w2, float h2) {
         return (x1 <= x2+w2 && x1+w1 >= x2 &&
                 y1 <= y2+h2 && y1+h1 >= y2);
+    }
+
+    /* 
+     * Given a raw resource id reads it and returns the string representation.
+     * For some reason this is a really difficult thing for java to do.
+     */
+    public static String rawResourceToString(int id) throws IOException {
+        BufferedReader bis = new BufferedReader( 
+                                    new InputStreamReader(
+                                        ResourceManager.getResources().openRawResource(
+                                            id) ) );
+
+        StringBuffer filebuf = new StringBuffer(1000); 
+        char[] buf = new char[1024];
+        int read = 0;
+        while((read=bis.read(buf)) != -1){
+            String readData = String.valueOf(buf, 0, read);
+            filebuf.append(readData);
+            buf = new char[1024];
+        }
+        bis.close();
+
+        return filebuf.toString();
     }
 
 }

@@ -48,7 +48,7 @@ public class LevelObject {
     public RectF getRectF() { return rectf; }
 
     public void draw(Canvas canvas, Camera camera) {
-        camera.draw(this.getRectF(),bitmap,canvas);
+        camera.draw(null,this.getRectF(),bitmap,canvas);
     }
 
     protected void commitPosition() {
