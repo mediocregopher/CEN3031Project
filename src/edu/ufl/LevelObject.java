@@ -17,9 +17,6 @@ public class LevelObject {
     protected float dx;
     protected float dy;
     
-	protected boolean isHarmful;
-	protected boolean topHarmful;
-
     protected Bitmap bitmap;
 
     LevelObject() { /* Don't do shit */ }
@@ -48,11 +45,7 @@ public class LevelObject {
     public float getWidth()  { return w;  }
     public float getHeight() { return h;  }
 	
-	public boolean getIsHarmful() { return isHarmful; }
-	public boolean getTopHarmful() { return topHarmful; }
-
     public RectF getRectF() { return rectf; }
-    
 
     public void draw(Canvas canvas, Camera camera) {
         camera.draw(this.getRectF(),bitmap,canvas);
