@@ -8,13 +8,6 @@ public class LevelObject {
 
     protected RectF rectf;
 
-    // Physic constants
-    protected static final float FPS_PERIOD = (float)GameThread.FPS_PERIOD;
-    protected static final float GRAVITY = 1000f/1000f * (FPS_PERIOD/1000f);    // 0.009 pixels/millisecond^2 (remember +y moves down)
-    protected static final float SPEED = 200f/1000f; // 250 pixels/millisecond
-    protected static final float JUMP_SPEED = 600f/1000f;
-
-
     protected float x;
     protected float y;
     protected float h;
@@ -24,7 +17,6 @@ public class LevelObject {
     protected float dx;
     protected float dy;
     
-    protected boolean canJump;
 	protected boolean isHarmful;
 	protected boolean topHarmful;
 
@@ -55,14 +47,12 @@ public class LevelObject {
 
     public float getWidth()  { return w;  }
     public float getHeight() { return h;  }
-    public float getJumpSpeed() { return JUMP_SPEED; }
 	
 	public boolean getIsHarmful() { return isHarmful; }
 	public boolean getTopHarmful() { return topHarmful; }
 
     public RectF getRectF() { return rectf; }
     
-    public void setCanJump(boolean canJump) { this.canJump = canJump; }
 
     public void draw(Canvas canvas, Camera camera) {
         camera.draw(this.getRectF(),bitmap,canvas);

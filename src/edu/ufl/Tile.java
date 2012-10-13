@@ -33,7 +33,10 @@ public class Tile extends LevelObject{
                                                         Tile.tileTextures.get(t).intValue() );
             this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
 
-            //We assume all tiles are going to be the same size....
+            /*
+             * We assume all tiles are going to be the same size....
+             * Can't do this in the static block because it depends on ResourceManager being initialized. Bleh
+             */
             Tile.SIZE = bitmap.getWidth();
         }
         else {

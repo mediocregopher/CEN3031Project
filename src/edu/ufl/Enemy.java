@@ -6,29 +6,35 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 public class Enemy extends LevelObject{
-	EnemyType type;
-	public float range;
-	public boolean movingLeft;//if true its moving -x else its moving +x
-	
+
 	public static enum EnemyType {
         BASIC,
 		TOP
     }
-	
+
+	EnemyType type;
+	public float range;
+	public boolean movingLeft; //if true its moving -x else its moving +x
+
+    private boolean isHarmful = true;
+    private boolean topHarmful = false;
+
 	public Enemy (float x, float y, char c) {
-		type = findEnemyType(c);
+		this.type = findEnemyType(c);
 		this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.enemy );
         this.initRectF(x,y-bitmap.getHeight(),bitmap.getWidth(),bitmap.getHeight());
 		
-		 isHarmful = true;
-		 if (type.equals(EnemyType.TOP))
-			topHarmful = true;
+        if (type.equals(EnemyType.TOP))
+            topHarmful = true;
 		determineRange();
 	}
 	
 	public EnemyType getEnemyType() { return type;}
 	public float getRange() { return range; }
-	public boolean getDirection() { return movingLeft; }
+	public boolean isMovingLeft() { return movingLeft; }
+	public boolean getIsHarmful() { return isHarmful; }
+	public boolean getTopHarmful() { return topHarmful; }
+
 	
 	public void setEnemyType(EnemyType type) { this.type = type; }
 	public void setRange(float range) { this.range = range; }
@@ -41,7 +47,7 @@ public class Enemy extends LevelObject{
 			range = 20;
 	}
 	
-	public void changeDirecetions() {
+	public void changeDirection() {
 		movingLeft = !movingLeft;
 	}
 	

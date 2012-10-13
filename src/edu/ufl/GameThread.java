@@ -8,9 +8,6 @@ import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
 
-    public final static int FPS = 30;
-    public final static int FPS_PERIOD = 1000/FPS;
-
     long beginTime;     // the time when the cycle begun
     long timeDiff;      // the time it took for the cycle to execute
     int sleepTime;      // ms to sleep (<0 if we're behind)
@@ -90,7 +87,7 @@ public class GameThread extends Thread {
             //If there's time left over in this frame, sleep. This is what keeps us at
             //our set FPS
             timeDiff = System.currentTimeMillis() - beginTime;
-            sleepTime = (int)(FPS_PERIOD - timeDiff);
+            sleepTime = (int)(Constants.FPS_PERIOD - timeDiff);
             if (sleepTime > 0) {
                 try {
                     Thread.sleep(sleepTime);
