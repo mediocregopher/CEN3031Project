@@ -2,6 +2,9 @@ package edu.ufl;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.view.Display;
+import android.view.WindowManager;
+import android.util.DisplayMetrics;
 
 /*
  * A stupid little singleton class so we don't have to pass context around
@@ -15,7 +18,14 @@ public class ResourceManager {
 
     public static void init(Context c) {
         ResourceManager.con = c;
-        ResourceManager.densityDpi = getResources().getDisplayMetrics().densityDpi;
+
+        /* <magic> */
+        Display display = ((WindowManager) c.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        /* </magic> */
+
+        ResourceManager.densityDpi = outMetrics.densityDpi;
     }
 
     public static Resources getResources() {

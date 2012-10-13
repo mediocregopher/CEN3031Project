@@ -33,6 +33,7 @@ public class GameThread extends Thread {
         this.camera = new Camera(gamePanel);
 
         ResourceManager.init(context);
+        Constants.init();
         setLevel(R.raw.level1);
         
     }

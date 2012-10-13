@@ -7,8 +7,8 @@ import android.graphics.Canvas;
 public class Albert extends LevelObject {
 
     // Physic constants
-    private static final float SPEED = 200f/1000f; // 250 pixels/millisecond
-    private static final float JUMP_SPEED = 600f/1000f;
+    private float SPEED = 150f/1000f;
+    private float JUMP_SPEED = 400f/1000f;
 
 
     private boolean canJump;
@@ -23,6 +23,10 @@ public class Albert extends LevelObject {
         this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
                                                     R.drawable.albert );
         this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
+
+        //Scale *SPEED's
+        SPEED = ResourceManager.dpToPx(SPEED);
+        JUMP_SPEED = ResourceManager.dpToPx(JUMP_SPEED);
     }
     
     public void update(GameController controller) {
