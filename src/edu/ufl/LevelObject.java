@@ -3,6 +3,7 @@ package edu.ufl;
 import android.graphics.RectF;
 import android.graphics.Canvas;
 import android.graphics.Bitmap;
+import edu.ufl.Sprite.SpriteType;
 
 public class LevelObject {
 
@@ -17,7 +18,9 @@ public class LevelObject {
     protected float dx;
     protected float dy;
     
+    //Need to get rid of bitmap
     protected Bitmap bitmap;
+    protected Sprite sprite;
 
     LevelObject() { /* Don't do shit */ }
     LevelObject(float x, float y, float w, float h) {
@@ -55,5 +58,10 @@ public class LevelObject {
         rectf.offsetTo(Math.round(x),Math.round(y));
     }
 	
+    protected void changeSprite(SpriteType stype) {
+        if (this.sprite.getType() != stype) {
+            this.sprite = new Sprite(stype);
+        }
+    }
 
 }

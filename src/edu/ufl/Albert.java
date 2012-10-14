@@ -3,6 +3,7 @@ package edu.ufl;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import edu.ufl.Sprite.SpriteType;
 
 public class Albert extends LevelObject {
 
@@ -19,10 +20,8 @@ public class Albert extends LevelObject {
 
     public boolean isDead() { return dead; }
 
-    private Sprite sprite;
-
     Albert(float x, float y) {
-        this.sprite = new Sprite(Sprite.SpriteType.ALBERT);
+        this.sprite = new Sprite(SpriteType.ALBERT);
         this.initRectF(x,y,this.sprite.getWidth(),this.sprite.getHeight());
 
         //Scale *SPEED's
@@ -35,6 +34,9 @@ public class Albert extends LevelObject {
             if      (controller.isLeftPressed())  { dx = -SPEED; }
             else if (controller.isRightPressed()) { dx =  SPEED; }
             else    { dx = 0; }
+
+            if (dx == 0) { this.changeSprite(SpriteType.ALBERT);         }
+            else {         this.changeSprite(SpriteType.ALBERT_WALKING); }
         
             if (controller.isSprinting()) { dx *= 2; }
 
@@ -55,8 +57,7 @@ public class Albert extends LevelObject {
         dead = true;
         // TODO: Play death sound
         // TODO: Decrement lives
-        this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
-                                                    R.drawable.albert_dead );
+        this.changeSprite(SpriteType.ALBERT_DEAD);
         dx = 0;
         dy = -JUMP_SPEED;
     }

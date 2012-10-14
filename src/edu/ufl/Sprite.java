@@ -11,15 +11,22 @@ import org.json.*;
 public class Sprite {
 
     public static enum SpriteType {
-        ALBERT
+        ALBERT,
+        ALBERT_WALKING,
+        ALBERT_DEAD
     }
 
     private final static HashMap<SpriteType,SpriteSpec> spriteSpecs = new HashMap<SpriteType,SpriteSpec>() {{
-        put( SpriteType.ALBERT, new SpriteSpec( R.drawable.albert,
-                                                R.raw.albert_sprite ));
+        put( SpriteType.ALBERT,         new SpriteSpec( R.drawable.albert,
+                                                        R.raw.albert_sprite ));
+        put( SpriteType.ALBERT_WALKING, new SpriteSpec( R.drawable.albert_walking,
+                                                        R.raw.albert_walking_sprite ));
+        put( SpriteType.ALBERT_DEAD,    new SpriteSpec( R.drawable.albert_dead,
+                                                        R.raw.albert_dead_sprite ));
     }};
 
     private Bitmap bitmap;
+    private SpriteType type;
     private float width;
     private float height;
 
@@ -31,6 +38,7 @@ public class Sprite {
     private RectF mask;
 
     Sprite(SpriteType type) {
+        this.type = type;
 
         SpriteSpec spec = Sprite.spriteSpecs.get(type);
 
@@ -67,6 +75,7 @@ public class Sprite {
 
     public float getWidth()  { return this.width;  }
     public float getHeight() { return this.height; }
+    public SpriteType getType() { return this.type; }
 
     public void update() {
         /* If we're done running this frame of the sprite we need to figure out
