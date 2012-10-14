@@ -39,6 +39,7 @@ public class GameThread extends Thread {
     }
     
     private void setLevel(int id){
+        level = null;
         try {
             BufferedInputStream bis = new BufferedInputStream( 
                                         ResourceManager.getResources().openRawResource(
