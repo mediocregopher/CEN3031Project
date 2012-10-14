@@ -8,8 +8,8 @@ import edu.ufl.Sprite.SpriteType;
 public class Albert extends LevelObject {
 
     // Physic constants
-    private float SPEED = 150f/1000f;
-    private float JUMP_SPEED = 400f/1000f;
+    private float SPEED = 200f/1000f;
+    private float JUMP_SPEED = 500f/1000f;
 
 
     private boolean canJump;
