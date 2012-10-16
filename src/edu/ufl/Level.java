@@ -145,7 +145,9 @@ public class Level {
 
             for (int i = 0; i <= enemies.size(); i++) {
                 Enemy enemy = get(i,true);
-                if (enemy != null) { enemiesToLookAt.add(enemy);}
+                if (enemy != null) {
+                	enemy.update();
+                	enemiesToLookAt.add(enemy);}
             }
 
             RectF albertRectF = albert.getRectF();

@@ -14,7 +14,9 @@ public class Enemy extends LevelObject{
 
 	EnemyType type;
 	public float range;
-	public boolean movingLeft; //if true its moving -x else its moving +x
+	public float movingLeft = -5; //moving left value with be negative else it will be moving right if it is positive
+	
+	public float orgX;
 
     private boolean isHarmful = true;
     private boolean topHarmful = false;
@@ -23,6 +25,9 @@ public class Enemy extends LevelObject{
 		this.type = findEnemyType(c);
 		this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.enemy );
         this.initRectF(x,y-bitmap.getHeight(),bitmap.getWidth(),bitmap.getHeight());
+        this.orgX = getX();
+      //  this.setX(x);
+      //  this.setY(y);
 		
         if (type.equals(EnemyType.TOP))
             topHarmful = true;
@@ -31,14 +36,14 @@ public class Enemy extends LevelObject{
 	
 	public EnemyType getEnemyType() { return type;}
 	public float getRange() { return range; }
-	public boolean isMovingLeft() { return movingLeft; }
+	public float isMovingLeft() { return movingLeft; }
 	public boolean getIsHarmful() { return isHarmful; }
 	public boolean getTopHarmful() { return topHarmful; }
 
 	
 	public void setEnemyType(EnemyType type) { this.type = type; }
 	public void setRange(float range) { this.range = range; }
-	public void setDirection(boolean movingLeft) { this.movingLeft = movingLeft; }
+	public void setDirection(float movingLeft) { this.movingLeft = movingLeft; }
 	
 	public void determineRange() {
 		if (type.equals(EnemyType.BASIC))
@@ -48,11 +53,19 @@ public class Enemy extends LevelObject{
 	}
 	
 	public void changeDirection() {
-		movingLeft = !movingLeft;
+		movingLeft = -1*movingLeft;
 	}
 	
 	public void kill() {
 		//the enemy dies
+	}
+	
+	public void update(){
+		//updates the movement of the enemies
+		if(((this.getX() - this.orgX) >= this.range) || ((this.getX() - this.orgX) <= (-1*this.range))){
+			changeDirection();
+		}
+		setX(this.getX() + isMovingLeft());
 	}
 	
 	public EnemyType findEnemyType(char c) {
