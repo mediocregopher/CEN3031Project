@@ -39,8 +39,9 @@ public class GameThread extends Thread {
     }
     
     private void setLevel(int id){
+    	SoundManager.playMedia(2);
         level = null;
-        try {
+        try {        	
             BufferedInputStream bis = new BufferedInputStream( 
                                         ResourceManager.getResources().openRawResource(
                                           id) );
@@ -70,6 +71,8 @@ public class GameThread extends Thread {
                     update();
                     // END IF
                     if (level.isFinished()) {
+                    	SoundManager.pauseMedia();
+                    	SoundManager.resetMedia();
                         setLevel(R.raw.level1);
                     } else {
                         draw(c);
@@ -97,6 +100,8 @@ public class GameThread extends Thread {
             }
 
         }
+        SoundManager.pauseMedia();
+        SoundManager.resetMedia();
         GameLog.d("GameThread", "Game loop executed " + tickCount + " times");
     }
 

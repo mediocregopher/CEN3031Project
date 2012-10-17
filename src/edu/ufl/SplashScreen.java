@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 public class SplashScreen extends Activity {
     protected boolean _active = true;
     protected int _splashTime = 5000;
-    MediaPlayer mpTebow;
     
     /** Called when the activity is first created. */
     @Override
@@ -18,8 +17,13 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         
-        mpTebow = MediaPlayer.create(SplashScreen.this, R.raw.orange_blue);
-        mpTebow.start();
+        // Creates and loads SoundManager
+        SoundManager.getInstance();
+        SoundManager.initSounds(this);
+        SoundManager.loadSounds();
+        SoundManager.loadMedia();
+        
+        SoundManager.playMedia(1);
         
         Thread splashTread = new Thread() {
             @Override
@@ -36,10 +40,10 @@ public class SplashScreen extends Activity {
                     // do nothing
                     
                 } finally {
-                	
-                	mpTebow.release();
+                	SoundManager.pauseMedia();
+                	SoundManager.resetMedia();
                     finish();
-                    
+                                        
                     Intent intent = new Intent(SplashScreen.this, Menu.class);
                     startActivity(intent);
                     

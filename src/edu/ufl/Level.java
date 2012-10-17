@@ -187,6 +187,7 @@ public class Level {
                 else {
                     albert.setDY(-albert.getJumpSpeed() / 2);
                     killEnemy(enemiesToLookAt.get(i));
+                    SoundManager.playSound(3, 1.0f, false);
                 }
                 break;
 

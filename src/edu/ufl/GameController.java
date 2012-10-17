@@ -3,7 +3,7 @@ package edu.ufl;
 import android.view.MotionEvent;
 
 public class GameController {
-
+	
     private double leftPortion;
     private double rightPortion;
     private double jumpPortion;
@@ -63,6 +63,7 @@ public class GameController {
                 originY = y;
             }
             else if (y > jumpPortion) {
+            	SoundManager.playSound(2, 1.5f, false);
                 jumpPressed  = true;
             }
         }
