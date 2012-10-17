@@ -1,9 +1,6 @@
 package edu.ufl;
 
-import java.util.HashMap;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 
 public class Enemy extends LevelObject{
 
@@ -62,7 +59,7 @@ public class Enemy extends LevelObject{
 	
 	public void update(){
 		//updates the movement of the enemies
-		if(((this.getX() - this.orgX) >= this.range) || ((this.getX() - this.orgX) <= (-1*this.range))){
+		if(Math.abs(getX() - orgX) >= this.range){
 			changeDirection();
 		}
 		setX(this.getX() + isMovingLeft());

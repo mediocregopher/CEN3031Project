@@ -1,7 +1,5 @@
 package edu.ufl;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import edu.ufl.Sprite.SpriteType;
 

@@ -1,9 +1,7 @@
 package edu.ufl;
 
 import java.util.HashMap;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 
 public class Tile extends LevelObject{
 
