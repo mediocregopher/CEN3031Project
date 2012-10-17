@@ -16,17 +16,20 @@ public class GameController {
     private boolean  leftPressed = false;
     private boolean rightPressed = false;
     private boolean  jumpPressed = false;
+    private boolean  attackPressed = false;
     private boolean sprintActive = false;
     
     public boolean  isLeftPressed() { return  leftPressed; }
     public boolean isRightPressed() { return rightPressed; }
     public boolean  isJumpPressed() { return  jumpPressed; }
+    public boolean  isAttackPressed() { return  attackPressed; }
     public boolean isSprinting() {return sprintActive;}
 
     public void panelSizeChanged(int w, int h) {
         leftPortion  = ((double)w)*(.2);
         rightPortion = ((double)w)*(.8);
         jumpPortion  = ((double)h)*(.8);
+        // Attack Portion is implied
         sprintOffset  = ((double)w)*(.1);
     }
 
@@ -54,17 +57,16 @@ public class GameController {
                 leftPressed  = true;
                 originX = x;
                 originY = y;
-            }
-            else if (x > rightPortion && lrPointer == -1) {
+            } else if (x > rightPortion && lrPointer == -1) {
                 // Right
                 lrPointer    = event.getPointerId(index);
                 rightPressed = true;
                 originX = x;
                 originY = y;
-            }
-            else if (y > jumpPortion) {
-            	SoundManager.playSound(2, 1.5f, false);
+            } else if (y > jumpPortion) {
                 jumpPressed  = true;
+            } else {
+                attackPressed = true;
             }
         }
         if (action == MotionEvent.ACTION_MOVE) {
@@ -84,6 +86,7 @@ public class GameController {
             }
             else {
                 jumpPressed  = false;
+                attackPressed = false;
             }
         }
      }

@@ -38,7 +38,10 @@ public class Albert extends LevelObject {
         
             if (controller.isSprinting()) { dx *= 2; }
 
-            if (controller.isJumpPressed() && canJump) { dy = -JUMP_SPEED; }
+            if (controller.isJumpPressed() && canJump) { 
+                   dy = -JUMP_SPEED;
+                   SoundManager.playSound(2, 1.5f, false);
+            }
         }
 
         dy += Constants.GRAVITY;
