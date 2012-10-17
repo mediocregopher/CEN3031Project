@@ -21,6 +21,10 @@ public class LevelObject {
     //Need to get rid of bitmap
     protected Bitmap bitmap;
     protected Sprite sprite;
+    
+    // Harmful parameters
+    protected boolean isHarmful = false;
+    protected boolean topHarmful = false;
 
     LevelObject() { /* Don't do shit */ }
     LevelObject(float x, float y, float w, float h) {
@@ -49,6 +53,9 @@ public class LevelObject {
     public float getHeight() { return h;  }
 	
     public RectF getRectF() { return rectf; }
+    
+    public boolean getIsHarmful() { return isHarmful; }
+    public boolean getTopHarmful() { return topHarmful; }
 
     public void draw(Canvas canvas, Camera camera) {
         camera.draw(null,this.getRectF(),bitmap,canvas);
@@ -62,6 +69,26 @@ public class LevelObject {
         if (this.sprite.getType() != stype) {
             this.sprite = new Sprite(stype);
         }
+    }
+    
+    public void collideTop(LevelObject lo) {
+        setY(lo.getRectF().top - getHeight());
+        setDY(0);
+    }
+    
+    public void collideBottom(LevelObject lo) {
+        setY(lo.getRectF().bottom);
+        if (getDY() < 0) setDY(0);
+    }
+    
+    public void collideLeft(LevelObject lo) {
+        setX(lo.getRectF().left - getWidth());
+        setDX(0);
+    }
+    
+    public void collideRight(LevelObject lo) {
+        setX(lo.getRectF().right);
+        setDX(0);
     }
 
 }

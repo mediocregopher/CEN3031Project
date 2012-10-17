@@ -63,6 +63,8 @@ public class Enemy extends LevelObject{
 			changeDirection();
 		}
 		setX(this.getX() + isMovingLeft());
+		
+		dy += Constants.GRAVITY;
 	}
 	
 	public EnemyType findEnemyType(char c) {

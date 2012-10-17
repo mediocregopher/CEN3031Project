@@ -57,7 +57,7 @@ public class Level {
 
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
-    private ArrayList<LevelObject> toLookAt;
+    private ArrayList<Tile> tilesToLookAt;
 	private ArrayList<Enemy> enemiesToLookAt;
 
     //Constructor
@@ -105,7 +105,7 @@ public class Level {
         int MAX_X = getMaxPixelsX();
         int MAX_Y = getMaxPixelsY();
 
-        // Assume Albert can't jump
+        // BEGIN Boundary conditions
         albert.setCanJump(false);
 
         if (albert.getX() < 0) {
@@ -122,12 +122,13 @@ public class Level {
                 albert.kill();
             }
         }
+        // END boundary conditions
 
         // Only do these if albert is alive
         // Allows the death animation to run
         if (!albert.isDead()) {
 
-            toLookAt = new ArrayList<LevelObject>();
+            tilesToLookAt = new ArrayList<Tile>();
 
             int xstart = (int)( camera.getX()/Tile.SIZE);
             if (xstart - UPDATE_OFFSET >=0) xstart -= UPDATE_OFFSET;
@@ -137,7 +138,7 @@ public class Level {
             for (int i=xstart; i<=xend; i++) {
                 for (int j=0; j<getMaxY(); j++) {
                     Tile tile = get(i,j);
-                    if (tile.getType() != TileType.AIR) { toLookAt.add(tile); }
+                    if (tile.getType() != TileType.AIR) { tilesToLookAt.add(tile); }
                 }
             }
 
@@ -146,61 +147,18 @@ public class Level {
             for (int i = 0; i <= enemies.size(); i++) {
                 Enemy enemy = get(i,true);
                 if (enemy != null) {
-                	enemy.update();
-                	enemiesToLookAt.add(enemy);}
-            }
-
-            RectF albertRectF = albert.getRectF();
-            for (int i=0; i<toLookAt.size(); i++) {
-                RectF tileRectF   = toLookAt.get(i).getRectF();
-                switch(Util.intersect(albertRectF,tileRectF)) {
-                case NONE:   break;
-
-                case TOP:    albert.setY(tileRectF.top - albert.getHeight());
-                albert.setDY(0);
-                albert.setCanJump(!gamePanel.controller.isJumpPressed());
-                break;
-
-                case BOTTOM: albert.setY(tileRectF.bottom);
-                if (albert.getDY() < 0) albert.setDY(0);
-                break;
-
-                case LEFT:   albert.setX(tileRectF.left - albert.getWidth());
-                albert.setDX(0);
-                break;
-
-                case RIGHT:  albert.setX(tileRectF.right);
-                albert.setDX(0);
-                break;
-                }
-            }
-
-            for (int i = 0; i < enemiesToLookAt.size(); i++) {
-                RectF enemyRectF = enemiesToLookAt.get(i).getRectF();
-                switch (Util.intersect(albertRectF, enemyRectF)) {
-                case NONE: break;
-
-                case TOP: albert.setY(enemyRectF.top - albert.getHeight());
-                if (enemiesToLookAt.get(i).getTopHarmful()) {
-                    albert.kill();
-                }
-                else {
-                    albert.setDY(-albert.getJumpSpeed() / 2);
-                    killEnemy(enemiesToLookAt.get(i));
-                    SoundManager.playSound(3, 1.0f, false);
-                }
-                break;
-
-                default:    
-                    if (enemiesToLookAt.get(i).getIsHarmful()) {
-                        albert.kill();
+                    if (enemy.getX() > xstart*Tile.SIZE && enemy.getX() < xend*Tile.SIZE) {
+                        enemy.update();
+                        collide(enemy,tilesToLookAt);
+                        enemiesToLookAt.add(enemy);
                     }
-                    else {
-                        killEnemy(enemiesToLookAt.get(i));
-                    }
-                    break;
                 }
             }
+
+            collide(albert,tilesToLookAt);
+            
+            albertEnemyCollision();
+            
             camera.offset(albert,this);
 
         }
@@ -209,8 +167,8 @@ public class Level {
     public void draw(Canvas canvas, Camera camera) {
         canvas.drawARGB(255, 0x81, 0x43, 0xb6);
         camera.drawBackground(background,getMaxPixelsY(),canvas);
-        for (int i=0; i<toLookAt.size(); i++) {
-            toLookAt.get(i).draw(canvas,camera);
+        for (int i=0; i<tilesToLookAt.size(); i++) {
+            tilesToLookAt.get(i).draw(canvas,camera);
         }
         for (int i=0; i<enemiesToLookAt.size(); i++) {
             enemiesToLookAt.get(i).draw(canvas,camera);
@@ -225,4 +183,65 @@ public class Level {
 	public void killEnemy(Enemy e) {
 		enemies.remove(e);
 	}
+	
+    private void collide(LevelObject obj, ArrayList<? extends LevelObject> toCollide) {
+        RectF objRectF = obj.getRectF();
+        
+        for (int i = 0; i < toCollide.size(); i++) {
+            LevelObject lo = toCollide.get(i);
+            RectF collideRectF = lo.getRectF();
+            switch (Util.intersect(objRectF, collideRectF)) {
+            case NONE:
+                break;
+
+            case TOP:
+                obj.collideTop(lo);
+                break;
+
+            case BOTTOM:
+                obj.collideBottom(lo);
+                break;
+
+            case LEFT:
+                obj.collideLeft(lo);
+                break;
+
+            case RIGHT:
+                obj.collideRight(lo);
+                break;
+            }
+        }
+    }
+    
+    private void albertEnemyCollision() {
+        RectF albertRectF = albert.getRectF();
+        for (int i = 0; i < enemiesToLookAt.size(); i++) {
+            RectF enemyRectF = enemiesToLookAt.get(i).getRectF();
+            switch (Util.intersect(albertRectF, enemyRectF)) {
+            case NONE: break;
+
+            case TOP: albert.setY(enemyRectF.top - albert.getHeight());
+            if (enemiesToLookAt.get(i).getTopHarmful()) {
+                albert.kill();
+            }
+            else {
+                albert.setDY(-albert.getJumpSpeed() / 2);
+                killEnemy(enemiesToLookAt.get(i));
+                SoundManager.playSound(3, 1.0f, false);
+            }
+            break;
+
+            default:    
+                // Shouldn't enemy.getIsHarmful always be true?
+                if (enemiesToLookAt.get(i).getIsHarmful()) {
+                    albert.kill();
+                }
+                else {
+                    killEnemy(enemiesToLookAt.get(i));
+                }
+                break;
+            }
+        }
+    }
+    
 }

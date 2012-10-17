@@ -9,7 +9,7 @@ public class Albert extends LevelObject {
     private float SPEED = 200f/1000f;
     private float JUMP_SPEED = 500f/1000f;
 
-
+    private GameController controller;
     private boolean canJump;
     private boolean dead = false;
 
@@ -28,6 +28,8 @@ public class Albert extends LevelObject {
     }
     
     public void update(GameController controller) {
+        this.controller = controller;
+        
         if (!dead) {
             if      (controller.isLeftPressed())  { dx = -SPEED; }
             else if (controller.isRightPressed()) { dx =  SPEED; }
@@ -62,6 +64,12 @@ public class Albert extends LevelObject {
         this.changeSprite(SpriteType.ALBERT_DEAD);
         dx = 0;
         dy = -JUMP_SPEED;
+    }
+    
+    @Override
+    public void collideTop(LevelObject lo) {
+        super.collideTop(lo);
+        setCanJump(!controller.isJumpPressed());
     }
 
 }
