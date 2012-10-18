@@ -1,5 +1,6 @@
 package edu.ufl;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Rect;
@@ -11,6 +12,9 @@ class Camera {
     private GamePanel gamePanel;
     private float x;
     private float y;
+    
+    private float cloudX;
+    private static final float CLOUD_DX = 2f;
 
     Camera(GamePanel gP) {
         gamePanel = gP;
@@ -98,10 +102,21 @@ class Camera {
         }
     }
 
-    public void drawBackground(Bitmap background, int MAX_Y, Canvas canvas) {
+    public void drawBackground(Bitmap background, Bitmap clouds, int MAX_Y, Canvas canvas) {
         float bx = 0;
         float by = (float)(MAX_Y - background.getHeight()) - getY();
         canvas.drawBitmap(background,bx,by,null);
+        
+        canvas.drawBitmap(clouds, cloudX - getX(), (float)(MAX_Y - clouds.getHeight()) - getY(), null);
+        canvas.drawBitmap(clouds, cloudX - getX() - clouds.getWidth(), (float)(MAX_Y - clouds.getHeight()) - getY(), null);
+        cloudX += CLOUD_DX;
+        
+        // This works for any GamePanel < 1600px which is the cloud bitmap width
+        if (cloudX < getX()) {
+            cloudX += clouds.getWidth();
+        } else if (cloudX - clouds.getWidth() > getX()) {
+            cloudX -= clouds.getWidth();
+        }
     }
 
 }

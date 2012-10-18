@@ -51,6 +51,7 @@ public class Level {
     
     public  Albert albert;
     private Bitmap background;
+    private Bitmap clouds;
     private boolean finished = false;
     
     public boolean isFinished() { return finished; } 
@@ -74,8 +75,13 @@ public class Level {
         this.maxY = maxY;
         this.albert = albert;
 
-        this.background = BitmapFactory.decodeResource( ResourceManager.getResources(),
-                                                        R.drawable.background );
+        BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        this.background = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.background, options );
+        
+        options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        this.clouds = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.clouds, options);
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
@@ -166,7 +172,7 @@ public class Level {
 
     public void draw(Canvas canvas, Camera camera) {
         canvas.drawARGB(255, 0x81, 0x43, 0xb6);
-        camera.drawBackground(background,getMaxPixelsY(),canvas);
+        camera.drawBackground(background, clouds,getMaxPixelsY(),canvas);
         for (int i=0; i<tilesToLookAt.size(); i++) {
             tilesToLookAt.get(i).draw(canvas,camera);
         }
