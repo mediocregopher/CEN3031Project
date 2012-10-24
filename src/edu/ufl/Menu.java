@@ -46,12 +46,11 @@ public class Menu extends ListActivity
     protected void onPause(){
     	SoundManager.pauseMedia();
     	super.onPause();
-    	finish();
     }
     
     @Override
     protected void onStop() {
     	super.onStop();
-    	finish();
+    	SoundManager.resetMedia();
     }    
 }
