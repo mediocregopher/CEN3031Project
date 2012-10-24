@@ -28,7 +28,7 @@ public class Enemy extends LevelObject{
 		
         if (type.equals(EnemyType.TOP))
             topHarmful = true;
-		determineRange();
+		//determineRange();
 	}
 	
 	public EnemyType getEnemyType() { return type;}
@@ -42,12 +42,12 @@ public class Enemy extends LevelObject{
 	public void setRange(float range) { this.range = range; }
 	public void setDirection(float movingLeft) { this.movingLeft = movingLeft; }
 	
-	public void determineRange() {
-		if (type.equals(EnemyType.BASIC))
-			range = 50;
-		else
-			range = 20;
-	}
+	//public void determineRange() {
+	//	if (type.equals(EnemyType.BASIC))
+	//		range = 50;
+	//	else
+	//		range = 20;
+	//}
 	
 	public void changeDirection() {
 		movingLeft = -1*movingLeft;
@@ -81,5 +81,14 @@ public class Enemy extends LevelObject{
 				break;
 		}
 		return eT;
+	}
+	
+	public void collideLeft(LevelObject lo){
+	    super.collideLeft(lo);
+	    changeDirection();
+	}
+	public void collideRight(LevelObject lo){
+	    super.collideRight(lo);
+	    changeDirection();
 	}
 }
