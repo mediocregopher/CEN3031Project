@@ -1,7 +1,10 @@
 package edu.ufl;
 
+import java.util.ArrayList;
+
 import android.graphics.Canvas;
 import edu.ufl.Sprite.SpriteType;
+import edu.ufl.Tile.TileType;
 
 public class Albert extends LevelObject {
 
@@ -72,4 +75,10 @@ public class Albert extends LevelObject {
         setCanJump(!controller.isJumpPressed());
     }
 
+    public LevelObject getFromArray (ArrayList<? extends LevelObject> toCollide, int i) {
+        LevelObject temp = toCollide.get(i);
+        if (((Tile)temp).getType().equals(TileType.AIBOUND))
+            return null;
+        return temp;
+    }
 }

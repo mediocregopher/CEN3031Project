@@ -194,7 +194,10 @@ public class Level {
         RectF objRectF = obj.getRectF();
         
         for (int i = 0; i < toCollide.size(); i++) {
-            LevelObject lo = toCollide.get(i);
+            LevelObject lo = obj.getFromArray(toCollide, i);
+            if (lo == null) {
+                continue;
+            }
             RectF collideRectF = lo.getRectF();
             switch (Util.intersect(objRectF, collideRectF)) {
             case NONE:
@@ -218,6 +221,7 @@ public class Level {
             }
         }
     }
+    
     
     private void albertEnemyCollision() {
         RectF albertRectF = albert.getRectF();

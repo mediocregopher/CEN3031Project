@@ -9,7 +9,8 @@ public class Tile extends LevelObject{
 
     public static enum TileType {
         AIR,
-        GROUND
+        GROUND,
+        AIBOUND
     }
 
     private static HashMap<TileType,Integer> tileTextures;

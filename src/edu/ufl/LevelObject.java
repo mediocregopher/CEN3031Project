@@ -1,5 +1,7 @@
 package edu.ufl;
 
+import java.util.ArrayList;
+
 import android.graphics.RectF;
 import android.graphics.Canvas;
 import android.graphics.Bitmap;
@@ -100,4 +102,7 @@ public class LevelObject {
         setDX(0);
     }
 
+    public LevelObject getFromArray (ArrayList<? extends LevelObject> toCollide, int i) {
+        return toCollide.get(i);
+    }
 }

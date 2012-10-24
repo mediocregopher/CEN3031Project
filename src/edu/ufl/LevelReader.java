@@ -75,6 +75,7 @@ public class LevelReader {
         TileType type;
         switch (c) {
             case '#': type = TileType.GROUND; break;
+            case '*': type = TileType.AIBOUND; break;
             default:  type = TileType.AIR;  break;
         }
         return type;
