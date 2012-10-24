@@ -26,15 +26,18 @@ public class Sprite {
     }};
 
     private Bitmap bitmap;
+    private Bitmap fbitmap;
     private SpriteType type;
     private float width;
     private float height;
 
     private boolean loop;
+    private boolean flipped = false;
     private ArrayList<Integer> framesper;
 
     private int curr = 0;
     private int currCount;
+    private int numFrames;
     private RectF mask;
 
     Sprite(SpriteType type) {
@@ -45,6 +48,7 @@ public class Sprite {
         JSONObject sjson = JSON.fileAsObject( spec.jsonid );
         this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
                                                     spec.drawableid );
+        this.fbitmap = Bitmap.createScaledBitmap(this.bitmap,-this.bitmap.getWidth(),this.bitmap.getHeight(),false);
         this.height = this.bitmap.getHeight();
 
         /* Get sprite width */
@@ -71,11 +75,20 @@ public class Sprite {
 
         this.currCount = this.framesper.get(0).intValue();
         this.mask = new RectF(0,0,this.width,this.height);
+        this.numFrames = this.framesper.size();
     }
 
     public float getWidth()  { return this.width;  }
     public float getHeight() { return this.height; }
-    public SpriteType getType() { return this.type; }
+    public boolean getFlipped() { return this.flipped; }
+    public SpriteType getType() { return this.type;    }
+
+
+    public void flip() { this.flipped = !this.flipped; }
+
+    /* These only work if the original sprite is "facing" right" */
+    public void faceRight() { if (this.flipped)  this.flip(); }
+    public void faceLeft()  { if (!this.flipped) this.flip(); }
 
     public void update() {
         /* If we're done running this frame of the sprite we need to figure out
@@ -84,7 +97,7 @@ public class Sprite {
             this.curr++;
 
             /* If we've gone through all the frames, check if we should loop */
-            if (this.curr == this.framesper.size()) {
+            if (this.curr == this.numFrames) {
                 if (this.loop) this.curr = 0;
                 else this.curr--;
             }
@@ -92,12 +105,15 @@ public class Sprite {
             this.currCount = this.framesper.get(this.curr).intValue();
         }
 
-        this.mask.offsetTo(this.curr*this.width,0);
+        /* Position mask based on whether or not we're flipped */
+        if (!this.flipped) this.mask.offsetTo(this.curr*this.width,0);
+        else               this.mask.offsetTo( (this.numFrames - this.curr - 1)*this.width, 0);
         this.currCount--;
     }
 
     public void draw(RectF rectf, Canvas canvas, Camera camera) {
-        camera.draw(this.mask,rectf,bitmap,canvas);
+        if (this.flipped) camera.draw(this.mask,rectf,this.fbitmap,canvas);
+        else              camera.draw(this.mask,rectf,this.bitmap, canvas);
     }
 
     /* 

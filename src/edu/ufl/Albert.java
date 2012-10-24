@@ -31,12 +31,12 @@ public class Albert extends LevelObject {
         this.controller = controller;
         
         if (!dead) {
-            if      (controller.isLeftPressed())  { dx = -SPEED; }
-            else if (controller.isRightPressed()) { dx =  SPEED; }
+            if      (controller.isLeftPressed())  { this.sprite.faceLeft();  dx = -SPEED; }
+            else if (controller.isRightPressed()) { this.sprite.faceRight(); dx =  SPEED; }
             else    { dx = 0; }
 
-            if (dx == 0) { this.changeSprite(SpriteType.ALBERT);         }
-            else {         this.changeSprite(SpriteType.ALBERT_WALKING); }
+            if (dx == 0) { this.changeSpriteKeepDirection(SpriteType.ALBERT);         }
+            else {         this.changeSpriteKeepDirection(SpriteType.ALBERT_WALKING); }
         
             if (controller.isSprinting()) { dx *= 2; }
 
@@ -61,7 +61,7 @@ public class Albert extends LevelObject {
         SoundManager.pauseMedia();
         SoundManager.playSound(4, 1.0f, false);
         // TODO: Decrement lives
-        this.changeSprite(SpriteType.ALBERT_DEAD);
+        this.changeSpriteKeepDirection(SpriteType.ALBERT_DEAD);
         dx = 0;
         dy = -JUMP_SPEED;
     }

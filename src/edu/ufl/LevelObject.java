@@ -70,6 +70,15 @@ public class LevelObject {
             this.sprite = new Sprite(stype);
         }
     }
+
+    protected void changeSpriteKeepDirection(SpriteType stype) {
+        if (this.sprite.getType() != stype) {
+            Sprite oldsprite = this.sprite;
+            this.sprite = new Sprite(stype);
+            if (oldsprite.getFlipped() != this.sprite.getFlipped()) 
+                this.sprite.flip();
+        }
+    }
     
     public void collideTop(LevelObject lo) {
         setY(lo.getRectF().top - getHeight());
