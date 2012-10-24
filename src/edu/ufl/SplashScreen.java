@@ -18,7 +18,7 @@ public class SplashScreen extends Activity {
         
         // Creates and loads SoundManager
         SoundManager.getInstance();
-        SoundManager.initSounds(this);
+        SoundManager.initSounds(this.getApplicationContext());
         SoundManager.loadSounds();
         SoundManager.loadMedia();
         

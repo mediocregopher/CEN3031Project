@@ -17,6 +17,7 @@ public class Tile extends LevelObject{
     static {
         tileTextures = new HashMap<TileType,Integer>(10); //Increase if we have over 10 tile types
         tileTextures.put(TileType.GROUND, R.drawable.ground_tile);
+        tileTextures.put(TileType.AIBOUND, R.drawable.ground_tile);
     }
 
     //Extra Members

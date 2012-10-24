@@ -59,9 +59,6 @@ public class Enemy extends LevelObject{
 	
 	public void update(){
 		//updates the movement of the enemies
-		if(Math.abs(getX() - orgX) >= this.range){
-			changeDirection();
-		}
 		setX(this.getX() + isMovingLeft());
 		
 		dy += Constants.GRAVITY;
