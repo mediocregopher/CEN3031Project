@@ -10,7 +10,7 @@ import android.widget.ListView;
 public class Menu extends ListActivity
 {
 	//basic startup menu
-	String classes[] = {"thegame", "Help", "Settings", "Level", "High Score"};
+	String classes[] = {"Play", "Help", "Settings", "Level", "High Score"};
 	
 	
     /* Called when the activity is first created. */
@@ -29,7 +29,27 @@ public class Menu extends ListActivity
     	String act = classes[position];
     	try{
     	super.onListItemClick(l, v, position, id);
-    	Class myClass = Class.forName("edu.ufl." + act);
+    	
+    	if(act.equals("Play")){
+    		Class myClass = Class.forName("edu.ufl.thegame");
+        	Intent intent = new Intent(Menu.this, myClass);
+        	SoundManager.pauseMedia();
+        	SoundManager.resetMedia();
+        	SoundManager.playSound(1, 1.0f, false);
+        	
+        	startActivity(intent);
+    	}
+    	
+    	else{
+    		Class myClass = Class.forName("edu.ufl." + act);
+        	Intent intent = new Intent(Menu.this, myClass);
+        	SoundManager.pauseMedia();
+        	SoundManager.resetMedia();
+        	SoundManager.playSound(1, 1.0f, false);
+        	
+        	startActivity(intent);
+    	}
+/*    	Class myClass = Class.forName("edu.ufl." + act);
     	Intent intent = new Intent(Menu.this, myClass);
     	
     	SoundManager.pauseMedia();
@@ -37,6 +57,7 @@ public class Menu extends ListActivity
     	SoundManager.playSound(1, 1.0f, false);
     	
     	startActivity(intent);
+ */
     } catch(ClassNotFoundException e){
     	e.printStackTrace();
     	}
