@@ -106,8 +106,8 @@ public class Sprite {
         }
 
         /* Position mask based on whether or not we're flipped */
-        if (!this.flipped) this.mask.offsetTo(this.curr*this.width,0);
-        else               this.mask.offsetTo( (this.numFrames - this.curr - 1)*this.width, 0);
+        if (!this.flipped) this.mask.offsetTo(this.curr*this.width+1,0);
+        else               this.mask.offsetTo( (this.numFrames - this.curr - 1)*this.width+1, 0);
         this.currCount--;
     }
 
