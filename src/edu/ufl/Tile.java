@@ -10,7 +10,8 @@ public class Tile extends LevelObject{
         AIR,
         GROUND,
         AIBOUND,
-        CHECKPOINT
+        CHECKPOINT,
+        LEVELEND
     }
 
     private static HashMap<TileType,Integer> tileTextures;
@@ -19,6 +20,7 @@ public class Tile extends LevelObject{
         tileTextures.put(TileType.GROUND, R.drawable.ground_tile);
         tileTextures.put(TileType.AIBOUND, R.drawable.blank_tile);
         tileTextures.put(TileType.CHECKPOINT, R.drawable.yellow_flag);
+        tileTextures.put(TileType.LEVELEND, R.drawable.red_flag);
     }
 
     //Extra Members

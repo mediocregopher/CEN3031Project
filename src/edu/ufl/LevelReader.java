@@ -77,6 +77,7 @@ public class LevelReader {
             case '#': type = TileType.GROUND; break;
             case '*': type = TileType.AIBOUND; break;
             case 'c': type = TileType.CHECKPOINT; break;
+            case 'f': type = TileType.LEVELEND; break;
             default:  type = TileType.AIR;  break;
         }
         return type;

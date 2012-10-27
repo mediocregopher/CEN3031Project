@@ -60,6 +60,9 @@ public class Level {
     private boolean needsReset = false;
     public boolean needsReset() { return needsReset; } 
 
+    private boolean isDone = false;
+    public boolean isDone() { return isDone; }
+
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
     private ArrayList<Tile> tilesToLookAt;
@@ -209,6 +212,10 @@ public class Level {
                 if (obj instanceof Albert) {
                     if (tile.getType() == TileType.CHECKPOINT) {
                         gotCheckpoint();                    
+                        continue;
+                    }
+                    else if (tile.getType() == TileType.LEVELEND) {
+                        isDone = true;
                         continue;
                     }
                 }

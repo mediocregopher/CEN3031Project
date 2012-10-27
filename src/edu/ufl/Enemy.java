@@ -87,6 +87,8 @@ public class Enemy extends LevelObject{
         Tile temp = toCollide.get(i);
         if (temp.getType().equals(TileType.CHECKPOINT))
             return null;
+        if (temp.getType().equals(TileType.LEVELEND))
+            return null;
         return temp;
     }
 }

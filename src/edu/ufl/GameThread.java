@@ -55,14 +55,12 @@ public class GameThread extends Thread {
 
     @Override
     public void run() {
-        long tickCount = 0L;
         GameLog.d("GameThread", "Starting game loop");
         while (running) {
             beginTime = System.currentTimeMillis();
 
             /* Begin actual game loop stuff */
 
-            tickCount++;
             Canvas c = null;
             try {
                 c = surfaceHolder.lockCanvas();
@@ -74,7 +72,15 @@ public class GameThread extends Thread {
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
                         setLevel(R.raw.level1);
-                    } else {
+                    }
+                    else if (level.isDone()) {
+                        //Should send back to main menu or something
+                        //running = false;
+                    	SoundManager.pauseMedia();
+                    	SoundManager.resetMedia();
+                        setLevel(R.raw.level1);
+                    }
+                    else {
                         draw(c);
                     }
                 }
@@ -102,7 +108,6 @@ public class GameThread extends Thread {
         }
         SoundManager.pauseMedia();
         SoundManager.resetMedia();
-        GameLog.d("GameThread", "Game loop executed " + tickCount + " times");
     }
 
     private void draw(Canvas canvas) {
