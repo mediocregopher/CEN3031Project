@@ -10,7 +10,7 @@ public class Albert extends LevelObject {
 
     // Physic constants
     private float SPEED = 200f/1000f;
-    private float JUMP_SPEED = 500f/1000f;
+    private float JUMP_SPEED = 610f/1000f;
 
     private GameController controller;
     private boolean canJump;
