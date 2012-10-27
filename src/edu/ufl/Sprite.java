@@ -79,6 +79,24 @@ public class Sprite {
         this.numFrames = this.framesper.size();
     }
 
+    /* Copy constructor */
+    Sprite(Sprite s) {
+        this.bitmap = s.bitmap;
+        this.fbitmap = s.fbitmap;
+        this.type = s.type;
+        this.width = s.width;
+        this.height = s.height;
+
+        this.loop = s.loop;
+        this.flipped = s.flipped;
+        this.framesper = s.framesper;
+
+        this.curr = s.curr;
+        this.currCount = s.currCount;
+        this.numFrames = s.numFrames;
+        this.mask = new RectF(s.mask);
+    }
+
     public float getWidth()  { return this.width;  }
     public float getHeight() { return this.height; }
     public boolean getFlipped() { return this.flipped; }

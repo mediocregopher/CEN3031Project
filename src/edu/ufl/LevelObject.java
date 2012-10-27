@@ -32,6 +32,16 @@ public class LevelObject {
     LevelObject(float x, float y, float w, float h) {
         this.initRectF(x,y,w,h);
     }
+    /* Copy constructor (fuckin java) */
+    LevelObject(LevelObject lo) {
+        this.initRectF(lo.x,lo.y,lo.w,lo.h);
+        this.dx = lo.dx;
+        this.dy = lo.dy;
+        this.bitmap = lo.bitmap;
+        if (lo.sprite != null) this.sprite = new Sprite(lo.sprite);
+        this.isHarmful = lo.isHarmful;
+        this.topHarmful = lo.topHarmful;
+    }
 
     public void initRectF(float x, float y, float w, float h) {
         this.x = x;
@@ -102,7 +112,7 @@ public class LevelObject {
         setDX(0);
     }
 
-    public LevelObject getFromArray (ArrayList<? extends LevelObject> toCollide, int i) {
+    public Tile getFromArray (ArrayList<Tile> toCollide, int i) {
         return toCollide.get(i);
     }
 }

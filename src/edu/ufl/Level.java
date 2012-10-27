@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.graphics.Bitmap;
 
 import edu.ufl.Tile.TileType;
+import edu.ufl.Util.IntersectRet;
 
 /*
 
@@ -51,9 +52,13 @@ public class Level {
     public  Albert albert;
     private Bitmap background;
     private Bitmap clouds;
-    private boolean finished = false;
+
+    private Tile   checkpoint;
+    private ArrayList<Enemy> checkpointEnemies;
+    private Albert checkpointAlbert;
     
-    public boolean isFinished() { return finished; } 
+    private boolean needsReset = false;
+    public boolean needsReset() { return needsReset; } 
 
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
@@ -117,7 +122,13 @@ public class Level {
 
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             if (albert.isDead()) {
-                finished = true;
+                if (this.checkpointAlbert != null) {
+                    this.albert = this.checkpointAlbert;
+                    this.enemies = this.checkpointEnemies;
+                }
+                else {
+                    needsReset = true;
+                }
             } else {
                 albert.kill();
             }
@@ -148,13 +159,13 @@ public class Level {
                 if (enemy != null) {
                     if (enemy.getX() > xstart*Tile.SIZE && enemy.getX() < xend*Tile.SIZE) {
                         enemy.update();
-                        collide(enemy,tilesToLookAt);
+                        tileCollide(enemy,tilesToLookAt);
                         enemiesToLookAt.add(enemy);
                     }
                 }
             }
 
-            collide(albert,tilesToLookAt);
+            tileCollide(albert,tilesToLookAt);
             
             albertEnemyCollision();
             
@@ -183,34 +194,42 @@ public class Level {
 		enemies.remove(e);
 	}
 	
-    private void collide(LevelObject obj, ArrayList<? extends LevelObject> toCollide) {
+    private void tileCollide(LevelObject obj, ArrayList<Tile> toCollide) {
         RectF objRectF = obj.getRectF();
         
         for (int i = 0; i < toCollide.size(); i++) {
-            LevelObject lo = obj.getFromArray(toCollide, i);
-            if (lo == null) {
+            Tile tile = obj.getFromArray(toCollide, i);
+            if (tile == null) {
                 continue;
             }
-            RectF collideRectF = lo.getRectF();
-            switch (Util.intersect(objRectF, collideRectF)) {
-            case NONE:
-                break;
 
-            case TOP:
-                obj.collideTop(lo);
-                break;
+            IntersectRet intret = Util.intersect(objRectF, tile.getRectF());
+            if (intret != IntersectRet.NONE) {
 
-            case BOTTOM:
-                obj.collideBottom(lo);
-                break;
+                if (obj instanceof Albert) {
+                    if (tile.getType() == TileType.CHECKPOINT) {
+                        gotCheckpoint();                    
+                        continue;
+                    }
+                }
 
-            case LEFT:
-                obj.collideLeft(lo);
-                break;
+                switch (intret) {
+                case TOP:
+                    obj.collideTop(tile);
+                    break;
 
-            case RIGHT:
-                obj.collideRight(lo);
-                break;
+                case BOTTOM:
+                    obj.collideBottom(tile);
+                    break;
+
+                case LEFT:
+                    obj.collideLeft(tile);
+                    break;
+
+                case RIGHT:
+                    obj.collideRight(tile);
+                    break;
+                }
             }
         }
     }
@@ -244,6 +263,14 @@ public class Level {
                 }
                 break;
             }
+        }
+    }
+
+    private void gotCheckpoint() {
+        this.checkpointAlbert = new Albert(this.albert);
+        this.checkpointEnemies = new ArrayList<Enemy>();
+        for (int i = 0; i < this.enemies.size(); i++) {
+            this.checkpointEnemies.add(new Enemy(this.enemies.get(i)));
         }
     }
     

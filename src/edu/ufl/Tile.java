@@ -9,7 +9,8 @@ public class Tile extends LevelObject{
     public static enum TileType {
         AIR,
         GROUND,
-        AIBOUND
+        AIBOUND,
+        CHECKPOINT
     }
 
     private static HashMap<TileType,Integer> tileTextures;
@@ -17,6 +18,7 @@ public class Tile extends LevelObject{
         tileTextures = new HashMap<TileType,Integer>(10); //Increase if we have over 10 tile types
         tileTextures.put(TileType.GROUND, R.drawable.ground_tile);
         tileTextures.put(TileType.AIBOUND, R.drawable.aibound);
+        tileTextures.put(TileType.CHECKPOINT, R.drawable.aibound);
     }
 
     //Extra Members
@@ -40,6 +42,12 @@ public class Tile extends LevelObject{
         else {
             this.initRectF(x,y,0,0);
         }
+    }
+
+    /* Copy constructor */
+    Tile(Tile t) {
+        super(t);
+        this.type = t.type;
     }
 
 }

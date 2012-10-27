@@ -29,6 +29,16 @@ public class Albert extends LevelObject {
         SPEED = ResourceManager.dpToPx(SPEED);
         JUMP_SPEED = ResourceManager.dpToPx(JUMP_SPEED);
     }
+
+    /* Copy Constructor */
+    Albert(Albert a) {
+        super(a);
+        this.controller = a.controller;
+        this.canJump = a.canJump;
+        this.dead = a.dead;
+        this.SPEED = a.SPEED;
+        this.JUMP_SPEED = a.JUMP_SPEED;
+    }
     
     public void update(GameController controller) {
         this.controller = controller;
@@ -98,9 +108,9 @@ public class Albert extends LevelObject {
         setCanJump(!controller.isJumpPressed());
     }
 
-    public LevelObject getFromArray (ArrayList<? extends LevelObject> toCollide, int i) {
-        LevelObject temp = toCollide.get(i);
-        if (((Tile)temp).getType().equals(TileType.AIBOUND))
+    public Tile getFromArray (ArrayList<Tile> toCollide, int i) {
+        Tile temp = toCollide.get(i);
+        if (temp.getType().equals(TileType.AIBOUND))
             return null;
         return temp;
     }

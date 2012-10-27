@@ -1,5 +1,8 @@
 package edu.ufl;
 
+import java.util.ArrayList;
+import edu.ufl.Tile.TileType;
+
 public class Enemy extends LevelObject{
 
 	public static enum EnemyType {
@@ -8,11 +11,8 @@ public class Enemy extends LevelObject{
     }
 
 	EnemyType type;
-	public float range;
 	public float movingLeft = -5; //moving left value with be negative else it will be moving right if it is positive
 	
-	public float orgX;
-
     private boolean isHarmful = true;
     private boolean topHarmful = false;
 
@@ -20,33 +20,29 @@ public class Enemy extends LevelObject{
 		this.type = findEnemyType(c);
         this.bitmap = ResourceManager.getBitmap(R.drawable.enemy);
         this.initRectF(x,y-bitmap.getHeight(),bitmap.getWidth(),bitmap.getHeight());
-        this.orgX = getX();
-      //  this.setX(x);
-      //  this.setY(y);
 		
         if (type.equals(EnemyType.TOP))
             topHarmful = true;
-		//determineRange();
 	}
+
+    /* Copy Constructor */
+    public Enemy(Enemy e) {
+        super(e);
+        this.type = e.type;
+        this.isHarmful  = e.isHarmful;
+        this.topHarmful = e.topHarmful;
+    }
 	
 	public EnemyType getEnemyType() { return type;}
-	public float getRange() { return range; }
 	public float isMovingLeft() { return movingLeft; }
 	public boolean getIsHarmful() { return isHarmful; }
 	public boolean getTopHarmful() { return topHarmful; }
 
 	
 	public void setEnemyType(EnemyType type) { this.type = type; }
-	public void setRange(float range) { this.range = range; }
 	public void setDirection(float movingLeft) { this.movingLeft = movingLeft; }
 	
-	//public void determineRange() {
-	//	if (type.equals(EnemyType.BASIC))
-	//		range = 50;
-	//	else
-	//		range = 20;
-	//}
-	
+
 	public void changeDirection() {
 		movingLeft = -1*movingLeft;
 	}
@@ -86,4 +82,11 @@ public class Enemy extends LevelObject{
 	    super.collideRight(lo);
 	    changeDirection();
 	}
+
+    public Tile getFromArray (ArrayList<Tile> toCollide, int i) {
+        Tile temp = toCollide.get(i);
+        if (temp.getType().equals(TileType.CHECKPOINT))
+            return null;
+        return temp;
+    }
 }

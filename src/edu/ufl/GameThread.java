@@ -70,7 +70,7 @@ public class GameThread extends Thread {
                     // IF running - and not paused
                     update();
                     // END IF
-                    if (level.isFinished()) {
+                    if (level.needsReset()) {
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
                         setLevel(R.raw.level1);
