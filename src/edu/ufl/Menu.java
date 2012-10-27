@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class Menu extends Activity
 {
@@ -16,24 +17,15 @@ public class Menu extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 		addListenerOnButton();
-		
-		// Plays go_gators_studio
- //       SoundManager.playMedia(3);
-        
 		}
  
 	public void addListenerOnButton() {
-		imageButton = (ImageButton) findViewById(R.id.playbutton);
-		
+		imageButton = (ImageButton) findViewById(R.id.playbutton);		
 		imageButton.setOnClickListener(new OnClickListener() {
- 
 			public void onClick(View arg0) {
 				try{
 					Class myClass = Class.forName("edu.ufl.thegame");
 					Intent intent = new Intent(Menu.this, myClass);
-	//				SoundManager.pauseMedia();
-	//				SoundManager.resetMedia();
-	//				SoundManager.playSound(1, 1.0f, false);
 					startActivity(intent);
 				}
 				catch(ClassNotFoundException e){
@@ -42,18 +34,24 @@ public class Menu extends Activity
 //			  		Toast.makeText(Menu.this,"Play Button is Clicked", Toast.LENGTH_SHORT).show();
 				}
 			});
+		
+		imageButton = (ImageButton) findViewById(R.id.helpbutton);		
+		imageButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {				
+			  	Toast.makeText(Menu.this,"Use right and left side of touchscreen to navigate. Use bottom middle part of toughscreen to jump.", 
+			  			Toast.LENGTH_SHORT).show();
+				}
+			});
  
 		}
 
     @Override
     protected void onPause(){
-   // 	SoundManager.pauseMedia();
     	super.onPause();
     }
     
     @Override
     protected void onStop() {
     	super.onStop();
-  //  	SoundManager.resetMedia();
     }    
 }
