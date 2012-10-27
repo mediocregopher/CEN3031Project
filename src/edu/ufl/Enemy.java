@@ -1,7 +1,5 @@
 package edu.ufl;
 
-import android.graphics.BitmapFactory;
-
 public class Enemy extends LevelObject{
 
 	public static enum EnemyType {
@@ -20,7 +18,7 @@ public class Enemy extends LevelObject{
 
 	public Enemy (float x, float y, char c) {
 		this.type = findEnemyType(c);
-		this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.enemy );
+        this.bitmap = ResourceManager.getBitmap(R.drawable.enemy);
         this.initRectF(x,y-bitmap.getHeight(),bitmap.getWidth(),bitmap.getHeight());
         this.orgX = getX();
       //  this.setX(x);

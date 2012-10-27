@@ -1,7 +1,6 @@
 package edu.ufl;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import java.util.HashMap;
@@ -49,9 +48,8 @@ public class Sprite {
         SpriteSpec spec = Sprite.spriteSpecs.get(type);
 
         JSONObject sjson = JSON.fileAsObject( spec.jsonid );
-        this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
-                                                    spec.drawableid );
-        this.fbitmap = Bitmap.createScaledBitmap(this.bitmap,-this.bitmap.getWidth(),this.bitmap.getHeight(),false);
+        this.bitmap = ResourceManager.getBitmap(spec.drawableid);
+        this.fbitmap = ResourceManager.getBitmapFlipped(spec.drawableid);
         this.height = this.bitmap.getHeight();
 
         /* Get sprite width */

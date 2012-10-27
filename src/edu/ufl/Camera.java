@@ -1,6 +1,5 @@
 package edu.ufl;
 
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Rect;

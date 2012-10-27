@@ -1,7 +1,6 @@
 package edu.ufl;
 
 import java.util.HashMap;
-import android.graphics.BitmapFactory;
 
 public class Tile extends LevelObject{
 
@@ -29,8 +28,7 @@ public class Tile extends LevelObject{
     Tile(TileType t, float x, float y) {
         this.type = t;
         if (t != TileType.AIR) {
-            this.bitmap = BitmapFactory.decodeResource( ResourceManager.getResources(),
-                                                        Tile.tileTextures.get(t).intValue() );
+            this.bitmap = ResourceManager.getBitmap( Tile.tileTextures.get(t).intValue() );
             this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
 
             /*

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import edu.ufl.Tile.TileType;
 
@@ -75,13 +74,8 @@ public class Level {
         this.maxY = maxY;
         this.albert = albert;
 
-        BitmapFactory.Options options = new BitmapFactory.Options(); 
-        options.inPurgeable = true;
-        this.background = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.background, options );
-        
-        options = new BitmapFactory.Options(); 
-        options.inPurgeable = true;
-        this.clouds = BitmapFactory.decodeResource( ResourceManager.getResources(), R.drawable.clouds, options);
+        this.background = ResourceManager.getBitmap(R.drawable.background);
+        this.clouds = ResourceManager.getBitmap(R.drawable.clouds);
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
