@@ -2,7 +2,9 @@
     "spritewidth": 78,
     "loop": true,
     "framesper": [
-        10,
-        10 
+        4,
+        3,
+        4,
+        3
     ]
 }
