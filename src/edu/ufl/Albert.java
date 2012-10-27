@@ -76,6 +76,10 @@ public class Albert extends LevelObject {
                    dy = -JUMP_SPEED;
                    SoundManager.playSound(2, 1.5f, false);
             }
+
+            if (dy != 0) {
+                this.changeSpriteKeepDirection(SpriteType.ALBERT_FALLING);
+            }
         }
 
         dy += Constants.GRAVITY;

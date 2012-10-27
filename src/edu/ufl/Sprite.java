@@ -13,7 +13,8 @@ public class Sprite {
         ALBERT,
         ALBERT_WALKING,
         ALBERT_SPRINTING,
-        ALBERT_DEAD
+        ALBERT_DEAD,
+        ALBERT_FALLING
     }
 
     private final static HashMap<SpriteType,SpriteSpec> spriteSpecs = new HashMap<SpriteType,SpriteSpec>() {{
@@ -25,6 +26,8 @@ public class Sprite {
                                                           R.raw.albert_sprinting_sprite ));
         put( SpriteType.ALBERT_DEAD,      new SpriteSpec( R.drawable.albert_dead,
                                                           R.raw.albert_dead_sprite ));
+        put( SpriteType.ALBERT_FALLING,   new SpriteSpec( R.drawable.albert_falling,
+                                                          R.raw.albert_sprite ));
     }};
 
     private Bitmap bitmap;
