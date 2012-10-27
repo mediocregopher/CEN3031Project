@@ -34,14 +34,25 @@ public class Albert extends LevelObject {
         this.controller = controller;
         
         if (!dead) {
-            if      (controller.isLeftPressed())  { this.sprite.faceLeft();  dx = -SPEED; }
-            else if (controller.isRightPressed()) { this.sprite.faceRight(); dx =  SPEED; }
-            else    { dx = 0; }
+            /* If left pressed, face left */
+            if (controller.isLeftPressed())  { 
+                dx = -SPEED;
+                this.sprite.faceLeft();
+                this.handleMovementSpritesAndSprinting(controller);
+            }
 
-            if (dx == 0) { this.changeSpriteKeepDirection(SpriteType.ALBERT);         }
-            else {         this.changeSpriteKeepDirection(SpriteType.ALBERT_WALKING); }
-        
-            if (controller.isSprinting()) { dx *= 2; }
+            /* If right pressed, face right */
+            else if (controller.isRightPressed()) {
+                dx = SPEED;
+                this.sprite.faceRight();
+                this.handleMovementSpritesAndSprinting(controller);
+            }
+
+            /* Otherwise, stand still */
+            else {
+                this.changeSpriteKeepDirection(SpriteType.ALBERT);
+                dx = 0;
+            }
 
             if (controller.isJumpPressed() && canJump) { 
                    dy = -JUMP_SPEED;
@@ -53,6 +64,18 @@ public class Albert extends LevelObject {
         this.setX(rectf.left + dx * Constants.FPS_PERIOD);
         this.setY(rectf.top  + dy * Constants.FPS_PERIOD);
         this.sprite.update(); 
+    }
+
+    /* We have to do this when either isLeftPressed() or isRightPressed(),
+     * figured I might as well stick it in a function
+     */
+    private void handleMovementSpritesAndSprinting(GameController controller) {
+        if (controller.isSprinting()) {
+            dx *= 2; 
+            this.changeSpriteKeepDirection(SpriteType.ALBERT_SPRINTING);
+        }
+        else 
+            this.changeSpriteKeepDirection(SpriteType.ALBERT_WALKING);
     }
 
     public void draw(Canvas canvas, Camera camera) {

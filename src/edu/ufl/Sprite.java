@@ -13,16 +13,19 @@ public class Sprite {
     public static enum SpriteType {
         ALBERT,
         ALBERT_WALKING,
+        ALBERT_SPRINTING,
         ALBERT_DEAD
     }
 
     private final static HashMap<SpriteType,SpriteSpec> spriteSpecs = new HashMap<SpriteType,SpriteSpec>() {{
-        put( SpriteType.ALBERT,         new SpriteSpec( R.drawable.albert,
-                                                        R.raw.albert_sprite ));
-        put( SpriteType.ALBERT_WALKING, new SpriteSpec( R.drawable.albert_walking,
-                                                        R.raw.albert_walking_sprite ));
-        put( SpriteType.ALBERT_DEAD,    new SpriteSpec( R.drawable.albert_dead,
-                                                        R.raw.albert_dead_sprite ));
+        put( SpriteType.ALBERT,           new SpriteSpec( R.drawable.albert,
+                                                          R.raw.albert_sprite ));
+        put( SpriteType.ALBERT_WALKING,   new SpriteSpec( R.drawable.albert_walking,
+                                                          R.raw.albert_walking_sprite ));
+        put( SpriteType.ALBERT_SPRINTING, new SpriteSpec( R.drawable.albert_walking,
+                                                          R.raw.albert_sprinting_sprite ));
+        put( SpriteType.ALBERT_DEAD,      new SpriteSpec( R.drawable.albert_dead,
+                                                          R.raw.albert_dead_sprite ));
     }};
 
     private Bitmap bitmap;
