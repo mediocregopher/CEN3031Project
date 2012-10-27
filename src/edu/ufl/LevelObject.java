@@ -28,6 +28,8 @@ public class LevelObject {
     protected boolean isHarmful = false;
     protected boolean topHarmful = false;
 
+    protected boolean facingLeft = false;
+
     LevelObject() { /* Don't do shit */ }
     LevelObject(float x, float y, float w, float h) {
         this.initRectF(x,y,w,h);
@@ -41,6 +43,7 @@ public class LevelObject {
         if (lo.sprite != null) this.sprite = new Sprite(lo.sprite);
         this.isHarmful = lo.isHarmful;
         this.topHarmful = lo.topHarmful;
+        this.facingLeft = lo.facingLeft;
     }
 
     public void initRectF(float x, float y, float w, float h) {
@@ -65,9 +68,21 @@ public class LevelObject {
     public float getHeight() { return h;  }
 	
     public RectF getRectF() { return rectf; }
+    public RectF getHitbox() { return getRectF(); }
     
     public boolean getIsHarmful() { return isHarmful; }
     public boolean getTopHarmful() { return topHarmful; }
+
+    public boolean getFacingLeft() { return facingLeft; }
+    public boolean getFacingRight() { return !facingLeft; }
+    public void faceLeft() { 
+        if (sprite != null) { sprite.faceLeft(); }
+        facingLeft = true; 
+    }
+    public void faceRight() {
+        if (sprite != null) { sprite.faceRight(); }
+        facingLeft = false;
+    }
 
     public void draw(Canvas canvas, Camera camera) {
         camera.draw(null,this.getRectF(),bitmap,canvas);

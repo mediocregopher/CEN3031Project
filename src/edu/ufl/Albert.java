@@ -2,6 +2,7 @@ package edu.ufl;
 
 import java.util.ArrayList;
 
+import android.graphics.RectF;
 import android.graphics.Canvas;
 import edu.ufl.Sprite.SpriteType;
 import edu.ufl.Tile.TileType;
@@ -11,10 +12,13 @@ public class Albert extends LevelObject {
     // Physic constants
     private float SPEED = 200f/1000f;
     private float JUMP_SPEED = 610f/1000f;
+    private float ALBERT_TAIL = 20f;
 
     private GameController controller;
     private boolean canJump;
     private boolean dead = false;
+
+    private RectF hitbox;
 
     public float getJumpSpeed() { return JUMP_SPEED; }
     public void setCanJump(boolean canJump) { this.canJump = canJump; }
@@ -22,12 +26,14 @@ public class Albert extends LevelObject {
     public boolean isDead() { return dead; }
 
     Albert(float x, float y) {
-        this.sprite = new Sprite(SpriteType.ALBERT);
-        this.initRectF(x,y,this.sprite.getWidth(),this.sprite.getHeight());
-
         //Scale *SPEED's
         SPEED = ResourceManager.dpToPx(SPEED);
         JUMP_SPEED = ResourceManager.dpToPx(JUMP_SPEED);
+        ALBERT_TAIL = ResourceManager.dpToPx(ALBERT_TAIL);
+
+        this.sprite = new Sprite(SpriteType.ALBERT);
+        this.initRectF(x,y,this.sprite.getWidth(),this.sprite.getHeight());
+        this.hitbox = new RectF(x+ALBERT_TAIL,y,x+this.sprite.getWidth(),y+this.sprite.getHeight());
     }
 
     /* Copy Constructor */
@@ -36,25 +42,27 @@ public class Albert extends LevelObject {
         this.controller = a.controller;
         this.canJump = a.canJump;
         this.dead = a.dead;
+        this.hitbox = new RectF(a.hitbox);
         this.SPEED = a.SPEED;
         this.JUMP_SPEED = a.JUMP_SPEED;
+        this.ALBERT_TAIL = a.ALBERT_TAIL;
     }
     
     public void update(GameController controller) {
         this.controller = controller;
-        
+
         if (!dead) {
             /* If left pressed, face left */
             if (controller.isLeftPressed())  { 
                 dx = -SPEED;
-                this.sprite.faceLeft();
+                this.faceLeft();
                 this.handleMovementSpritesAndSprinting(controller);
             }
 
             /* If right pressed, face right */
             else if (controller.isRightPressed()) {
                 dx = SPEED;
-                this.sprite.faceRight();
+                this.faceRight();
                 this.handleMovementSpritesAndSprinting(controller);
             }
 
@@ -71,9 +79,10 @@ public class Albert extends LevelObject {
         }
 
         dy += Constants.GRAVITY;
-        this.setX(rectf.left + dx * Constants.FPS_PERIOD);
-        this.setY(rectf.top  + dy * Constants.FPS_PERIOD);
+        this.setX(x + dx * Constants.FPS_PERIOD);
+        this.setY(y + dy * Constants.FPS_PERIOD);
         this.sprite.update(); 
+
     }
 
     /* We have to do this when either isLeftPressed() or isRightPressed(),
@@ -87,6 +96,25 @@ public class Albert extends LevelObject {
         else 
             this.changeSpriteKeepDirection(SpriteType.ALBERT_WALKING);
     }
+
+    @Override
+    public RectF getHitbox() { return hitbox; }
+
+    @Override 
+    public void setX(float x) {
+        super.setX(x);
+        if (getFacingLeft())
+            this.hitbox.offsetTo(x,this.y);
+        else
+            this.hitbox.offsetTo(x+ALBERT_TAIL,this.y);
+    }
+
+    @Override
+    public void setY(float y) {
+        super.setY(y);
+        this.hitbox.offsetTo(this.hitbox.left,y);
+    }
+
 
     public void draw(Canvas canvas, Camera camera) {
         sprite.draw(this.getRectF(),canvas,camera);

@@ -198,7 +198,7 @@ public class Level {
 	}
 	
     private void tileCollide(LevelObject obj, ArrayList<Tile> toCollide) {
-        RectF objRectF = obj.getRectF();
+        RectF objRectF = obj.getHitbox();
         
         for (int i = 0; i < toCollide.size(); i++) {
             Tile tile = obj.getFromArray(toCollide, i);
@@ -243,9 +243,9 @@ public class Level {
     
     
     private void albertEnemyCollision() {
-        RectF albertRectF = albert.getRectF();
+        RectF albertRectF = albert.getHitbox();
         for (int i = 0; i < enemiesToLookAt.size(); i++) {
-            RectF enemyRectF = enemiesToLookAt.get(i).getRectF();
+            RectF enemyRectF = enemiesToLookAt.get(i).getHitbox();
             switch (Util.intersect(albertRectF, enemyRectF)) {
             case NONE: break;
 
