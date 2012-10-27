@@ -1,11 +1,11 @@
 package edu.ufl;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 public class Menu extends Activity
 {
@@ -16,6 +16,10 @@ public class Menu extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 		addListenerOnButton();
+		
+		// Plays go_gators_studio
+ //       SoundManager.playMedia(3);
+        
 		}
  
 	public void addListenerOnButton() {
@@ -24,7 +28,18 @@ public class Menu extends Activity
 		imageButton.setOnClickListener(new OnClickListener() {
  
 			public void onClick(View arg0) {
-			   Toast.makeText(Menu.this,"Play Button is Clicked", Toast.LENGTH_SHORT).show();
+				try{
+					Class myClass = Class.forName("edu.ufl.thegame");
+					Intent intent = new Intent(Menu.this, myClass);
+	//				SoundManager.pauseMedia();
+	//				SoundManager.resetMedia();
+	//				SoundManager.playSound(1, 1.0f, false);
+					startActivity(intent);
+				}
+				catch(ClassNotFoundException e){
+			    	e.printStackTrace();
+			    	}
+//			  		Toast.makeText(Menu.this,"Play Button is Clicked", Toast.LENGTH_SHORT).show();
 				}
 			});
  
@@ -32,13 +47,13 @@ public class Menu extends Activity
 
     @Override
     protected void onPause(){
-    	SoundManager.pauseMedia();
+   // 	SoundManager.pauseMedia();
     	super.onPause();
     }
     
     @Override
     protected void onStop() {
     	super.onStop();
-    	SoundManager.resetMedia();
+  //  	SoundManager.resetMedia();
     }    
 }
