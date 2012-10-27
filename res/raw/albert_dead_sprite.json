@@ -1,7 +1,14 @@
 {
-    "spritewidth": 78,
+    "spritewidth": 108,
     "loop": true,
     "framesper": [
-        1024
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
     ]
 }

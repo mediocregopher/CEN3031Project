@@ -129,6 +129,13 @@ public class Albert extends LevelObject {
         SoundManager.pauseMedia();
         SoundManager.playSound(4, 1.0f, false);
         // TODO: Decrement lives
+        //Change size of rect for death animation. Doesn't really matter at this point
+        this.rectf.set(
+            this.rectf.left,
+            this.rectf.top,
+            this.rectf.left + ResourceManager.dpToPx(108),
+            this.rectf.top  + ResourceManager.dpToPx(108)
+        );
         this.changeSpriteKeepDirection(SpriteType.ALBERT_DEAD);
         dx = 0;
         dy = -JUMP_SPEED;
