@@ -132,8 +132,7 @@ public class Level {
 
             int xstart = (int)( camera.getX()/Tile.SIZE);
             if (xstart - UPDATE_OFFSET >=0) xstart -= UPDATE_OFFSET;
-            int xend   = xstart + (int)( (camera.getX()+gamePanel.getWidth()) / Tile.SIZE) + UPDATE_OFFSET;
-
+            int xend   = xstart + (int)( ((float)gamePanel.getWidth()) / Tile.SIZE) + UPDATE_OFFSET*2;
 
             for (int i=xstart; i<=xend; i++) {
                 for (int j=0; j<getMaxY(); j++) {
