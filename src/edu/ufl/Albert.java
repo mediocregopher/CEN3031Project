@@ -153,4 +153,16 @@ public class Albert extends LevelObject {
             return null;
         return temp;
     }
+    
+    public RectF attack() {
+        RectF attackLine;
+        if (this.facingLeft) {
+            attackLine = new RectF(hitbox.left-5, hitbox.top, hitbox.left, hitbox.top-5);
+        }
+        else {
+            attackLine = new RectF(hitbox.right, hitbox.top, hitbox.right+5, hitbox.top-5);
+        }
+        return attackLine; //creating area of attack, change the numbers to calibrate it 
+    }
+    
 }

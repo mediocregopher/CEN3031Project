@@ -108,7 +108,8 @@ public class Level {
 	}
     public void update(GamePanel gamePanel, Camera camera) {
         albert.update(gamePanel.controller);
-
+        
+        
         // get level dimensions
         int MAX_X = getMaxPixelsX();
         int MAX_Y = getMaxPixelsY();
@@ -167,7 +168,16 @@ public class Level {
                     }
                 }
             }
-
+            // attack for albert after enemies have moved
+            if (gamePanel.controller.isAttackPressed()) {
+                RectF attackLine = albert.attack();
+                for (int i = 0; i < enemiesToLookAt.size(); i++) {
+                    if (enemies.get(i).rectf.intersect(attackLine)) {
+                        killEnemy(enemies.get(i));
+                    }
+                }
+            }
+            
             tileCollide(albert,tilesToLookAt);
             
             albertEnemyCollision();
