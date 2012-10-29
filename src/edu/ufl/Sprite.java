@@ -31,7 +31,6 @@ public class Sprite {
     }};
 
     private Bitmap bitmap;
-    private Bitmap fbitmap;
     private SpriteType type;
     private float width;
     private float height;
@@ -52,7 +51,6 @@ public class Sprite {
 
         JSONObject sjson = JSON.fileAsObject( spec.jsonid );
         this.bitmap = ResourceManager.getBitmap(spec.drawableid);
-        this.fbitmap = ResourceManager.getBitmapFlipped(spec.drawableid);
         this.height = this.bitmap.getHeight();
 
         /* Get sprite width */
@@ -85,7 +83,6 @@ public class Sprite {
     /* Copy constructor */
     Sprite(Sprite s) {
         this.bitmap = s.bitmap;
-        this.fbitmap = s.fbitmap;
         this.type = s.type;
         this.width = s.width;
         this.height = s.height;
@@ -128,13 +125,12 @@ public class Sprite {
         }
 
         /* Position mask based on whether or not we're flipped */
-        if (!this.flipped) this.mask.offsetTo(this.curr*this.width,0);
-        else               this.mask.offsetTo( (this.numFrames - this.curr - 1)*this.width, 0);
+        this.mask.offsetTo(this.curr*this.width,0);
         this.currCount--;
     }
 
     public void draw(RectF rectf, Canvas canvas, Camera camera) {
-        if (this.flipped) camera.draw(this.mask,rectf,this.fbitmap,canvas);
+        if (this.flipped) camera.drawFlipped(this.mask,rectf,this.bitmap,canvas);
         else              camera.draw(this.mask,rectf,this.bitmap, canvas);
     }
 

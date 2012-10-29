@@ -48,6 +48,13 @@ class Camera {
             canvas.drawBitmap(bitmap,src,dst,null);
         }
     }
+    
+    public void drawFlipped(RectF mask, RectF loRectF, Bitmap bitmap, Canvas canvas) {
+        canvas.save();
+        canvas.scale(-1.0f, 1.0f,loRectF.left+loRectF.width()/2-x, loRectF.bottom);
+        draw(mask, loRectF, bitmap, canvas);
+        canvas.restore();
+    }
 
     public void drawRectF(RectF loRectF, Canvas canvas) {
         Paint color  = new Paint();

@@ -54,7 +54,7 @@ public class ResourceManager {
         BitmapPair b = ResourceManager.bitmaps.get(drawableid);
         if (b == null) {
             b = new BitmapPair(drawableid);
-            ResourceManager.bitmaps.put(new Integer(drawableid), b);
+            ResourceManager.bitmaps.put(Integer.valueOf(drawableid), b);
         }
         return b;
     }
@@ -63,27 +63,17 @@ public class ResourceManager {
         return ResourceManager.getBitmapPair(drawableid).original;
     }
 
-    public static Bitmap getBitmapFlipped(int drawableid) {
-        return ResourceManager.getBitmapPair(drawableid).flipped;
-    }
-
     /* Given a drawable id, stores both the original bitmap representation
      * and a copy which is flipped across the y-axis
      */
     private static class BitmapPair {
         private static BitmapFactory.Options defaultOptions = new BitmapFactory.Options() {{
             inPurgeable = true;
+            inInputShareable = true;
         }};
         public final Bitmap original;
-        public final Bitmap flipped;
         public BitmapPair(int drawableid) {
             this.original = BitmapFactory.decodeResource( ResourceManager.getResources(), drawableid, defaultOptions );
-            this.flipped  = Bitmap.createScaledBitmap(
-                                this.original,
-                                -this.original.getWidth(),
-                                this.original.getHeight(),
-                                false
-                            );
         }
     }
 }
