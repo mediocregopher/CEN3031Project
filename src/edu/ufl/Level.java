@@ -123,6 +123,9 @@ public class Level {
                 if (this.checkpointAlbert != null) {
                     this.albert = this.checkpointAlbert;
                     this.enemies = this.checkpointEnemies;
+                    SoundManager.pauseMedia();
+                    SoundManager.resetMedia();
+                    SoundManager.playMedia(2);
                 }
                 else {
                     needsReset = true;
