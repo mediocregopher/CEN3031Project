@@ -63,6 +63,9 @@ public class Level {
     private boolean isDone = false;
     public boolean isDone() { return isDone; }
 
+    private static final int ATTACK_FREQUENCY = (int)Constants.FPS; //Can only attack every second
+    private int lastAttack = 0;
+
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
     private ArrayList<Tile> tilesToLookAt;
@@ -97,15 +100,6 @@ public class Level {
         return ret;
     }
 	
-	public Enemy get(int X, boolean t) {
-		Enemy ret;
-		try {
-			ret = enemies.get(X);
-		} catch (IndexOutOfBoundsException e) {
-			ret = null;
-		}
-		return ret;
-	}
     public void update(GamePanel gamePanel, Camera camera) {
         albert.update(gamePanel.controller);
         
@@ -158,25 +152,28 @@ public class Level {
 
             enemiesToLookAt = new ArrayList<Enemy>();
 
-            for (int i = 0; i <= enemies.size(); i++) {
-                Enemy enemy = get(i,true);
-                if (enemy != null) {
-                    if (enemy.getX() > xstart*Tile.SIZE && enemy.getX() < xend*Tile.SIZE) {
-                        enemy.update();
-                        tileCollide(enemy,tilesToLookAt);
-                        enemiesToLookAt.add(enemy);
-                    }
+            for (int i = 0; i < enemies.size(); i++) {
+                Enemy enemy = enemies.get(i);
+                if (enemy.getX() > xstart*Tile.SIZE && enemy.getX() < xend*Tile.SIZE) {
+                    enemy.update();
+                    tileCollide(enemy,tilesToLookAt);
+                    enemiesToLookAt.add(enemy);
                 }
             }
             // attack for albert after enemies have moved
-            if (gamePanel.controller.isAttackPressed()) {
+            if (gamePanel.controller.isAttackPressed() && lastAttack == 0) {
                 GameLog.d("Level","Attack pressed");
+                lastAttack = ATTACK_FREQUENCY;
                 RectF attackHitbox = albert.attackHitbox();
                 for (int i = 0; i < enemiesToLookAt.size(); i++) {
-                    if (RectF.intersects(enemies.get(i).getRectF(), attackHitbox)) {
-                        killEnemy(enemies.get(i));
+                    if (RectF.intersects(enemiesToLookAt.get(i).getRectF(), attackHitbox)) {
+                        GameLog.d("Level","Killing enemy");
+                        killEnemy(enemiesToLookAt.get(i));
                     }
                 }
+            }
+            else if (lastAttack != 0) {
+                lastAttack--;
             }
             
             tileCollide(albert,tilesToLookAt);
@@ -201,10 +198,12 @@ public class Level {
     }
 	
 	public void killEnemy(int index) {
+        enemiesToLookAt.remove(enemies.get(index));
 		enemies.remove(index);
 	}
 	
 	public void killEnemy(Enemy e) {
+        enemiesToLookAt.remove(e);
 		enemies.remove(e);
 	}
 	
