@@ -19,7 +19,7 @@ public class Enemy extends LevelObject{
 	public Enemy (float x, float y, char c) {
 		this.type = findEnemyType(c);
         this.bitmap = ResourceManager.getBitmap(R.drawable.enemy);
-        this.initRectF(x,y-bitmap.getHeight(),bitmap.getWidth(),bitmap.getHeight());
+        this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
 		
         if (type.equals(EnemyType.TOP))
             topHarmful = true;

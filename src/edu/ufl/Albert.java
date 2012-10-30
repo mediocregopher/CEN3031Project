@@ -13,6 +13,7 @@ public class Albert extends LevelObject {
     private float SPEED = 200f/1000f;
     private float JUMP_SPEED = 610f/1000f;
     private float ALBERT_TAIL = 20f;
+    private float ALBERT_ATTACK_RANGE = 50f;
 
     private GameController controller;
     private boolean canJump;
@@ -30,6 +31,7 @@ public class Albert extends LevelObject {
         SPEED = ResourceManager.dpToPx(SPEED);
         JUMP_SPEED = ResourceManager.dpToPx(JUMP_SPEED);
         ALBERT_TAIL = ResourceManager.dpToPx(ALBERT_TAIL);
+        ALBERT_ATTACK_RANGE = ResourceManager.dpToPx(ALBERT_ATTACK_RANGE);
 
         this.sprite = new Sprite(SpriteType.ALBERT);
         this.initRectF(x,y,this.sprite.getWidth(),this.sprite.getHeight());
@@ -46,6 +48,7 @@ public class Albert extends LevelObject {
         this.SPEED = a.SPEED;
         this.JUMP_SPEED = a.JUMP_SPEED;
         this.ALBERT_TAIL = a.ALBERT_TAIL;
+        this.ALBERT_ATTACK_RANGE = a.ALBERT_ATTACK_RANGE;
     }
     
     public void update(GameController controller) {
@@ -154,15 +157,15 @@ public class Albert extends LevelObject {
         return temp;
     }
     
-    public RectF attack() {
-        RectF attackLine;
+    public RectF attackHitbox() {
+        RectF attackHitbox;
         if (this.facingLeft) {
-            attackLine = new RectF(hitbox.left-5, hitbox.top, hitbox.left, hitbox.top-5);
+            attackHitbox = new RectF(hitbox.left-ALBERT_ATTACK_RANGE, hitbox.top, hitbox.left, hitbox.top+ALBERT_ATTACK_RANGE);
         }
         else {
-            attackLine = new RectF(hitbox.right, hitbox.top, hitbox.right+5, hitbox.top-5);
+            attackHitbox = new RectF(hitbox.right, hitbox.top, hitbox.right+ALBERT_ATTACK_RANGE, hitbox.top+ALBERT_ATTACK_RANGE);
         }
-        return attackLine; //creating area of attack, change the numbers to calibrate it 
+        return attackHitbox; //creating area of attack, change the numbers to calibrate it 
     }
     
 }

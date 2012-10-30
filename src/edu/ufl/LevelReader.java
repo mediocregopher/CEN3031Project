@@ -18,11 +18,10 @@ public class LevelReader {
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         ArrayList<Tile> row = new ArrayList<Tile>();
 
-        //Declare an albert, put him in a precarious place
+        //Declare objects to preload their image sizes
         Albert albert = new Albert(50,50);
-
-        //Declare a new tiletype to initialize the Tile.SIZE variable
         new Tile(TileType.GROUND,0,0);
+        Enemy enemy = new Enemy(0,0,'e');
 
         while ((i = fh.read()) != -1) {
             char c = (char)i;
@@ -41,15 +40,27 @@ public class LevelReader {
                     //ALBERT!
                     case 'a':
                         albert.setX(x*Tile.SIZE);
-                        albert.setY(y*Tile.SIZE-(albert.getHeight() - Tile.SIZE - 5));
+                        albert.setY(y*Tile.SIZE-(albert.getHeight() - Tile.SIZE));
                         break;
                         
 					case 'e':
-						enemyCase(c, enemies, x, y);
+                        enemies.add(
+                            new Enemy(
+                                x*Tile.SIZE, 
+                                y*(Tile.SIZE)-(enemy.getHeight() - Tile.SIZE), 
+                                c
+                            )
+                        );
 						break;
 						
 					case 't':
-					    enemyCase(c, enemies, x, y);
+                        enemies.add(
+                            new Enemy(
+                                x*Tile.SIZE, 
+                                y*(Tile.SIZE)-(enemy.getHeight() - Tile.SIZE), 
+                                c
+                            )
+                        );
                         break;
                 }
                 //Assume it's a tile if nothing else
@@ -81,10 +92,6 @@ public class LevelReader {
             default:  type = TileType.AIR;  break;
         }
         return type;
-    }
-	
-    public static void enemyCase(char c, ArrayList<Enemy> enemies, float x, float y) {
-        enemies.add(new Enemy(x*Tile.SIZE, y*(Tile.SIZE)+Tile.SIZE, c));
     }
 
 }

@@ -170,9 +170,10 @@ public class Level {
             }
             // attack for albert after enemies have moved
             if (gamePanel.controller.isAttackPressed()) {
-                RectF attackLine = albert.attack();
+                GameLog.d("Level","Attack pressed");
+                RectF attackHitbox = albert.attackHitbox();
                 for (int i = 0; i < enemiesToLookAt.size(); i++) {
-                    if (enemies.get(i).rectf.intersect(attackLine)) {
+                    if (RectF.intersects(enemies.get(i).getRectF(), attackHitbox)) {
                         killEnemy(enemies.get(i));
                     }
                 }
