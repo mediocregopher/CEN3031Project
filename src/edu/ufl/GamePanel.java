@@ -9,6 +9,7 @@ import android.view.SurfaceView;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
+    public Context context;
     private GameThread thread;
     public  GameController controller;
 
@@ -17,6 +18,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
         thread     = new GameThread(getHolder(), context, this);
         controller = new GameController();
+        this.context = context;
         setFocusable(true);
     }
 

@@ -5,6 +5,7 @@ import java.io.*;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
+import android.app.Activity;
 
 public class GameThread extends Thread {
 
@@ -75,7 +76,7 @@ public class GameThread extends Thread {
                     }
                     else if (level.isDone()) {
                         //Should send back to main menu or something
-                        //running = false;
+                        running = false;
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
                         setLevel(R.raw.level1);
@@ -108,6 +109,8 @@ public class GameThread extends Thread {
         }
         SoundManager.pauseMedia();
         SoundManager.resetMedia();
+
+        ((Activity)(gamePanel.context)).finish();
     }
 
     private void draw(Canvas canvas) {
