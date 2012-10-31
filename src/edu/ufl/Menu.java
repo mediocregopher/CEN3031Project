@@ -29,6 +29,17 @@ public class Menu extends Activity
 	    //          Toast.makeText(Menu.this,"Play Button is Clicked", Toast.LENGTH_SHORT).show();
 	}
 
+	public void levelSelect(View v) {
+        try{
+            Class<?> myClass = Class.forName("edu.ufl.LevelSelect");
+            Intent intent = new Intent(Menu.this, myClass);
+            startActivity(intent);
+        }
+        catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        //          Toast.makeText(Menu.this,"Play Button is Clicked", Toast.LENGTH_SHORT).show();
+    }
 	
 	public void help(View v) {
 	    Toast.makeText(Menu.this,"Use right and left side of touchscreen to navigate. Use bottom middle part of toughscreen to jump.", 
