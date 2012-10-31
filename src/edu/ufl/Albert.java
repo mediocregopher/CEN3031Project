@@ -14,6 +14,7 @@ public class Albert extends LevelObject {
     private float JUMP_SPEED = 610f/1000f;
     private float ALBERT_TAIL = 20f;
     private float ALBERT_ATTACK_RANGE = 50f;
+    private float TERMINAL_VEL = JUMP_SPEED;
 
     private GameController controller;
     private boolean canJump;
@@ -32,6 +33,7 @@ public class Albert extends LevelObject {
         JUMP_SPEED = ResourceManager.dpToPx(JUMP_SPEED);
         ALBERT_TAIL = ResourceManager.dpToPx(ALBERT_TAIL);
         ALBERT_ATTACK_RANGE = ResourceManager.dpToPx(ALBERT_ATTACK_RANGE);
+        TERMINAL_VEL = ResourceManager.dpToPx(TERMINAL_VEL);
 
         this.sprite = new Sprite(SpriteType.ALBERT);
         this.initRectF(x,y,this.sprite.getWidth(),this.sprite.getHeight());
@@ -88,6 +90,7 @@ public class Albert extends LevelObject {
         }
 
         dy += Constants.GRAVITY;
+        if (dy > TERMINAL_VEL) { dy = TERMINAL_VEL;}
         this.setX(x + dx * Constants.FPS_PERIOD);
         this.setY(y + dy * Constants.FPS_PERIOD);
         this.sprite.update(); 
