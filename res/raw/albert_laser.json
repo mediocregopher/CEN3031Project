@@ -1,0 +1,10 @@
+{
+    "spritewidth": 128,
+    "loop": true,
+    "framesper": [
+        1,
+        2
+    ],
+    "offsetFacingLeft": -50
+}
+

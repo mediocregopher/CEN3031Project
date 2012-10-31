@@ -71,7 +71,8 @@ public class Albert extends LevelObject {
 
             /* Otherwise, stand still */
             else {
-                this.changeSpriteKeepDirection(SpriteType.ALBERT);
+                if (this.sprite.getType() != SpriteType.ALBERT_LASER)
+                    this.changeSpriteKeepDirection(SpriteType.ALBERT);
                 dx = 0;
             }
 
@@ -81,7 +82,8 @@ public class Albert extends LevelObject {
             }
 
             if (dy != 0) {
-                this.changeSpriteKeepDirection(SpriteType.ALBERT_FALLING);
+                if (this.sprite.getType() != SpriteType.ALBERT_LASER)
+                    this.changeSpriteKeepDirection(SpriteType.ALBERT_FALLING);
             }
         }
 
@@ -98,10 +100,12 @@ public class Albert extends LevelObject {
     private void handleMovementSpritesAndSprinting(GameController controller) {
         if (controller.isSprinting()) {
             dx *= 2; 
-            this.changeSpriteKeepDirection(SpriteType.ALBERT_SPRINTING);
+            if (this.sprite.getType() != SpriteType.ALBERT_LASER)
+                this.changeSpriteKeepDirection(SpriteType.ALBERT_SPRINTING);
         }
         else 
-            this.changeSpriteKeepDirection(SpriteType.ALBERT_WALKING);
+            if (this.sprite.getType() != SpriteType.ALBERT_LASER)
+                this.changeSpriteKeepDirection(SpriteType.ALBERT_WALKING);
     }
 
     @Override
@@ -124,7 +128,7 @@ public class Albert extends LevelObject {
 
 
     public void draw(Canvas canvas, Camera camera) {
-        sprite.draw(this.getRectF(),canvas,camera);
+        sprite.draw(this.x,this.y,canvas,camera);
     }
     
     public void kill() {
@@ -132,18 +136,11 @@ public class Albert extends LevelObject {
         SoundManager.pauseMedia();
         SoundManager.playSound(4, 1.0f, false);
         // TODO: Decrement lives
-        //Change size of rect for death animation. Doesn't really matter at this point
-        this.rectf.set(
-            this.rectf.left,
-            this.rectf.top,
-            this.rectf.left + ResourceManager.dpToPx(108),
-            this.rectf.top  + ResourceManager.dpToPx(108)
-        );
         this.changeSpriteKeepDirection(SpriteType.ALBERT_DEAD);
         dx = 0;
         dy = -JUMP_SPEED;
     }
-    
+
     @Override
     public void collideTop(LevelObject lo) {
         super.collideTop(lo);

@@ -14,7 +14,8 @@ public class Sprite {
         ALBERT_WALKING,
         ALBERT_SPRINTING,
         ALBERT_DEAD,
-        ALBERT_FALLING
+        ALBERT_FALLING,
+        ALBERT_LASER
     }
 
     private final static HashMap<SpriteType,SpriteSpec> spriteSpecs = new HashMap<SpriteType,SpriteSpec>() {{
@@ -28,6 +29,8 @@ public class Sprite {
                                                           R.raw.albert_dead_sprite ));
         put( SpriteType.ALBERT_FALLING,   new SpriteSpec( R.drawable.albert_falling,
                                                           R.raw.albert_sprite ));
+        put( SpriteType.ALBERT_LASER,     new SpriteSpec( R.drawable.albert_laser,
+                                                          R.raw.albert_laser ));
     }};
 
     private Bitmap bitmap;
@@ -38,6 +41,8 @@ public class Sprite {
     private boolean loop;
     private boolean flipped = false;
     private ArrayList<Integer> framesper;
+    private float offsetFacingLeft;
+    private float offsetFacingRight;
 
     private int curr = 0;
     private int currCount;
@@ -74,6 +79,12 @@ public class Sprite {
             this.framesper = new ArrayList<Integer>();
             this.framesper.add(1);
         }
+
+        try { this.offsetFacingLeft = (float)(ResourceManager.dpToPx(sjson.getInt("offsetFacingLeft"))); }
+        catch (JSONException e) { this.offsetFacingLeft = 0; }
+
+        try { this.offsetFacingRight = (float)(ResourceManager.dpToPx(sjson.getInt("offsetFacingRight"))); }
+        catch (JSONException e) { this.offsetFacingRight = 0; }
 
         this.currCount = this.framesper.get(0).intValue();
         this.mask = new RectF(0,0,this.width,this.height);
@@ -129,9 +140,25 @@ public class Sprite {
         this.currCount--;
     }
 
-    public void draw(RectF rectf, Canvas canvas, Camera camera) {
-        if (this.flipped) camera.drawFlipped(this.mask,rectf,this.bitmap,canvas);
-        else              camera.draw(this.mask,rectf,this.bitmap, canvas);
+    public void draw(float x, float y, Canvas canvas, Camera camera) {
+        if (!this.flipped) {
+            RectF placement = new RectF(
+                x + this.offsetFacingRight,
+                y,
+                x + this.offsetFacingRight + this.width,
+                y + this.height
+            );
+            camera.draw(this.mask,placement,this.bitmap,canvas);
+        }
+        else {
+            RectF placement = new RectF(
+                x + this.offsetFacingLeft,
+                y,
+                x + this.offsetFacingLeft + this.width,
+                y + this.height
+            );
+            camera.drawFlipped(this.mask,placement,this.bitmap, canvas);
+        }
     }
 
     /* 

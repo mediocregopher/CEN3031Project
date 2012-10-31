@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Bitmap;
+import edu.ufl.Sprite.SpriteType;
 
 import edu.ufl.Tile.TileType;
 import edu.ufl.Util.IntersectRet;
@@ -165,17 +166,22 @@ public class Level {
             }
             // attack for albert after enemies have moved
             if (gamePanel.controller.isAttackPressed() && lastAttack == 0) {
+                albert.changeSpriteKeepDirection(SpriteType.ALBERT_LASER);
                 GameLog.d("Level","Attack pressed");
                 lastAttack = ATTACK_FREQUENCY;
-                RectF attackHitbox = albert.attackHitbox();
-                for (int i = 0; i < enemiesToLookAt.size(); i++) {
-                    if (RectF.intersects(enemiesToLookAt.get(i).getRectF(), attackHitbox)) {
-                        GameLog.d("Level","Killing enemy");
-                        killEnemy(enemiesToLookAt.get(i));
-                    }
-                }
             }
             else if (lastAttack != 0) {
+                //Actually perform attack on second frame of animation
+                if (lastAttack == ATTACK_FREQUENCY - 3) {
+                    albert.changeSpriteKeepDirection(SpriteType.ALBERT);
+                    RectF attackHitbox = albert.attackHitbox();
+                    for (int i = 0; i < enemiesToLookAt.size(); i++) {
+                        if (RectF.intersects(enemiesToLookAt.get(i).getRectF(), attackHitbox)) {
+                            GameLog.d("Level","Killing enemy");
+                            killEnemy(enemiesToLookAt.get(i));
+                        }
+                    }
+                }
                 lastAttack--;
             }
             
