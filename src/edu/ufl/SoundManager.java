@@ -55,6 +55,7 @@ public class SoundManager {
 		addSound(2, R.raw.boing_spring);
 		addSound(3, R.raw.odd_bounce);
 		addSound(4, R.raw.death);
+		addSound(5, R.raw.laser);
 	}
 	
 	/**

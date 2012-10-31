@@ -167,6 +167,7 @@ public class Level {
             // attack for albert after enemies have moved
             if (gamePanel.controller.isAttackPressed() && lastAttack == 0) {
                 albert.changeSpriteKeepDirection(SpriteType.ALBERT_LASER);
+                SoundManager.playSound(5,1f,false);
                 GameLog.d("Level","Attack pressed");
                 lastAttack = ATTACK_FREQUENCY;
             }
