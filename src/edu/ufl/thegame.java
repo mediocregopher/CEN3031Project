@@ -1,5 +1,6 @@
 package edu.ufl;
 
+import android.content.Intent;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -30,4 +31,5 @@ public class thegame extends Activity
     	super.onStop();
     	finish();
     }
+
 }

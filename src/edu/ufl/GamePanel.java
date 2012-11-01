@@ -1,5 +1,7 @@
 package edu.ufl;
 
+import android.content.Intent;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
@@ -32,6 +34,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void surfaceDestroyed(SurfaceHolder holder) {
         GameLog.d("GamePanel", "Surface is being destroyed, attempting to shut down thread");
+
+        //Show level win screen, we assume we won the level (for now)
+        Intent intent = new Intent(context, LevelWin.class);
+        context.startActivity(intent);
 
         /* Block until we can shutdown the gamethread */
         boolean retry = true;

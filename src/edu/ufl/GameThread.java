@@ -79,7 +79,6 @@ public class GameThread extends Thread {
                         running = false;
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
-                        setLevel(R.raw.level1);
                     }
                     else {
                         draw(c);
