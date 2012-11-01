@@ -22,7 +22,7 @@
         android:layout_alignParentRight="true"
         android:onClick="help"
         android:src="@drawable/help_button" />
-
+
     <ImageButton
         android:id="@+id/ImageButton01"
         android:layout_width="wrap_content"
