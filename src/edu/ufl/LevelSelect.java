@@ -23,7 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LevelSelect extends FragmentActivity {
-    static final int NUM_WORLDS = 3;
+    static final int[][] LEVEL_LOOKUP = new int[][] {
+                        {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3},
+                        {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3},
+                        {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3}};
+    static final int NUM_WORLDS = LEVEL_LOOKUP.length;
+    static final int LVL_PER_WORLD = LEVEL_LOOKUP[0].length;
 
     LSAdapter lsAdapter;
 
@@ -57,7 +62,7 @@ public class LevelSelect extends FragmentActivity {
     }
 
     public static class World extends Fragment {
-        int mNum;
+        int worldNum;
 
         /**
          * Create a new instance of CountingFragment, providing "num"
@@ -80,7 +85,7 @@ public class LevelSelect extends FragmentActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mNum = getArguments() != null ? getArguments().getInt("num") : 1;
+            worldNum = getArguments() != null ? getArguments().getInt("num") + 1 : 0;
         }
 
         /**
@@ -92,12 +97,12 @@ public class LevelSelect extends FragmentActivity {
                 Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.world_pager, container, false);
             View tv = v.findViewById(R.id.text);
-            ((TextView)tv).setText("World" + (mNum+1));
+            ((TextView)tv).setText("World" + worldNum);
             
             View gv = v.findViewById(R.id.levelgrid);
             List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
             
-            for(int i=0;i<NUM_WORLDS;i++){
+            for(int i=0;i<LVL_PER_WORLD;i++){
                 HashMap<String, String> hm = new HashMap<String,String>();
                 hm.put("lvl", "LVL-" + (i+1));
                 aList.add(hm);
@@ -115,7 +120,9 @@ public class LevelSelect extends FragmentActivity {
                     try{
                         Class<?> myClass = Class.forName("edu.ufl.thegame");
                         Intent intent = new Intent(getActivity(), myClass);
+                        intent.putExtra("lvl", LEVEL_LOOKUP[worldNum][position]);
                         startActivity(intent);
+                        GameLog.d("LevelSelect", "Chose level: " + worldNum + "-" + (position+1));
                     }
                     catch(ClassNotFoundException e){
                         e.printStackTrace();

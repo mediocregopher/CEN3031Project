@@ -2,7 +2,9 @@ package edu.ufl;
 
 import android.content.Intent;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.WindowManager;
 
 public class thegame extends Activity
@@ -12,8 +14,8 @@ public class thegame extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //setContentView(new GamePanel(this));
-        setContentView(R.layout.main);
+        setContentView(new GamePanel(this, getIntent().getIntExtra("lvl", R.raw.level1_1)));
+        //setContentView(R.layout.main);
         
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }

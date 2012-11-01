@@ -20,6 +20,7 @@ public class GameThread extends Thread {
     private Camera camera;
 
     private Level level;
+    private int lvlID;
 
     /* Whether or not the thread is currently alive */
     private boolean running;
@@ -27,15 +28,16 @@ public class GameThread extends Thread {
         this.running = running;
     }
 
-    public GameThread(SurfaceHolder surfaceHolder, Context context, GamePanel gamePanel) {
+    public GameThread(SurfaceHolder surfaceHolder, Context context, GamePanel gamePanel, int lvlID) {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
         this.camera = new Camera(gamePanel);
+        this.lvlID = lvlID;
 
         ResourceManager.init(context);
         Constants.init();
-        setLevel(R.raw.level1);
+        setLevel(lvlID);
         
     }
     
@@ -72,13 +74,14 @@ public class GameThread extends Thread {
                     if (level.needsReset()) {
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
-                        setLevel(R.raw.level1);
+                        setLevel(lvlID);
                     }
                     else if (level.isDone()) {
                         //Should send back to main menu or something
                         running = false;
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
+                        setLevel(lvlID);
                     }
                     else {
                         draw(c);
