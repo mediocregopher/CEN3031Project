@@ -1,6 +1,7 @@
 package edu.ufl;
 
 import android.content.Context;
+import android.app.Activity;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,10 +14,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread thread;
     public  GameController controller;
 
-    public GamePanel(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public GamePanel(Context context,  int lvlID) {
+        super(context);
         getHolder().addCallback(this);
-        thread     = new GameThread(getHolder(), context, this);
+        thread     = new GameThread(getHolder(), context, this, lvlID);
         controller = new GameController();
         this.context = context;
         setFocusable(true);
