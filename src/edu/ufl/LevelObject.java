@@ -83,6 +83,10 @@ public class LevelObject {
         if (sprite != null) { sprite.faceRight(); }
         facingLeft = false;
     }
+    public void changeDirection() {
+        if (this.facingLeft) this.faceRight();
+        else this.faceLeft();
+    }
 
     public void draw(Canvas canvas, Camera camera) {
         camera.draw(null,this.getRectF(),bitmap,canvas);

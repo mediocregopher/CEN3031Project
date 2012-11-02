@@ -21,7 +21,6 @@ public class LevelReader {
         //Declare objects to preload their image sizes
         Albert albert = new Albert(50,50);
         new Tile(TileType.GROUND,0,0);
-        Enemy enemy = new Enemy(0,0,'e');
 
         while ((i = fh.read()) != -1) {
             char c = (char)i;
@@ -36,6 +35,8 @@ public class LevelReader {
 
             //Else get the level object and add it
             else {
+                float enemyX = x*Tile.SIZE;
+                float enemyY = y*Tile.SIZE;
                 switch (c) {
                     //ALBERT!
                     case 'a':
@@ -43,25 +44,30 @@ public class LevelReader {
                         albert.setY(y*Tile.SIZE-(albert.getHeight() - Tile.SIZE));
                         break;
                         
-					case 'e':
-                        enemies.add(
-                            new Enemy(
-                                x*Tile.SIZE, 
-                                y*(Tile.SIZE)-(enemy.getHeight() - Tile.SIZE), 
-                                c
-                            )
-                        );
+					case 'b':
+                        enemies.add( new AlabamaFanEnemy( enemyX, enemyY ));
 						break;
-						
+
+					case 'r':
+                        enemies.add( new AuburnFanEnemy( enemyX, enemyY ));
+						break;
+
+					case 's':
+                        enemies.add( new FSUFanEnemy( enemyX, enemyY ));
+						break;
+
+					case 'k':
+                        enemies.add( new KentuckyFanEnemy( enemyX, enemyY ));
+						break;
+
 					case 't':
-                        enemies.add(
-                            new Enemy(
-                                x*Tile.SIZE, 
-                                y*(Tile.SIZE)-(enemy.getHeight() - Tile.SIZE), 
-                                c
-                            )
-                        );
-                        break;
+                        enemies.add( new TennFanEnemy( enemyX, enemyY ));
+						break;
+
+					case 'u':
+                        enemies.add( new USFFanEnemy( enemyX, enemyY ));
+						break;
+
                 }
                 //Assume it's a tile if nothing else
                 TileType type = charToTileType(c);

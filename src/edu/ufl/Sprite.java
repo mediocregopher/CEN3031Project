@@ -15,22 +15,58 @@ public class Sprite {
         ALBERT_SPRINTING,
         ALBERT_DEAD,
         ALBERT_FALLING,
-        ALBERT_LASER
+        ALBERT_LASER,
+        ALABAMAFAN_STANDING,
+        ALABAMAFAN_WALKING,
+        AUBURNFAN_STANDING,
+        AUBURNFAN_WALKING,
+        FSUFAN_STANDING,
+        FSUFAN_WALKING,
+        KENTUCKYFAN_STANDING,
+        KENTUCKYFAN_WALKING,
+        TENNFAN_STANDING,
+        TENNFAN_WALKING,
+        USFFAN_STANDING,
+        USFFAN_WALKING
     }
 
     private final static HashMap<SpriteType,SpriteSpec> spriteSpecs = new HashMap<SpriteType,SpriteSpec>() {{
-        put( SpriteType.ALBERT,           new SpriteSpec( R.drawable.albert,
-                                                          R.raw.albert_sprite ));
-        put( SpriteType.ALBERT_WALKING,   new SpriteSpec( R.drawable.albert_walking,
-                                                          R.raw.albert_walking_sprite ));
-        put( SpriteType.ALBERT_SPRINTING, new SpriteSpec( R.drawable.albert_walking,
-                                                          R.raw.albert_sprinting_sprite ));
-        put( SpriteType.ALBERT_DEAD,      new SpriteSpec( R.drawable.albert_dead,
-                                                          R.raw.albert_dead_sprite ));
-        put( SpriteType.ALBERT_FALLING,   new SpriteSpec( R.drawable.albert_falling,
-                                                          R.raw.albert_sprite ));
-        put( SpriteType.ALBERT_LASER,     new SpriteSpec( R.drawable.albert_laser,
-                                                          R.raw.albert_laser ));
+        put( SpriteType.ALBERT,               new SpriteSpec( R.drawable.albert,
+                                                              R.raw.albert_sprite ));
+        put( SpriteType.ALBERT_WALKING,       new SpriteSpec( R.drawable.albert_walking,
+                                                              R.raw.albert_walking_sprite ));
+        put( SpriteType.ALBERT_SPRINTING,     new SpriteSpec( R.drawable.albert_walking,
+                                                              R.raw.albert_sprinting_sprite ));
+        put( SpriteType.ALBERT_DEAD,          new SpriteSpec( R.drawable.albert_dead,
+                                                              R.raw.albert_dead_sprite ));
+        put( SpriteType.ALBERT_FALLING,       new SpriteSpec( R.drawable.albert_falling,
+                                                              R.raw.albert_sprite ));
+        put( SpriteType.ALBERT_LASER,         new SpriteSpec( R.drawable.albert_laser,
+                                                              R.raw.albert_laser ));
+        put( SpriteType.ALABAMAFAN_STANDING,  new SpriteSpec( R.drawable.alabamafan,
+                                                              R.raw.fan_standing ));
+        put( SpriteType.ALABAMAFAN_WALKING,   new SpriteSpec( R.drawable.alabamafan_walk,
+                                                              R.raw.fan_walking ));
+        put( SpriteType.AUBURNFAN_STANDING,   new SpriteSpec( R.drawable.auburnfan,
+                                                              R.raw.fan_standing ));
+        put( SpriteType.AUBURNFAN_WALKING,    new SpriteSpec( R.drawable.auburnfan_walk,
+                                                              R.raw.fan_walking ));
+        put( SpriteType.FSUFAN_STANDING,      new SpriteSpec( R.drawable.fsufan,
+                                                              R.raw.fan_standing ));
+        put( SpriteType.FSUFAN_WALKING,       new SpriteSpec( R.drawable.fsufan_walk,
+                                                              R.raw.fan_walking ));
+        put( SpriteType.KENTUCKYFAN_STANDING, new SpriteSpec( R.drawable.kentuckyfan,
+                                                              R.raw.fan_standing ));
+        put( SpriteType.KENTUCKYFAN_WALKING,  new SpriteSpec( R.drawable.kentuckyfan_walk,
+                                                              R.raw.fan_walking ));
+        put( SpriteType.TENNFAN_STANDING,     new SpriteSpec( R.drawable.tennfan,
+                                                              R.raw.fan_standing ));
+        put( SpriteType.TENNFAN_WALKING,      new SpriteSpec( R.drawable.tennfan_walk,
+                                                              R.raw.fan_walking ));
+        put( SpriteType.USFFAN_STANDING,      new SpriteSpec( R.drawable.usffan,
+                                                              R.raw.fan_standing ));
+        put( SpriteType.USFFAN_WALKING,       new SpriteSpec( R.drawable.usffan_walk,
+                                                              R.raw.fan_walking ));
     }};
 
     private Bitmap bitmap;

@@ -2,48 +2,47 @@ package edu.ufl;
 
 import java.util.ArrayList;
 import edu.ufl.Tile.TileType;
+import edu.ufl.Sprite.SpriteType;
+import android.graphics.Canvas;
 
 public class Enemy extends LevelObject{
 
-	public static enum EnemyType {
-        BASIC,
-		TOP
-    }
-
-	EnemyType type;
-	public float movingLeft = -5; //moving left value with be negative else it will be moving right if it is positive
+	public float movingLeft = 5; //moving left value with be negative else it will be moving right if it is positive
 	
-    private boolean isHarmful = true;
-    private boolean topHarmful = false;
+    protected boolean isHarmful = true;
+    protected boolean topHarmful = false;
 
-	public Enemy (float x, float y, char c) {
-		this.type = findEnemyType(c);
-        this.bitmap = ResourceManager.getBitmap(R.drawable.enemy);
-        this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
-		
-        if (type.equals(EnemyType.TOP))
-            topHarmful = true;
+    protected SpriteType standingSprite;
+    protected SpriteType walkingSprite;
+    protected SpriteType hurtSprite;
+
+	public Enemy (float x, float y) {
+        this.x = x;
+        this.y = y;
 	}
 
     /* Copy Constructor */
     public Enemy(Enemy e) {
         super(e);
-        this.type = e.type;
         this.isHarmful  = e.isHarmful;
         this.topHarmful = e.topHarmful;
+        this.standingSprite = e.standingSprite;
+        this.walkingSprite  = e.walkingSprite;
+        this.hurtSprite     = e.hurtSprite;
     }
 	
-	public EnemyType getEnemyType() { return type;}
 	public float isMovingLeft() { return movingLeft; }
 	public boolean getIsHarmful() { return isHarmful; }
 	public boolean getTopHarmful() { return topHarmful; }
 
-	
-	public void setEnemyType(EnemyType type) { this.type = type; }
 	public void setDirection(float movingLeft) { this.movingLeft = movingLeft; }
 	
+    public void initSprite() {
+        this.sprite = new Sprite(this.walkingSprite);
+    }
 
 	public void changeDirection() {
+        super.changeDirection();
 		movingLeft = -1*movingLeft;
 	}
 	
@@ -56,22 +55,7 @@ public class Enemy extends LevelObject{
 		setX(this.getX() + isMovingLeft());
 		
 		dy += Constants.GRAVITY;
-	}
-	
-	public EnemyType findEnemyType(char c) {
-		EnemyType eT;
-		switch (c) {
-			case 'e': 
-				eT = EnemyType.BASIC;
-				break;
-			case 't':
-				eT = EnemyType.TOP;
-				break;
-			default:
-				eT = EnemyType.BASIC;
-				break;
-		}
-		return eT;
+        this.sprite.update();
 	}
 	
 	public void collideLeft(LevelObject lo){
@@ -90,5 +74,9 @@ public class Enemy extends LevelObject{
         if (temp.getType().equals(TileType.LEVELEND))
             return null;
         return temp;
+    }
+
+    public void draw(Canvas canvas, Camera camera) {
+        this.sprite.draw(this.x,this.y,canvas,camera);
     }
 }
