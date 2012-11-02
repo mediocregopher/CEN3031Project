@@ -15,6 +15,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public Context context;
     private GameThread thread;
     public  GameController controller;
+    public boolean endedOnWin = false;
 
     public GamePanel(Context context,  int lvlID) {
         super(context);
@@ -37,8 +38,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         GameLog.d("GamePanel", "Surface is being destroyed, attempting to shut down thread");
 
         //Show level win screen, we assume we won the level (for now)
-        Intent intent = new Intent(context, LevelWin.class);
-        context.startActivity(intent);
+        if (this.endedOnWin) {
+            Intent intent = new Intent(context, LevelWin.class);
+            context.startActivity(intent);
+        }
 
         /* Block until we can shutdown the gamethread */
         boolean retry = true;

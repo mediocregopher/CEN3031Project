@@ -79,9 +79,10 @@ public class GameThread extends Thread {
                     else if (level.isDone()) {
                         //Should send back to main menu or something
                         running = false;
+                        gamePanel.endedOnWin = true;
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
-                        setLevel(lvlID);
+                        //setLevel(lvlID);
                     }
                     else {
                         draw(c);
