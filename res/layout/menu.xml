@@ -2,34 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue"
+    android:background="@drawable/mainmenu"
     android:padding="10dp" >
 
-    <ImageButton
+    <Button
         android:id="@+id/playbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:onClick="play"
-        android:src="@drawable/play_button" />
-
-    <ImageButton
-        android:id="@+id/helpbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="23dp"
+        android:background="@null"
+        android:onClick="play"
+        android:text="              " />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_alignBaseline="@+id/playbutton"
+        android:layout_alignBottom="@+id/playbutton"
         android:layout_alignParentRight="true"
+        android:background="@null"
         android:onClick="help"
-        android:src="@drawable/help_button" />
-
-    <ImageButton
-        android:id="@+id/ImageButton01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="levelSelect"
-        android:src="@drawable/play_button" />
+        android:text="         " />
 
 </RelativeLayout>
