@@ -40,6 +40,7 @@ public class Level {
     private int maxY;
     private ArrayList<ArrayList<Tile>> map;
 	private ArrayList<Enemy> enemies;
+	private float points;
 	
     //Getters/Setters
     //(The maxX/Y variables don't have setters because their value is inherent in
@@ -88,6 +89,8 @@ public class Level {
 
         this.background = ResourceManager.getBitmap(R.drawable.background);
         this.clouds = ResourceManager.getBitmap(R.drawable.clouds);
+        
+        this.points = 0;
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
@@ -199,7 +202,9 @@ public class Level {
         canvas.drawARGB(255, 0x81, 0x43, 0xb6);
         camera.drawBackground(background, clouds,getMaxPixelsY(),canvas);
         for (int i=0; i<tilesToLookAt.size(); i++) {
-            tilesToLookAt.get(i).draw(canvas,camera);
+            if (tilesToLookAt.get(i).getActive()) {
+                tilesToLookAt.get(i).draw(canvas,camera);
+            }
         }
         for (int i=0; i<enemiesToLookAt.size(); i++) {
             enemiesToLookAt.get(i).draw(canvas,camera);
@@ -238,8 +243,15 @@ public class Level {
                         isDone = true;
                         continue;
                     }
+                    else if (tile.getType() == TileType.FOOTBALL) {
+                        if (tile.getActive()) {
+                            points++;
+                        }
+                        
+                        tile.setActive(false);
+                        continue;
+                    }
                 }
-
                 switch (intret) {
                 case TOP:
                     obj.collideTop(tile);

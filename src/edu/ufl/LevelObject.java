@@ -29,6 +29,8 @@ public class LevelObject {
     protected boolean topHarmful = false;
 
     protected boolean facingLeft = false;
+    
+    
 
     LevelObject() { /* Don't do shit */ }
     LevelObject(float x, float y, float w, float h) {

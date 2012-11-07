@@ -5,13 +5,15 @@ import java.util.HashMap;
 public class Tile extends LevelObject{
 
     public static float SIZE;
-
+    private boolean active;
+    
     public static enum TileType {
         AIR,
         GROUND,
         AIBOUND,
         CHECKPOINT,
-        LEVELEND
+        LEVELEND,
+        FOOTBALL
     }
 
     private static HashMap<TileType,Integer> tileTextures;
@@ -23,16 +25,20 @@ public class Tile extends LevelObject{
         tileTextures.put(TileType.AIBOUND, R.drawable.aibound);
         tileTextures.put(TileType.CHECKPOINT, R.drawable.yellow_flag);
         tileTextures.put(TileType.LEVELEND, R.drawable.red_flag);
+        tileTextures.put(TileType.FOOTBALL, R.drawable.red_flag);
     }
 
     //Extra Members
     private TileType type;
     public TileType getType() { return this.type; }
     public void setType(TileType type) { this.type = type; }
+    public boolean getActive() {return this.active; }
+    public void setActive(boolean active) {this.active = active;}
 
     //Constructor
     Tile(TileType t, float x, float y) {
         this.type = t;
+        this.active = true;
         if (t != TileType.AIR) {
             this.bitmap = ResourceManager.getBitmap( Tile.tileTextures.get(t).intValue() );
             this.initRectF(x,y,bitmap.getWidth(),bitmap.getHeight());
