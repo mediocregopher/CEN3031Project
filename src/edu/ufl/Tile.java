@@ -25,7 +25,7 @@ public class Tile extends LevelObject{
         tileTextures.put(TileType.AIBOUND, R.drawable.aibound);
         tileTextures.put(TileType.CHECKPOINT, R.drawable.yellow_flag);
         tileTextures.put(TileType.LEVELEND, R.drawable.red_flag);
-        tileTextures.put(TileType.FOOTBALL, R.drawable.red_flag);
+        tileTextures.put(TileType.FOOTBALL, R.drawable.football);
     }
 
     //Extra Members
