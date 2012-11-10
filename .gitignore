@@ -19,3 +19,6 @@ local.properties
 .classpath
 .project
 .settings/
+
+#Dunno wtf this is
+assets/android-support-v4.jar

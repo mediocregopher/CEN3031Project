@@ -2,6 +2,7 @@ package edu.ufl;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.AssetManager;
 import android.view.Display;
 import android.view.WindowManager;
 import android.util.DisplayMetrics;
@@ -35,6 +36,10 @@ public class ResourceManager {
 
     public static Resources getResources() {
         return ResourceManager.con.getResources();
+    }
+
+    public static AssetManager getAssetManager() {
+        return ResourceManager.getResources().getAssets();
     }
 
     /* Scales dp to px */

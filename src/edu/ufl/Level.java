@@ -41,6 +41,7 @@ public class Level {
     private ArrayList<ArrayList<Tile>> map;
 	private ArrayList<Enemy> enemies;
 	private float points;
+    private float lives = 3;
 	
     //Getters/Setters
     //(The maxX/Y variables don't have setters because their value is inherent in
@@ -73,6 +74,8 @@ public class Level {
     private ArrayList<Tile> tilesToLookAt;
 	private ArrayList<Enemy> enemiesToLookAt;
 
+    private HUD hud;
+
     //Constructor
     public Level(ArrayList<ArrayList<Tile>> map, ArrayList<Enemy> enemies, Albert albert) {
         this.map = map;
@@ -91,6 +94,8 @@ public class Level {
         this.clouds = ResourceManager.getBitmap(R.drawable.clouds);
         
         this.points = 0;
+
+        this.hud = new HUD();
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
@@ -210,6 +215,7 @@ public class Level {
             enemiesToLookAt.get(i).draw(canvas,camera);
         }
         albert.draw(canvas,camera);
+        hud.drawLives(canvas,3);
     }
 	
 	public void killEnemy(int index) {
