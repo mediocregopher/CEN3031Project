@@ -41,7 +41,7 @@ public class Level {
     private ArrayList<ArrayList<Tile>> map;
 	private ArrayList<Enemy> enemies;
 	private float points;
-    private float lives = 3;
+    private int lives = 3;
 	
     //Getters/Setters
     //(The maxX/Y variables don't have setters because their value is inherent in
@@ -96,6 +96,11 @@ public class Level {
         this.points = 0;
 
         this.hud = new HUD();
+
+        //Pretend we got a checkpoint at the beginning so that if the player dies
+        //before hitting a checkpoint their lives are still decremented and
+        //we don't have to reload the entire level
+        this.gotCheckpoint();
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
@@ -129,7 +134,8 @@ public class Level {
 
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             if (albert.isDead()) {
-                if (this.checkpointAlbert != null) {
+                lives--;
+                if (lives >= 0 && this.checkpointAlbert != null) {
                     this.albert = this.checkpointAlbert;
                     this.enemies = this.checkpointEnemies;
                     SoundManager.pauseMedia();
@@ -215,7 +221,7 @@ public class Level {
             enemiesToLookAt.get(i).draw(canvas,camera);
         }
         albert.draw(canvas,camera);
-        hud.drawLives(canvas,3);
+        hud.drawLives(canvas,lives);
     }
 	
 	public void killEnemy(int index) {
