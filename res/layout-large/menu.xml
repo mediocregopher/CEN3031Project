@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mainmenu"
+    android:padding="25dp" >
+
+    <Button
+        android:id="@+id/playbutton"
+        android:layout_width="450dp"
+        android:layout_height="170dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="62dp"
+        android:background="@null"
+        android:onClick="levelSelect"
+        android:text="              " />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="450dp"
+        android:layout_height="170dp"
+        android:layout_alignBaseline="@+id/playbutton"
+        android:layout_alignBottom="@+id/playbutton"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:onClick="help"
+        android:text="         " />
+
+</RelativeLayout>
