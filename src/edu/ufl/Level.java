@@ -61,6 +61,7 @@ public class Level {
     private ArrayList<Enemy> checkpointEnemies;
     private ArrayList<Tile> checkpointFootballs;
     private Albert checkpointAlbert;
+    private int checkpointPoints;
     
     private boolean needsReset = false;
     public boolean needsReset() { return needsReset; } 
@@ -142,6 +143,7 @@ public class Level {
                     this.albert = this.checkpointAlbert;
                     this.enemies = this.checkpointEnemies;
                     this.footballs = this.checkpointFootballs;
+                    this.points = this.checkpointPoints;
 
                     //Go through all the footballs (at this point footballs is all
                     //the footballs from the previous checkpoint) and make sure they're
@@ -341,6 +343,7 @@ public class Level {
         for (int i = 0; i < this.enemies.size(); i++) {
             this.checkpointEnemies.add(new Enemy(this.enemies.get(i)));
         }
+        this.checkpointPoints = this.points;
     }
     
 }
