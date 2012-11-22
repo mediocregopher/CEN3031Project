@@ -16,6 +16,7 @@ public class LevelReader {
         //make blank level map to pass into the Level object
         ArrayList<ArrayList<Tile>> map = new ArrayList<ArrayList<Tile>>();
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+        ArrayList<Tile> footballs = new ArrayList<Tile>();
         ArrayList<Tile> row = new ArrayList<Tile>();
 
         //Declare objects to preload their image sizes
@@ -71,20 +72,27 @@ public class LevelReader {
                 }
                 //Assume it's a tile if nothing else
                 TileType type = charToTileType(c);
-                row.add(new Tile(type,x*Tile.SIZE,y*Tile.SIZE));
+                Tile newtile = new Tile(type,x*Tile.SIZE,y*Tile.SIZE);
+                row.add(newtile);
+
+                if  (newtile.getType() == TileType.FOOTBALL) {
+                    footballs.add(newtile);
+                }
+
                 x++;
             }
         }
 
         //Create the new level and return it
-        return new Level(map, enemies, albert);
+        return new Level(map, enemies, footballs, albert);
     }
 
     public static Level blankLevel() {
         ArrayList<ArrayList<Tile>> map = new ArrayList<ArrayList<Tile>>();
         Albert albert = new Albert(50,50);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-        return new Level(map,enemies,albert);
+        ArrayList<Tile> footballs = new ArrayList<Tile>();
+        return new Level(map,enemies,footballs,albert);
     }
 
     //Given a char, returns the associated type. Defaults to AIR

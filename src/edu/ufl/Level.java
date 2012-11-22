@@ -40,6 +40,7 @@ public class Level {
     private int maxY;
     private ArrayList<ArrayList<Tile>> map;
 	private ArrayList<Enemy> enemies;
+    private ArrayList<Tile> footballs;
 	private float points;
     private int lives = 3;
 	
@@ -58,6 +59,7 @@ public class Level {
 
     private Tile   checkpoint;
     private ArrayList<Enemy> checkpointEnemies;
+    private ArrayList<Tile> checkpointFootballs;
     private Albert checkpointAlbert;
     
     private boolean needsReset = false;
@@ -77,9 +79,10 @@ public class Level {
     private HUD hud;
 
     //Constructor
-    public Level(ArrayList<ArrayList<Tile>> map, ArrayList<Enemy> enemies, Albert albert) {
+    public Level(ArrayList<ArrayList<Tile>> map, ArrayList<Enemy> enemies, ArrayList<Tile> footballs, Albert albert) {
         this.map = map;
 		this.enemies = enemies;
+        this.footballs = footballs;
         int maxX = 0;
         int maxY = map.size();
         for (int i=0; i<maxY; i++) {
@@ -136,15 +139,24 @@ public class Level {
             if (albert.isDead()) {
                 lives--;
                 if (lives >= 0 && this.checkpointAlbert != null) {
-                    this.albert = new Albert(this.checkpointAlbert);
+                    this.albert = this.checkpointAlbert;
                     this.enemies = this.checkpointEnemies;
-                    SoundManager.pauseMedia();
-                    SoundManager.resetMedia();
-                    SoundManager.playMedia(2);
+                    this.footballs = this.checkpointFootballs;
+
+                    //Go through all the footballs (at this point footballs is all
+                    //the footballs from the previous checkpoint) and make sure they're
+                    //active
+                    for (int i=0; i<this.footballs.size(); i++) {
+                        this.footballs.get(i).setActive(true);
+                    }
 
                     //In the above we're making the real values references to
                     //the checkpoint values, so we need to re-copy the values
                     copyCheckpointValues();
+
+                    SoundManager.pauseMedia();
+                    SoundManager.resetMedia();
+                    SoundManager.playMedia(2);
                 }
                 else {
                     needsReset = true;
@@ -262,9 +274,9 @@ public class Level {
                     else if (tile.getType() == TileType.FOOTBALL) {
                         if (tile.getActive()) {
                             points++;
+                            tile.setActive(false);
+                            footballs.remove(tile);
                         }
-                        
-                        tile.setActive(false);
                         continue;
                     }
                 }
@@ -323,6 +335,7 @@ public class Level {
 
     private void copyCheckpointValues() {
         this.checkpointAlbert = new Albert(this.albert);
+        this.checkpointFootballs = new ArrayList<Tile>(this.footballs);
         this.checkpointEnemies = new ArrayList<Enemy>();
         for (int i = 0; i < this.enemies.size(); i++) {
             this.checkpointEnemies.add(new Enemy(this.enemies.get(i)));
