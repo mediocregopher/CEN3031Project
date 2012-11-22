@@ -100,7 +100,7 @@ public class Level {
         //Pretend we got a checkpoint at the beginning so that if the player dies
         //before hitting a checkpoint their lives are still decremented and
         //we don't have to reload the entire level
-        this.gotCheckpoint();
+        this.copyCheckpointValues();
     }
 
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
@@ -134,13 +134,18 @@ public class Level {
 
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             if (albert.isDead()) {
+                GameLog.d("Level", "Lives:"+String.valueOf(lives));
                 lives--;
                 if (lives >= 0 && this.checkpointAlbert != null) {
-                    this.albert = this.checkpointAlbert;
+                    this.albert = new Albert(this.checkpointAlbert);
                     this.enemies = this.checkpointEnemies;
                     SoundManager.pauseMedia();
                     SoundManager.resetMedia();
                     SoundManager.playMedia(2);
+
+                    //In the above we're making the real values references to
+                    //the checkpoint values, so we need to re-copy the values
+                    copyCheckpointValues();
                 }
                 else {
                     needsReset = true;
@@ -248,7 +253,7 @@ public class Level {
 
                 if (obj instanceof Albert) {
                     if (tile.getType() == TileType.CHECKPOINT) {
-                        gotCheckpoint();                    
+                        copyCheckpointValues();
                         continue;
                     }
                     else if (tile.getType() == TileType.LEVELEND) {
@@ -317,7 +322,7 @@ public class Level {
         }
     }
 
-    private void gotCheckpoint() {
+    private void copyCheckpointValues() {
         this.checkpointAlbert = new Albert(this.albert);
         this.checkpointEnemies = new ArrayList<Enemy>();
         for (int i = 0; i < this.enemies.size(); i++) {

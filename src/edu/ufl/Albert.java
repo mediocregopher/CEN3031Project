@@ -138,7 +138,6 @@ public class Albert extends LevelObject {
         dead = true;
         SoundManager.pauseMedia();
         SoundManager.playSound(4, 1.0f, false);
-        // TODO: Decrement lives
         this.changeSpriteKeepDirection(SpriteType.ALBERT_DEAD);
         dx = 0;
         dy = -JUMP_SPEED;
