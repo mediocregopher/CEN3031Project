@@ -15,8 +15,16 @@ public class HUD {
     private float livesY = 45;
     private float albertX = 10;
     private float albertY = 10;
-
     private Bitmap albertHead;
+    
+    private Paint pointsPaint;
+    private Paint pointsPaintStroke;
+    private float pointsX;
+    private float pointsY = 108.5f;
+    private float footballX = 15;
+    private float footballY = 75;
+    private Bitmap football;
+
 
     HUD() {
         Typeface smbTypeface = Typeface.createFromAsset(ResourceManager.getAssetManager(),"smb.ttf");
@@ -42,6 +50,16 @@ public class HUD {
         livesX = albertX + albertHead.getWidth() + ResourceManager.dpToPx(10);
         livesY = ResourceManager.dpToPx(livesY);
 
+        //Use same font for points as for lives
+        pointsPaint = livesPaint;
+        pointsPaintStroke = livesPaintStroke;
+        
+        football = ResourceManager.getBitmap(R.drawable.football);
+        footballX = ResourceManager.dpToPx(footballX);
+        footballY = ResourceManager.dpToPx(footballY);
+        pointsX = footballX + football.getWidth() + ResourceManager.dpToPx(10);
+        pointsY = ResourceManager.dpToPx(pointsY);
+
     }
 
     public void drawLives(Canvas canvas, int lives) {
@@ -49,6 +67,13 @@ public class HUD {
         canvas.drawText(livesText,livesX,livesY,livesPaintStroke);
         canvas.drawText(livesText,livesX,livesY,livesPaint);
         canvas.drawBitmap(albertHead,albertX,albertY,null);
+    }
+
+    public void drawPoints(Canvas canvas, int points) {
+        String pointsText = "X"+String.valueOf(points);
+        canvas.drawText(pointsText,pointsX,pointsY,pointsPaintStroke);
+        canvas.drawText(pointsText,pointsX,pointsY,pointsPaint);
+        canvas.drawBitmap(football,footballX,footballY,null);
     }
 
 }

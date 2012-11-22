@@ -41,7 +41,7 @@ public class Level {
     private ArrayList<ArrayList<Tile>> map;
 	private ArrayList<Enemy> enemies;
     private ArrayList<Tile> footballs;
-	private float points;
+	private int points = 0;
     private int lives = 3;
 	
     //Getters/Setters
@@ -238,6 +238,7 @@ public class Level {
         }
         albert.draw(canvas,camera);
         hud.drawLives(canvas,lives);
+        hud.drawPoints(canvas,points);
     }
 	
 	public void killEnemy(int index) {
