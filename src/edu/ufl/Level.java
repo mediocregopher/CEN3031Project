@@ -134,7 +134,6 @@ public class Level {
 
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             if (albert.isDead()) {
-                GameLog.d("Level", "Lives:"+String.valueOf(lives));
                 lives--;
                 if (lives >= 0 && this.checkpointAlbert != null) {
                     this.albert = new Albert(this.checkpointAlbert);

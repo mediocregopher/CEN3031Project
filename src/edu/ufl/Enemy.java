@@ -24,6 +24,7 @@ public class Enemy extends LevelObject{
     /* Copy Constructor */
     public Enemy(Enemy e) {
         super(e);
+        this.movingLeft = e.movingLeft;
         this.isHarmful  = e.isHarmful;
         this.topHarmful = e.topHarmful;
         this.standingSprite = e.standingSprite;
