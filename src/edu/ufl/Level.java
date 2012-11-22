@@ -139,7 +139,7 @@ public class Level {
         if (albert.getY()+albert.getHeight() > MAX_Y) {
             if (albert.isDead()) {
                 lives--;
-                if (lives >= 0 && this.checkpointAlbert != null) {
+                if (lives >= 1 && this.checkpointAlbert != null) {
                     this.albert = this.checkpointAlbert;
                     this.enemies = this.checkpointEnemies;
                     this.footballs = this.checkpointFootballs;
