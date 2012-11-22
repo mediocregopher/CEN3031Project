@@ -277,6 +277,10 @@ public class Level {
                     else if (tile.getType() == TileType.FOOTBALL) {
                         if (tile.getActive()) {
                             points++;
+                            if (points >= 10) {
+                                lives++;
+                                points = 0;
+                            }
                             tile.setActive(false);
                             footballs.remove(tile);
                         }
