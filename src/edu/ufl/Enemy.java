@@ -74,6 +74,8 @@ public class Enemy extends LevelObject{
             return null;
         if (temp.getType().equals(TileType.LEVELEND))
             return null;
+        if (temp.getType().equals(TileType.FOOTBALL))
+            return null;
         return temp;
     }
 
