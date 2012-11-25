@@ -17,10 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class LevelSelect extends FragmentActivity {
     static final int[][] LEVEL_LOOKUP = new int[][] {
@@ -117,7 +115,6 @@ public class LevelSelect extends FragmentActivity {
             ((GridView)gv).setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                         int position, long id) {
-                    GameLog.d("LevelSelect0", "Chose level: " + worldNum + "-" + (position+1));
                     try{
                         Class<?> myClass = Class.forName("edu.ufl.thegame");
                         Intent intent = new Intent(getActivity(), myClass);
@@ -127,17 +124,11 @@ public class LevelSelect extends FragmentActivity {
                         
                     }
                     catch(ClassNotFoundException e){
-                        GameLog.d("LevelSelect", "OMG");
                         e.printStackTrace();
                     }
                 }
             });
             return v;
-        }
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
         }
 
 

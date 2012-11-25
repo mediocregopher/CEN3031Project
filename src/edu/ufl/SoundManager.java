@@ -104,6 +104,7 @@ public class SoundManager {
 	 */
 	public static void playMedia(int index) {
 		try {
+		    mediaPlayer.reset();
 			mediaPlayer.setDataSource(context, mediaPlayerMap.get(index));
 			mediaPlayer.prepare();
 			mediaPlayer.start();

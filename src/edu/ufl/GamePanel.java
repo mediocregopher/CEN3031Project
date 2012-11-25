@@ -1,11 +1,9 @@
 package edu.ufl;
 
 import android.content.Intent;
-import android.app.Activity;
 import android.content.Context;
-import android.app.Activity;
 import android.graphics.Canvas;
-import android.util.AttributeSet;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,24 +12,32 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public Context context;
     private GameThread thread;
+    private int lvlID;
     public  GameController controller;
     public boolean endedOnWin = false;
 
-    public GamePanel(Context context,  int lvlID) {
+    public GamePanel(Context context, int lvlID) {
         super(context);
         getHolder().addCallback(this);
+        this.lvlID = lvlID;
         thread     = new GameThread(getHolder(), context, this, lvlID);
         controller = new GameController();
         this.context = context;
         setFocusable(true);
     }
 
+    public GameThread getThread() { return thread; }
+
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
-        thread.setRunning(true);
+        if (thread == null) {
+            GameLog.d("GP", "thread is null");
+            thread = new GameThread(getHolder(), context, this, lvlID);
+        }
         thread.start();
+        thread.setRunning(true);
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -54,6 +60,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 /* Try again */
             }
         }
+        thread = null;
         GameLog.d("GamePanel", "Thread was shut down cleanly");
     }
     
@@ -73,6 +80,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     protected void onDraw(Canvas canvas) {
+    }
+    
+    protected void saveState(Bundle map) {
+        thread.saveState(map);
+    }
+    
+    protected void restoreState(Bundle map) {
+        thread = new GameThread(getHolder(), context, this, lvlID);
+        thread.restoreState(map);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import edu.ufl.Sprite.SpriteType;
 
 import edu.ufl.Tile.TileType;
@@ -323,6 +324,16 @@ public class Level {
         for (int i = 0; i < this.enemies.size(); i++) {
             this.checkpointEnemies.add(new Enemy(this.enemies.get(i)));
         }
+    }
+    
+    protected void saveState(Bundle map) {
+        map.putFloat("AlberX", albert.x);
+        map.putFloat("AlberY", albert.y);
+    }
+    
+    protected void restoreState(Bundle map) {
+        albert.x = map.getFloat("AlberX");
+        albert.y = map.getFloat("AlberY");
     }
     
 }

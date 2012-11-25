@@ -4,6 +4,7 @@ import java.io.*;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.app.Activity;
 
@@ -41,7 +42,7 @@ public class GameThread extends Thread {
         
     }
     
-    private void setLevel(int id){
+    protected void setLevel(int id){
     	SoundManager.playMedia(2);
         level = null;
         try {        	
@@ -113,7 +114,9 @@ public class GameThread extends Thread {
         SoundManager.pauseMedia();
         SoundManager.resetMedia();
 
-        ((Activity)(gamePanel.context)).finish();
+        if (level.isDone()) {
+            ((Activity)(gamePanel.context)).finish();
+        }
     }
 
     private void draw(Canvas canvas) {
@@ -125,5 +128,17 @@ public class GameThread extends Thread {
     private void update() {
         level.update(gamePanel,camera);
         
+    }
+    
+    protected void saveState(Bundle map) {
+        synchronized (surfaceHolder) {
+            level.saveState(map);
+        }
+    }
+    
+    protected void restoreState(Bundle map) {
+        synchronized (surfaceHolder) {
+            level.restoreState(map);
+        }
     }
 }
