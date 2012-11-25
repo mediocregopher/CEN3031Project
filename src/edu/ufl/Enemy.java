@@ -24,6 +24,7 @@ public class Enemy extends LevelObject{
     /* Copy Constructor */
     public Enemy(Enemy e) {
         super(e);
+        this.movingLeft = e.movingLeft;
         this.isHarmful  = e.isHarmful;
         this.topHarmful = e.topHarmful;
         this.standingSprite = e.standingSprite;
@@ -72,6 +73,8 @@ public class Enemy extends LevelObject{
         if (temp.getType().equals(TileType.CHECKPOINT))
             return null;
         if (temp.getType().equals(TileType.LEVELEND))
+            return null;
+        if (temp.getType().equals(TileType.FOOTBALL))
             return null;
         return temp;
     }
