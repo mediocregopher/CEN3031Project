@@ -2,12 +2,11 @@ package edu.ufl;
 
 import java.util.ArrayList;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import edu.ufl.Sprite.SpriteType;
-
 import edu.ufl.Tile.TileType;
 import edu.ufl.Util.IntersectRet;
 
@@ -75,8 +74,8 @@ public class Level {
 
     //Everytime update is called it updates this list with objects we should actually check.
     //Also looked at by draw, which is why it's an object variable.
-    private ArrayList<Tile> tilesToLookAt;
-	private ArrayList<Enemy> enemiesToLookAt;
+    private ArrayList<Tile> tilesToLookAt = new ArrayList<Tile>();
+	private ArrayList<Enemy> enemiesToLookAt = new ArrayList<Enemy>();
 
     private HUD hud;
 
@@ -108,6 +107,13 @@ public class Level {
         this.copyCheckpointValues();
     }
 
+    public boolean canDraw() {
+        if (tilesToLookAt.isEmpty() || enemiesToLookAt.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     //Get an arbitrary tile in the map, assumes AIR if out of bounds
     public Tile get(int X, int Y) {
         Tile ret;
@@ -350,15 +356,60 @@ public class Level {
         }
         this.checkpointPoints = this.points;
     }
-    
+
     protected void saveState(Bundle map) {
         map.putFloat("AlberX", albert.x);
         map.putFloat("AlberY", albert.y);
+        map.putInt("EnemySize", this.enemies.size());
+        for (int i = 0; i < this.enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+            if (e.getType() != 'a') {
+                map.putChar("EnemyType" + i, e.getType());
+                map.putFloat("EnemyX" + i, enemies.get(i).x);
+                map.putFloat("EnemyY" + i, enemies.get(i).y);
+                map.putFloat("EnemyMoveL" + i, enemies.get(i).movingLeft);
+            }
+        }
     }
-    
+
     protected void restoreState(Bundle map) {
         albert.x = map.getFloat("AlberX");
         albert.y = map.getFloat("AlberY");
+        int EnemySize = map.getInt("EnemySize");
+        enemies = new ArrayList<Enemy>();
+        for (int i = 0; i < EnemySize; i++) {
+            char c = map.getChar("EnemyType"+i);
+            float x = map.getFloat("EnemyX" + i);
+            float y = map.getFloat("EnemyY" + i);
+            float ml = map.getFloat("EnemyMoveL" + i);
+            switch (c) {
+
+            case 'b':
+                enemies.add( new AlabamaFanEnemy(x,y,ml));
+                break;
+
+            case 'r':
+                enemies.add( new AuburnFanEnemy(x,y,ml));
+                break;
+
+            case 's':
+                enemies.add( new FSUFanEnemy(x,y,ml));
+                break;
+
+            case 'k':
+                enemies.add( new KentuckyFanEnemy(x,y,ml));
+                break;
+
+            case 't':
+                enemies.add( new TennFanEnemy(x,y,ml));
+                break;
+
+            case 'u':
+                enemies.add( new USFFanEnemy(x,y,ml));
+                break;
+            }
+
+        }
     }
-    
+
 }

@@ -1,6 +1,10 @@
 package edu.ufl;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
 import android.view.WindowManager;
 
@@ -9,16 +13,15 @@ public class thegame extends Activity
     GamePanel gp;
     Bundle state;
     private int lvlID;
+    private AlertDialog pauseDialog;
     /* Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
+        super.onCreate(savedInstanceState);       
         this.lvlID = getIntent().getIntExtra("lvl", R.raw.level1_1);
         gp = new GamePanel(this, lvlID);
         setContentView(gp);
         restore(savedInstanceState);
-        
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
     
@@ -26,6 +29,7 @@ public class thegame extends Activity
         if (map != null) {
             gp.restoreState(map);
             GameLog.d(this.getClass().getName(), "Restoring State");
+            pause();
         }
     }
     
@@ -48,10 +52,41 @@ public class thegame extends Activity
         
     }
     
+    private void pause() {
+        gp.getThread().pause();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("PAUSED")
+        .setTitle("SAW");
+        // Add the buttons
+        builder.setPositiveButton("Unpause", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                gp.getThread().unpause();
+            }
+        });
+        builder.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+
+        // Create the AlertDialog
+        pauseDialog = builder.create();
+        pauseDialog.show();
+        GameLog.d("thegame", "Showing pause dialog");
+        SoundManager.pauseMedia();
+    }
+    
     @Override
     protected void onPause(){
-        SoundManager.pauseMedia();
+        GameLog.d(this.getClass().getName(), "onPause");
+        if (pauseDialog != null)
+            pauseDialog.dismiss();
         super.onPause();
+    }
+    
+    @Override
+    public void onBackPressed() {
+        pause();
     }
     
     @Override

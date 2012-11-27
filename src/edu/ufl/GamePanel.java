@@ -43,12 +43,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder holder) {
         GameLog.d("GamePanel", "Surface is being destroyed, attempting to shut down thread");
 
-        //Show level win screen, we assume we won the level (for now)
-        if (this.endedOnWin) {
-            Intent intent = new Intent(context, LevelWin.class);
-            context.startActivity(intent);
-        }
-
         /* Block until we can shutdown the gamethread */
         boolean retry = true;
         thread.setRunning(false);
@@ -61,6 +55,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         thread = null;
+        
+      //Show level win screen, we assume we won the level (for now)
+        if (this.endedOnWin) {
+            Intent intent = new Intent(context, LevelWin.class);
+            context.startActivity(intent);
+        }
         GameLog.d("GamePanel", "Thread was shut down cleanly");
     }
     
@@ -87,8 +87,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
     
     protected void restoreState(Bundle map) {
-        thread = new GameThread(getHolder(), context, this, lvlID);
-        thread.restoreState(map);
+        if (thread != null) {
+            if(thread.isAlive() && thread.isRunning()) {
+                thread.restoreState(map);
+            } else {
+                thread = new GameThread(getHolder(), context, this, lvlID);
+                thread.restoreState(map); 
+            }
+        } else {
+            thread = new GameThread(getHolder(), context, this, lvlID);
+            thread.restoreState(map);
+        }
     }
 
 }

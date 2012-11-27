@@ -1,11 +1,12 @@
 package edu.ufl;
 
 import java.util.ArrayList;
-import edu.ufl.Tile.TileType;
-import edu.ufl.Sprite.SpriteType;
-import android.graphics.Canvas;
 
-public class Enemy extends LevelObject{
+import android.graphics.Canvas;
+import edu.ufl.Sprite.SpriteType;
+import edu.ufl.Tile.TileType;
+
+public class Enemy extends LevelObject {
 
 	public float movingLeft = 5; //moving left value with be negative else it will be moving right if it is positive
 	
@@ -81,5 +82,10 @@ public class Enemy extends LevelObject{
 
     public void draw(Canvas canvas, Camera camera) {
         this.sprite.draw(this.x,this.y,canvas,camera);
+    }
+
+    public char getType() {
+        GameLog.d("Enemy", "ONE OF THE ENEMY CLASSES DOES NOT IMPLEMENT getType()");
+        return 'a';
     }
 }

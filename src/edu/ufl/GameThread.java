@@ -25,9 +25,13 @@ public class GameThread extends Thread {
 
     /* Whether or not the thread is currently alive */
     private boolean running;
+    private boolean paused = false;
     public void setRunning(boolean running) {
         this.running = running;
     }
+    public boolean isRunning() {return running;}
+    
+    public boolean isPaused() {return paused;}
 
     public GameThread(SurfaceHolder surfaceHolder, Context context, GamePanel gamePanel, int lvlID) {
         super();
@@ -43,6 +47,7 @@ public class GameThread extends Thread {
     }
     
     protected void setLevel(int id){
+        lvlID = id;
     	SoundManager.playMedia(2);
         level = null;
         try {        	
@@ -69,9 +74,9 @@ public class GameThread extends Thread {
             try {
                 c = surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
-                    // IF running - and not paused
-                    update();
-                    // END IF
+                    if (!paused) {
+                        update();
+                    }
                     if (level.needsReset()) {
                     	SoundManager.pauseMedia();
                     	SoundManager.resetMedia();
@@ -130,15 +135,28 @@ public class GameThread extends Thread {
         
     }
     
+    public void pause() {
+        paused = true;
+    }
+    
+    public void unpause() {
+        paused = false;
+    }
+    
     protected void saveState(Bundle map) {
         synchronized (surfaceHolder) {
+            map.putBoolean("paused", paused);
             level.saveState(map);
         }
     }
     
     protected void restoreState(Bundle map) {
         synchronized (surfaceHolder) {
+            paused = map.getBoolean("paused", false);
             level.restoreState(map);
+            if (!level.canDraw()) {
+                //TODO: make the toLookAt arrays
+            }
         }
     }
 }
