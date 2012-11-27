@@ -22,9 +22,9 @@ import android.widget.TextView;
 
 public class LevelSelect extends FragmentActivity {
     static final int[][] LEVEL_LOOKUP = new int[][] {
-                        {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3},
-                        {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3},
-                        {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3}};
+                        {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3,R.raw.level1_4,R.raw.level1_5},
+                        {R.raw.level2_1,R.raw.level2_2,R.raw.level2_3,R.raw.level2_4,R.raw.level2_5},
+                        {R.raw.level3_1,R.raw.level3_2,R.raw.level3_3}};
     static final int NUM_WORLDS = LEVEL_LOOKUP.length;
     static final int LVL_PER_WORLD = LEVEL_LOOKUP[0].length;
 
