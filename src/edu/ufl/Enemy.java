@@ -42,11 +42,6 @@ public class Enemy extends LevelObject {
     public void initSprite() {
         this.sprite = new Sprite(this.walkingSprite);
     }
-
-	public void changeDirection() {
-        super.changeDirection();
-		movingLeft = -1*movingLeft;
-	}
 	
 	public void kill() {
 		//the enemy dies
@@ -56,17 +51,20 @@ public class Enemy extends LevelObject {
 		//updates the movement of the enemies
 		setX(this.getX() + isMovingLeft());
 		
-		dy += Constants.GRAVITY;
+		dy += (3f/4f)*Constants.GRAVITY;
+		setY(y + dy * Constants.FPS_PERIOD);
         this.sprite.update();
 	}
 	
 	public void collideLeft(LevelObject lo){
 	    super.collideLeft(lo);
-	    changeDirection();
+	    faceLeft();
+        if (movingLeft > 0) movingLeft *= -1;
 	}
 	public void collideRight(LevelObject lo){
 	    super.collideRight(lo);
-	    changeDirection();
+	    faceRight();
+	    if (movingLeft < 0) movingLeft *= -1;
 	}
 
     public Tile getFromArray (ArrayList<Tile> toCollide, int i) {
