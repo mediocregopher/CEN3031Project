@@ -94,7 +94,7 @@ public class Level {
         this.albert = albert;
 
         this.background = ResourceManager.getBitmap(R.drawable.background);
-        this.clouds = ResourceManager.getBitmap(R.drawable.blank_tile);
+        this.clouds = ResourceManager.getBitmap(R.drawable.clouds);
         
         SharedPreferences settings = ResourceManager.getPreferences();
         this.lives = settings.getInt("livesLeft", 3);
@@ -286,6 +286,7 @@ public class Level {
                         editor.putInt("levelCompleted", ++levelCompleted);
                         editor.putInt("livesLeft", lives);
                         editor.putInt("points", points);
+                        editor.commit();
                         continue;
                     }
                     else if (tile.getType() == TileType.FOOTBALL) {
