@@ -104,6 +104,9 @@ public class LevelReader {
             case 'c': type = TileType.CHECKPOINT; break;
             case 'f': type = TileType.LEVELEND; break;
             case '~': type = TileType.FOOTBALL; break;
+            case '=': type = TileType.WOOD; break;
+            case '%': type = TileType.ASPHALT; break;
+            case '"': type = TileType.BRICK; break;
             default:  type = TileType.AIR;  break;
         }
         return type;
