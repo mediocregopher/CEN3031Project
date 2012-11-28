@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class LevelSelect extends FragmentActivity {
@@ -41,6 +41,7 @@ public class LevelSelect extends FragmentActivity {
 
         pager = (ViewPager)findViewById(R.id.pager);
         pager.setAdapter(lsAdapter);
+        ResourceManager.init(this);
     }
 
     public static class LSAdapter extends FragmentPagerAdapter {
@@ -94,8 +95,10 @@ public class LevelSelect extends FragmentActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.world_pager, container, false);
-            View tv = v.findViewById(R.id.text);
-            ((TextView)tv).setText("World" + worldNum);
+            TextView tv = (TextView) v.findViewById(R.id.text);
+            tv.setText("World" + worldNum);
+            Typeface font = Typeface.createFromAsset(ResourceManager.getAssetManager(), "smb.ttf");  
+            tv.setTypeface(font);  
             
             View gv = v.findViewById(R.id.levelgrid);
             List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
@@ -111,7 +114,7 @@ public class LevelSelect extends FragmentActivity {
      
             // Ids of views in listview_layout
             int[] to = { R.id.lvl};
-            ((GridView)gv).setAdapter(new SimpleAdapter(container.getContext(), aList, R.layout.level_gridlayout, from, to));
+            ((GridView)gv).setAdapter(new mSimpleAdapter(container.getContext(), aList, R.layout.level_gridlayout, from, to));
             ((GridView)gv).setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                         int position, long id) {

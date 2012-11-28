@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 
 public class HUD {
 
-    private Typeface smbTypeface;
     private Paint livesPaint;
     private Paint livesPaintStroke;
     private float livesX;

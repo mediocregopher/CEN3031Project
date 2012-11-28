@@ -6,13 +6,18 @@
     android:padding="10dp"
     android:layout_gravity="center"
 >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/levelbutton" />
  
     <TextView
         android:id="@+id/lvl"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
         android:gravity="center_horizontal"
-    />
+        android:textSize="20dp" />
  
 </LinearLayout>

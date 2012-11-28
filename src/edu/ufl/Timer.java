@@ -1,6 +1,5 @@
 package edu.ufl;
 
-import java.io.*;
 
 public class Timer {
 
