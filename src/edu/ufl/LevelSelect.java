@@ -128,7 +128,9 @@ public class LevelSelect extends FragmentActivity {
             for(int i=0;i<LVL_PER_WORLD;i++){
                 HashMap<String, Object> hm = new HashMap<String,Object>();
                 hm.put("lvl", "LVL " + (worldNum) + "-" + (i+1));
-                if (worldNum*i <= lvlsComp) {
+                if (LVL_PER_WORLD*(worldNum-1)+i < lvlsComp) {
+                    hm.put("img", R.drawable.levelbutton_complete);
+                } else if (LVL_PER_WORLD*(worldNum-1)+i == lvlsComp) {
                     hm.put("img", R.drawable.levelbutton);
                 } else {
                     hm.put("img", R.drawable.levelbutton_lock);
