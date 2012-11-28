@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LevelSelect extends FragmentActivity {
@@ -44,6 +45,7 @@ public class LevelSelect extends FragmentActivity {
         pager.setAdapter(lsAdapter);
         ResourceManager.init(this);
     }
+    
 
     public static class LSAdapter extends FragmentPagerAdapter {
         public LSAdapter(FragmentManager fm) {
@@ -86,6 +88,24 @@ public class LevelSelect extends FragmentActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             worldNum = getArguments() != null ? getArguments().getInt("num") + 1 : 0;
+        }
+        
+        @Override
+        public void onResume() {
+            super.onResume();
+            SharedPreferences settings = ResourceManager.getPreferences();
+            int lvlComp = settings.getInt("levelCompleted", 0);
+            if (lvlComp/5+1 == worldNum) {
+                try {
+                    int position = lvlComp%LVL_PER_WORLD;
+                    GridView gv = (GridView) getView().findViewById(R.id.levelgrid);
+                    ImageView iv = (ImageView) gv.getChildAt(position).findViewById(R.id.lvl_btn);
+                    iv.setImageResource(R.drawable.levelbutton);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+
         }
 
         /**
@@ -132,7 +152,7 @@ public class LevelSelect extends FragmentActivity {
                         GameLog.d("LevelSelect", "Chose level: " + worldNum + "-" + (position+1));
                         SharedPreferences settings = ResourceManager.getPreferences();
                         int levelsCompleted = settings.getInt("levelCompleted", 0);
-                        if (5*(worldNum-1)+position <= levelsCompleted) {
+                        if (LVL_PER_WORLD*(worldNum-1)+position <= levelsCompleted) {
                             startActivity(intent);
                         }
                         
