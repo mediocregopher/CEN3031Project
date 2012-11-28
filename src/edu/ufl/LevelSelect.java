@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -123,7 +124,11 @@ public class LevelSelect extends FragmentActivity {
                         Intent intent = new Intent(getActivity(), myClass);
                         intent.putExtra("lvl", LEVEL_LOOKUP[worldNum-1][position]);
                         GameLog.d("LevelSelect", "Chose level: " + worldNum + "-" + (position+1));
-                        startActivity(intent);
+                        SharedPreferences settings = ResourceManager.getPreferences();
+                        int levelsCompleted = settings.getInt("levelCompleted", 0);
+                        if (5*(worldNum-1)+position <= levelsCompleted) {
+                            startActivity(intent);
+                        }
                         
                     }
                     catch(ClassNotFoundException e){
