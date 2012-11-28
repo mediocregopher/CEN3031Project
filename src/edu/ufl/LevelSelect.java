@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -101,19 +102,25 @@ public class LevelSelect extends FragmentActivity {
             tv.setTypeface(font);  
             
             View gv = v.findViewById(R.id.levelgrid);
-            List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
-            
+            List<HashMap<String,Object>> aList = new ArrayList<HashMap<String,Object>>();
+            SharedPreferences settings = ResourceManager.getPreferences();
+            int lvlsComp = settings.getInt("levelCompleted", 0);
             for(int i=0;i<LVL_PER_WORLD;i++){
-                HashMap<String, String> hm = new HashMap<String,String>();
-                hm.put("lvl", "LVL-" + (i+1));
+                HashMap<String, Object> hm = new HashMap<String,Object>();
+                hm.put("lvl", "LVL " + (worldNum) + "-" + (i+1));
+                if (worldNum*i <= lvlsComp) {
+                    hm.put("img", R.drawable.levelbutton);
+                } else {
+                    hm.put("img", R.drawable.levelbutton_lock);
+                }
                 aList.add(hm);
             }
      
             // Keys used in Hashmap
-            String[] from = {"lvl"};
+            String[] from = {"lvl", "img"};
      
             // Ids of views in listview_layout
-            int[] to = { R.id.lvl};
+            int[] to = { R.id.lvl, R.id.lvl_btn};
             ((GridView)gv).setAdapter(new mSimpleAdapter(container.getContext(), aList, R.layout.level_gridlayout, from, to));
             ((GridView)gv).setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
