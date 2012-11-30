@@ -26,7 +26,11 @@ public class LevelSelect extends FragmentActivity {
     static final int[][] LEVEL_LOOKUP = new int[][] {
                         {R.raw.level1_1,R.raw.level1_2,R.raw.level1_3,R.raw.level1_4,R.raw.level1_5},
                         {R.raw.level2_1,R.raw.level2_2,R.raw.level2_3,R.raw.level2_4,R.raw.level2_5},
-                        {R.raw.level3_1,R.raw.level3_2,R.raw.level3_3}};
+                        {R.raw.level3_1,R.raw.level3_2,R.raw.level3_3,R.raw.level3_4,R.raw.level3_5},
+                        {R.raw.level4_1,R.raw.level4_2,R.raw.level4_3,R.raw.level4_4,R.raw.level4_5},
+                        {R.raw.level5_1,R.raw.level5_2,R.raw.level5_3,R.raw.level5_4,R.raw.level5_5},
+                        {R.raw.level6_1,R.raw.level6_2,R.raw.level6_3,R.raw.level6_4,R.raw.level6_5},
+                        {R.raw.level7_1,R.raw.level7_2,R.raw.level7_3,R.raw.level7_4,R.raw.level7_5}};
     static final int NUM_WORLDS = LEVEL_LOOKUP.length;
     static final int LVL_PER_WORLD = LEVEL_LOOKUP[0].length;
 
