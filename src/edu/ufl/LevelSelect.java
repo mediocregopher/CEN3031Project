@@ -44,7 +44,10 @@ public class LevelSelect extends FragmentActivity {
         setContentView(R.layout.levelselect);
 
         lsAdapter = new LSAdapter(getSupportFragmentManager());
-
+        SoundManager.getInstance();
+        SoundManager.initSounds(this.getApplicationContext());
+        SoundManager.loadSounds();
+        SoundManager.loadMedia();
         pager = (ViewPager)findViewById(R.id.pager);
         pager.setAdapter(lsAdapter);
         ResourceManager.init(this);
