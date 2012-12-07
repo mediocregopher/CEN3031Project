@@ -1,6 +1,7 @@
 package edu.ufl;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.AssetManager;
 import android.view.Display;
@@ -36,6 +37,10 @@ public class ResourceManager {
 
     public static Resources getResources() {
         return ResourceManager.con.getResources();
+    }
+    
+    public static SharedPreferences getPreferences() {
+        return con.getSharedPreferences("Preferences", 0);
     }
 
     public static AssetManager getAssetManager() {

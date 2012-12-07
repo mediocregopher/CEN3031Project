@@ -2,6 +2,7 @@ package edu.ufl;
 
 import java.util.ArrayList;
 
+import android.content.SharedPreferences;
 import android.graphics.RectF;
 import android.graphics.Canvas;
 import edu.ufl.Sprite.SpriteType;
@@ -141,6 +142,10 @@ public class Albert extends LevelObject {
         this.changeSpriteKeepDirection(SpriteType.ALBERT_DEAD);
         dx = 0;
         dy = -JUMP_SPEED;
+        SharedPreferences settings = ResourceManager.getPreferences();
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("livesLeft", 3);
+        editor.commit();
     }
 
     @Override

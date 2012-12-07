@@ -120,6 +120,7 @@ public class GameThread extends Thread {
         SoundManager.resetMedia();
 
         if (level.isDone()) {
+            level = null;
             ((Activity)(gamePanel.context)).finish();
         }
     }

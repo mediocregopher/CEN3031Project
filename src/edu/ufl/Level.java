@@ -1,7 +1,7 @@
 package edu.ufl;
 
 import java.util.ArrayList;
-
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
@@ -34,7 +34,6 @@ public class Level {
 
     //Number of tiles to either side of the camera we will also call update on
     private static final int UPDATE_OFFSET = 3;
-
     //Members
     private int maxX;
     private int maxY;
@@ -97,7 +96,9 @@ public class Level {
         this.background = ResourceManager.getBitmap(R.drawable.background);
         this.clouds = ResourceManager.getBitmap(R.drawable.clouds);
         
-        this.points = 0;
+        SharedPreferences settings = ResourceManager.getPreferences();
+        this.lives = settings.getInt("livesLeft", 3);
+        this.points = settings.getInt("points", 0);
 
         this.hud = new HUD();
 
@@ -279,6 +280,13 @@ public class Level {
                     }
                     else if (tile.getType() == TileType.LEVELEND) {
                         isDone = true;
+                        SharedPreferences settings = ResourceManager.getPreferences();
+                        int levelCompleted = settings.getInt("levelCompleted", 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putInt("levelCompleted", ++levelCompleted);
+                        editor.putInt("livesLeft", lives);
+                        editor.putInt("points", points);
+                        editor.commit();
                         continue;
                     }
                     else if (tile.getType() == TileType.FOOTBALL) {
