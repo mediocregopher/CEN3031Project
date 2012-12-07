@@ -1,6 +1,7 @@
 package edu.ufl;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -59,6 +60,31 @@ public class Option extends Activity
 			button.setImageResource(R.drawable.soundbutton);
 			sound_off=0;
 		}
+		
+	}
+	
+	public void back(View v){
+			try{
+			        Class<?> myClass = Class.forName("edu.ufl.Menu");
+			        Intent intent = new Intent(Option.this,myClass);
+			        startActivity(intent);
+			    }
+			    catch(ClassNotFoundException e){
+			        e.printStackTrace();
+			    }
+				
+		
+	}
+	
+	public void play(View v){
+				try{
+			        Class<?> myClass = Class.forName("edu.ufl.LevelSelect");
+			        Intent intent = new Intent(Option.this,myClass);
+			        startActivity(intent);
+			    }
+			    catch(ClassNotFoundException e){
+			        e.printStackTrace();
+			    }
 		
 	}
 	
