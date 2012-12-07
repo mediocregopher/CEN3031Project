@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+//import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class Menu extends Activity
 {
-	ImageButton imageButton;
+//	ImageButton button;
 	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,22 @@ public class Menu extends Activity
 	    Toast.makeText(Menu.this,"Use right and left side of touchscreen to navigate. Use bottom middle part of toughscreen to jump.", 
                 Toast.LENGTH_SHORT).show();
 	}
+	
+	public void options(View v){
+		try{
+	        Class<?> myClass = Class.forName("edu.ufl.Option");
+	        Intent intent = new Intent(Menu.this,myClass);
+	        startActivity(intent);
+	    }
+	    catch(ClassNotFoundException e){
+	        e.printStackTrace();
+	    }
+		
+//		button=(ImageButton)findViewById(R.id.helpbutton);
+//		button.setImageResource(R.drawable.blank_tile);
+	}
+	
+	
 	
     @Override
     protected void onPause(){

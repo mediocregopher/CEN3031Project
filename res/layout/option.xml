@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sound_options"
+    android:padding="10dp" >
+
+    <ImageButton
+        android:id="@+id/music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="85dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/musicbutton"
+        android:onClick="mute_music" />
+
+    <ImageButton
+        android:id="@+id/sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/music"
+        android:layout_below="@+id/music"
+        android:src="@drawable/soundbutton"
+        android:onClick="mute_sound" />
+
+</RelativeLayout>
