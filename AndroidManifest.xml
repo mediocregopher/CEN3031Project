@@ -49,6 +49,13 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
         
+        <activity
+            android:name="Option"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+        </activity>
+        
     </application>
 
 </manifest>
