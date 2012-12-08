@@ -24,6 +24,7 @@ public class SoundManager {
 	private static Context context;
 	private static MediaPlayer mediaPlayer;
 	private static HashMap<Integer, Uri> mediaPlayerMap;
+	int mute=0;
 	
 	private SoundManager()	{ }
 	
@@ -65,6 +66,7 @@ public class SoundManager {
 	 * @param isLooping - set to true if sound loops, otherwise use false for single sounds
 	 */
 	public static void playSound(int index, float speed, boolean isLooping)	{
+		if(Option.getflag()==0){
 		float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		if (isLooping)
@@ -72,11 +74,16 @@ public class SoundManager {
 		else
 			soundPool.play(soundPoolMap.get(index), streamVolume, streamVolume, 1, 0, speed);
 		GameLog.d("SoundManager", "Play sound " + index);
+		}
+		else{}
 	}
 	
 	public static void stopSound(int index)
 	{
+		if(Option.getflag()==0){
 		soundPool.stop(soundPoolMap.get(index));
+		}
+		else{}
 	}
 		
 	/**
@@ -103,39 +110,53 @@ public class SoundManager {
 	 * @param index - the key of the desired audio file in the mediaPlayerMap
 	 */
 	public static void playMedia(int index) {
+		if(Option.getflag()==0){
 		try {
-		    mediaPlayer.reset();
+		  //  mediaPlayer.reset();
 			mediaPlayer.setDataSource(context, mediaPlayerMap.get(index));
 			mediaPlayer.prepare();
 			mediaPlayer.start();
-		}
+			}
 		catch(IOException ex) {
 			GameLog.d("SoundManager", "Media file not found");
-		}
+			}
 		catch(IllegalArgumentException ex) {
 			GameLog.d("SoundManager", "Unable to play media file");
+			}
 		}
+		else{}
 	}
 	
 	/**
 	 * Pauses playback of the mediaPlayer.
 	 */
 	public static void pauseMedia() {
-		mediaPlayer.pause();
+		if(Option.getflag()==0){
+			mediaPlayer.pause();
+			mediaPlayer.reset();
+		}
+		else{}
 	}
+	
 	
 	/**
 	 * Resumes playing from where the mediaPlayer was paused.
 	 */
 	public static void resumeMedia() {
-		mediaPlayer.start();
+		if(Option.getflag()==0){
+			mediaPlayer.start();
+		}
+		else{}
 	}
 	
 	/**
 	 * Resets the mediaPlayer so that a new file can be loaded into the player.
 	 */
 	public static void resetMedia() {
-		mediaPlayer.reset();
+		if(Option.getflag()==0){
+			mediaPlayer.reset();
+		}
+		else{}
 	}
 		
 	public static void cleanup() {
@@ -147,5 +168,9 @@ public class SoundManager {
 		mediaPlayerMap.clear();
 		audioManager.unloadSoundEffects();
 		_instance = null;
+	}
+	
+	public static void mute(){
+		mediaPlayer.release();
 	}
 }
