@@ -35,11 +35,10 @@ public class Option extends Activity
 			button.setImageResource(R.drawable.musicbutton);
 			music_off=0;
 			clearflag();
-	/*		 SoundManager.getInstance();
-		     SoundManager.initSounds(this.getApplicationContext());
-		     SoundManager.loadSounds();
-		     SoundManager.loadMedia();   
-		     SoundManager.playMedia(1);*/
+			SoundManager.getInstance();
+		    SoundManager.initSounds(this.getApplicationContext());
+		    SoundManager.loadSounds();
+		    SoundManager.loadMedia();   
 		}
 		
 	}
@@ -58,6 +57,10 @@ public class Option extends Activity
 			button.setImageResource(R.drawable.soundbutton);
 			sound_off=0;
 			clearflag();
+			SoundManager.getInstance();
+		    SoundManager.initSounds(this.getApplicationContext());
+		    SoundManager.loadSounds();
+		    SoundManager.loadMedia();  
 		}
 		
 	}
