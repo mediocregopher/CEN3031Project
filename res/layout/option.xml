@@ -24,24 +24,27 @@
         android:background="@null"
         android:onClick="play"
         android:text="              " />
-
+
     <ImageButton
         android:id="@+id/music"
-        android:layout_width="115dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/play"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="11dp"
         android:layout_marginTop="11dp"
+        android:background="@null"
         android:onClick="mute_music"
         android:src="@drawable/musicbutton" />
-
+
     <ImageButton
         android:id="@+id/sound"
-        android:layout_width="115dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/music"
         android:layout_below="@+id/music"
+        android:layout_marginTop="16dp"
+        android:background="@null"
         android:onClick="mute_sound"
         android:src="@drawable/soundbutton" />
 

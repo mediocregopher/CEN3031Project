@@ -33,9 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/button1"
-        android:layout_marginRight="44dp"
-        android:layout_marginTop="26dp"
-        android:src="@drawable/football"
-        android:onClick="options" />
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:onClick="options"
+        android:src="@drawable/star" />
 
 </RelativeLayout>
