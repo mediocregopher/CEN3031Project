@@ -24,28 +24,35 @@
         android:background="@null"
         android:onClick="play"
         android:text="              " />
-
+
     <ImageButton
         android:id="@+id/music"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/play"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="11dp"
         android:layout_marginTop="11dp"
+        android:adjustViewBounds="true"
         android:background="@null"
+        android:cropToPadding="false"
+        android:maxWidth="90dp"
         android:onClick="mute_music"
+        android:scaleType="fitCenter"
         android:src="@drawable/musicbutton" />
-
+
     <ImageButton
         android:id="@+id/sound"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/music"
         android:layout_below="@+id/music"
         android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
         android:background="@null"
+        android:maxWidth="90dp"
         android:onClick="mute_sound"
+        android:scaleType="fitCenter"
         android:src="@drawable/soundbutton" />
 
 </RelativeLayout>

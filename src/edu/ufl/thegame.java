@@ -15,7 +15,7 @@ public class thegame extends Activity
     /* Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);       
+        super.onCreate(savedInstanceState);
         this.lvlID = getIntent().getIntExtra("lvl", R.raw.level1_1);
         gp = new GamePanel(this, lvlID);
         setContentView(gp);
@@ -69,6 +69,7 @@ public class thegame extends Activity
 
         // Create the AlertDialog
         pauseDialog = builder.create();
+        pauseDialog.setCanceledOnTouchOutside(false);
         pauseDialog.show();
         GameLog.d("thegame", "Showing pause dialog");
         SoundManager.pauseMedia();

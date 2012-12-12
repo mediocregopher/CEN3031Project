@@ -112,7 +112,7 @@ public class SoundManager {
 	public static void playMedia(int index) {
 		if(Option.getflag()==0){
 		try {
-		  //  mediaPlayer.reset();
+		    mediaPlayer.reset();
 			mediaPlayer.setDataSource(context, mediaPlayerMap.get(index));
 			mediaPlayer.prepare();
 			mediaPlayer.start();

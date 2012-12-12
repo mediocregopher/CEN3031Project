@@ -366,6 +366,8 @@ public class Level {
     }
 
     protected void saveState(Bundle map) {
+        map.putInt("lives", lives);
+        map.putInt("points", points);
         map.putFloat("AlberX", albert.x);
         map.putFloat("AlberY", albert.y);
         map.putInt("EnemySize", this.enemies.size());
@@ -373,14 +375,16 @@ public class Level {
             Enemy e = enemies.get(i);
             if (e.getType() != 'a') {
                 map.putChar("EnemyType" + i, e.getType());
-                map.putFloat("EnemyX" + i, enemies.get(i).x);
-                map.putFloat("EnemyY" + i, enemies.get(i).y);
-                map.putFloat("EnemyMoveL" + i, enemies.get(i).movingLeft);
+                map.putFloat("EnemyX" + i, e.x);
+                map.putFloat("EnemyY" + i, e.y);
+                map.putFloat("EnemyMoveL" + i, e.movingLeft);
             }
         }
     }
 
     protected void restoreState(Bundle map) {
+        lives = map.getInt("lives", 3);
+        points = map.getInt("points",1);
         albert.x = map.getFloat("AlberX");
         albert.y = map.getFloat("AlberY");
         int EnemySize = map.getInt("EnemySize");
