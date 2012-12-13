@@ -42,8 +42,16 @@ public class Menu extends Activity
     }
 	
 	public void help(View v) {
-	    Toast.makeText(Menu.this,"Use right and left side of touchscreen to navigate. Use bottom middle part of toughscreen to jump.", 
-                Toast.LENGTH_SHORT).show();
+		try{
+	        Class<?> myClass = Class.forName("edu.ufl.Help");
+	        Intent intent = new Intent(Menu.this,myClass);
+	        startActivity(intent);
+	    }
+	    catch(ClassNotFoundException e){
+	        e.printStackTrace();
+	    }
+	    //Toast.makeText(Menu.this,"Use right and left side of touchscreen to navigate. Use bottom middle part of toughscreen to jump.", 
+         //       Toast.LENGTH_SHORT).show();
 	}
 	
 	public void options(View v){

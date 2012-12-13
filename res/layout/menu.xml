@@ -37,6 +37,6 @@
         android:layout_marginTop="16dp"
         android:background="@null"
         android:onClick="options"
-        android:src="@drawable/star" />
+        android:src="@drawable/settings_button" />
 
 </RelativeLayout>
